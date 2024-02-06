@@ -4,6 +4,7 @@
 	"description": "graphql backend for nextjs masters course",
 	"main": "./dist/app.js",
 	"scripts": {
+		"dev": "nodemon --exec ts-node src/app.ts",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -18,7 +19,9 @@
 		"@typescript-eslint/parser": "^6.21.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-import": "^2.29.1"
+		"eslint-plugin-import": "^2.29.1",
+		"nodemon": "^3.0.3",
+		"ts-node": "^10.9.2"
 	},
 	"dependencies": {
 		"@apollo/server": "^4.10.0",
