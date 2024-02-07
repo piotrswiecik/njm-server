@@ -8,6 +8,12 @@ dependencies:
   '@apollo/server':
     specifier: ^4.10.0
     version: 4.10.0(graphql@16.8.1)
+  '@types/express':
+    specifier: ^4.17.21
+    version: 4.17.21
+  express:
+    specifier: ^4.18.2
+    version: 4.18.2
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
