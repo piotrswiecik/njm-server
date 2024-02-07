@@ -26,4 +26,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.run_id }}
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }}
