@@ -5,4 +5,5 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 	_ctx,
 ) => {
 	/* Implement Query.product resolver logic here */
+	return null;
 };
