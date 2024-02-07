@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: db
+          ports:
+            - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  type: ClusterIP
+  selector:
+    app: db
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db
+data:
+  POSTGRES_DB: njm
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: db
+spec:
+  encryptedData:
+    POSTGRES_PASSWORD: AgBoJ98K4FWJIDF0F/6O0LmGqlQqUfMhQvBaW73g47h/zW6y43tLeWasTcNY1YNJS7vY8fiNyVDINp55Fss60OdcSKC0BgjoQpi0DGRiS19aypyxwKschh/xqwrd7L/woNgc4393I+BgbuZ+vxUJWGVfnQ36YbaL3dqMeCgoPr8mfLEN3dvbRrpQ6ytHcM9pxLVrxPff1E4YBUuKdLcrxDtIGJeRSR6EkAGLjj+EVnVLwVrBI525A8z52vuwj6ucBag+fH2wyFNHAnwoFFGwaevJ4YflQ+2SPEJd/AX0DMtKn+NE4aavlzYEslhLNiapR3eO0jdIZU1R0Lp5Jh7jdseGeFsOVtSq3HNjDFmGZ+zIyCMiUjRISX7IxyL/+12dzfKM+v5FkT7BJrgbeyD/cafUNvN1RADcuKcuEjMFtlvzFkEdj0QpwbKzeGm5jOpW9qEAK2SHtpF75gjlbUFwmQ39tHvuqaAq0z7hzqqE5UypbYBxb402Yp2QlkV9a6T0s3OiXdisi8Jc2TXUOVmhhNBqovwN0NVU57cy99fXeiLsl5NXdolbodPFAAgP2iKNiTLqgx+05IaZkfoNFzwY3ZodxeXVsO3FeRlB13aFVc5y5q3n7A2MBPf72Alb91M8n/88XqNgs2G0WYNNBoHfrmRyE8qDkZWnkoeAVG5F582kh4dAXpF7E6ZtHm4aKhLGTzjB0dbs6YNalm6TdbRG
+    POSTGRES_USER: AgCB6ly9aLQ8zqi+XVRc5cX6SIJXEb0DLnjCCJeIGa174C+Ijt2UHb4lU+lrqSi4pvLkhBPePsByBZPX4y7lUpKP3gayE9OjjQ99D/iScj/qmVqhV6F0Eq6xRDN1+LM9j2LD3Dyv2cI0Zy0QxelfhWCz0JmkGMzK+8e54v9iu6PcZPBv8UKPe8U2yoNwH2nsa6L7rwiwZZCq54yirgp0Ea5OUpctGqs2nRcPUt3zaA9cmTlPN/YyHDP9+PLkRC5QxlvSJNPwzrm7pcoe+R148jdOXlcMAOAazhoKzZCJdI7Mvo0DESyg/TwTIw9WBIYG2DE2AcwNJ6SMYHcNP/YdGYdvs2eiRxm9GE1eRxgof3s23GSrFQOHu9ryo9HQ1UGfFlDyOu41Thhw5xmmQd3rVp+naabbDRugsiexaq9NBF+yTNTjdgPmtgbLk0X/rmr5ji0uFQ8h8WmK9jeeVvfqFVhiaKw9Mq2xFSrLFv0bw7F1P56BFF9pXrmFIuO9Hg398WXOrpZZ6Jqkj2dSSWwPSiCzR2EdQC+NpnxImDfJ3AzTz9Vgv/hZB0NE7JaF/kasYZfX+zLJSqTGW9hkmgjl8irAGOR2/yunfs+QtLa03TqwoS1dzrvkNtJFhOlH7P1Rrk0wgqe6E9qgqI3jW8gmAAw+hzpLK/eeq0ZQJTjLMr5crI719pfz0qV91gQz1Qt+i60XdjsVyVYDW15m
+  template:
+    metadata:
+      name: db
+    type: Opaque
