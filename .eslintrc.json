@@ -15,6 +15,7 @@
 	},
 	"plugins": ["@typescript-eslint", "import"],
 	"rules": {
+		"@typescript-eslint/no-explicit-any": "warn", // escape hatch for graphql codegen
 		"import/order": "error",
 		"import/no-mutable-exports": "error",
 		"import/no-cycle": "error",
