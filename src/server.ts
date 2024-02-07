@@ -1,6 +1,7 @@
 import express from "express";
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import { expressMiddleware } from "@apollo/server/express4";
+import bodyParser from "body-parser";
 import { typeDefs } from "./graphql/typeDefs.generated";
 import { resolvers } from "./graphql/resolvers.generated";
 
@@ -12,23 +13,33 @@ const apolloServer = new ApolloServer({
 	resolvers,
 });
 
-// kubernetes health check
-app.get("/status", (req, res) => {
-	res.status(200).json({
-		status: "ok",
-	});
-});
+apolloServer
+	.start()
+	.then(() => {
+		console.log("Apollo initialized");
 
-app.listen(config.NODE_PORT, () => {
-	console.log(`🚀 REST server ready at port ${config.NODE_PORT}`);
-});
+		app.use(bodyParser.json());
 
-startStandaloneServer(apolloServer, {
-	listen: { port: config.GRAPHQL_PORT },
-})
-	.then(({ url }) => {
-		console.log(`🚀 GraphQL server ready at ${url}`);
+		// kubernetes health check endpoint
+		app.get("/status", (req, res) => {
+			res.status(200).json({
+				status: "ok",
+			});
+		});
+
+		// graphql endpoint
+		app.use(
+			"/graphql",
+			expressMiddleware(apolloServer, {
+				// context function returns a context object that will be available in all resolvers
+				// may be useful later for authentication & other stuff
+				context: async ({ req }) => ({ headers: req.headers }),
+			}),
+		);
+		app.listen(config.NODE_PORT, () => {
+			console.log(`🚀 Server ready at port ${config.NODE_PORT}`);
+		});
 	})
 	.catch((err) => {
-		console.error(err);
+		console.log(err);
 	});
