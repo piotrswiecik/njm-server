@@ -7,3 +7,7 @@ Node.js GraphQL backend for Next.js Masters course.
 - Start dev DB: `docker-compose -f docker-compose-dev.yaml`.
 - DB admin panel @ _localhost:8080_, user: _admin_, pass: _password_.
 - Start Node in hot reload: `npm run dev`.
+
+## Codegen
+
+- `pnpm codegen` to create/update GraphQL resolvers.
