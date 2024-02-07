@@ -6,6 +6,7 @@ import { typeDefs } from "./graphql/typeDefs.generated";
 import { resolvers } from "./graphql/resolvers.generated";
 
 import { config } from "./config/config";
+import { logger } from "./utils/logger";
 
 const app = express();
 const apolloServer = new ApolloServer({
@@ -16,12 +17,18 @@ const apolloServer = new ApolloServer({
 apolloServer
 	.start()
 	.then(() => {
-		console.log("Apollo initialized");
+		logger.info("Apollo server initialized");
 
 		app.use(bodyParser.json());
 
+    app.get("/^(?!\/graphql$).*$/", (_, res) => {
+      res.status(404).json({
+        status: "not found",
+      }); 
+    });
+
 		// kubernetes health check endpoint
-		app.get("/status", (req, res) => {
+		app.get("/status", (_, res) => {
 			res.status(200).json({
 				status: "ok",
 			});
@@ -37,9 +44,9 @@ apolloServer
 			}),
 		);
 		app.listen(config.NODE_PORT, () => {
-			console.log(`🚀 Server ready at port ${config.NODE_PORT}`);
+			logger.info(`🚀 Server ready at port ${config.NODE_PORT}`);
 		});
 	})
 	.catch((err) => {
-		console.log(err);
+    logger.error(`Server failed to start: ${err}`);
 	});
