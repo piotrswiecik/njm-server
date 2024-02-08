@@ -1,11 +1,11 @@
 name: njm server build
 run-name: ${{ github.actor }} - ${{ github.event_name }} - ${{ github.sha }}
 
-on: 
-  push: 
+on:
+  push:
     branches:
       - main
-      
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: njm-server
@@ -27,3 +27,11 @@ jobs:
         with:
           push: true
           tags: ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }}
+      - name: update image tag in kubernetes config
+        run: |
+          sed -i '/- name: graphql-server/,/newTag: /s/newTag: .*/newTag: "${{ github.sha }}"/' deployment/kustomization.yaml
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add deployment/kustomization.yaml
+          git commit -m "[skip ci] automated image tag update - graphql-server:${{ github.sha }}"
+          git push origin main

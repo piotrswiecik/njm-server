@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - database.yaml
+  - server.yaml
+  - ingress.yaml
+images:
+  - name: db
+    newName: postgres
+    newTag: 16-bookworm
+  - name: graphql-server
+    newName: ghcr.io/piotrswiecik/njm-server
+    newTag: 1.0.0

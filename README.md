@@ -11,3 +11,22 @@ Node.js GraphQL backend for Next.js Masters course.
 ## Codegen
 
 - `pnpm codegen` to create/update GraphQL resolvers.
+
+## Deployment
+
+Server deployment using ArgoCD on RKE2 single node Kubernetes cluster.
+All production secrets are encrypted using sealed secrets controller - <https://github.com/bitnami-labs/sealed-secrets>.
+
+Required settings:
+
+```shell
+# database
+POSTGRES_USER
+POSTGRES_PASSWORD
+
+# app
+DATABASE_USER
+DATABASE_PASS
+NODE_ENV # development || production
+NODE_PORT # graphql & rest server port, default 8000
+```
