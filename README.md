@@ -35,6 +35,8 @@ POSTGRES_PASSWORD
 # app
 DATABASE_USER
 DATABASE_PASS
+DATABASE_HOST # as "host:port"
+DATABASE_NAME
 NODE_ENV # development || production
 NODE_PORT # graphql & rest server port, default 8000
 ```

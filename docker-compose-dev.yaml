@@ -23,6 +23,10 @@ services:
     restart: always
     environment:
       NODE_PORT: 8000
+      DATABASE_HOST: db:5432
+      DATABASE_NAME: njm
+      DATABASE_USER: admin
+      DATABASE_PASS: password
     ports:
       - "8000:8000"
     volumes:

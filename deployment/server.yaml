@@ -37,7 +37,8 @@ metadata:
 data:
   NODE_PORT: 8000
   NODE_ENV: production
-  DATABASE_URL: tbd
+  DATABASE_HOST: db:5432
+  DATABASE_NAME: njm
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
@@ -49,6 +50,5 @@ spec:
     DATABASE_USER: AgBAJ8t8LkslBTfd6Qe7VPV+z3CXpcLCa2tYQ3bPkvEz9XSyPXOPwI3wYhuRokBiJ3GWwfclPkt4dTAWHp0cd9vXZ7302t9StV2KiloZdxV/bkGK+Y2CKRR87r8t1o2K7mNZB1Nen0BKQo3fqjZ8YRqUrBDy+14GCK722YawUSYOSq79KzCWGsXOmh8uz4OAiiFGXkz9MnhrLJJ47pbe4VmZ+G/Xq9bWEox2d9UDctQUYVdt5xlmQb9Eo5Bj941zS150iAkTt/to3GUYfbgKxYTzRAAeuacLZp4BOyCi/RVJ4RmkhCbCXQlQee7SAPXWVclyMMpV2jvHttqXmoS9skiaNoEM9s03yZhsM9qHs+o6gJnvyBwmedlUp+ZMDciiAdhKZ+hI7Zpa0EosyWHBq3bkbJz3LGjvI3YDIoORKeb0coUbbRymNM6zoXB7CvJdlPFCKw598FdVeHF6ZpDbc+scTUdwjH6NS2r5HELYJAGw3q1jtzRQ4alaOJME2daWZiLQggLZrgIxKgMr9K8/zGUNhw+Q98xUaRsryN5hJQAL0XoPWNXVoR30CsaWts/MfECxcM31OVAJFAnjbt5a2/Zmo4KxuPKnNZfNY7OVEiFtFToahuoquXpGWrzwJ5j7iUpl8aga98G2545EoAJDyfefuarxxsF3GmWO4V7jBDiaLi8q9UZ6XVbmJLFnowK2QwEhox5ro5AkOSTM
   template:
     metadata:
-      creationTimestamp: null
       name: graphql-server
 
