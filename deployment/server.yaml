@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graphql-server
+spec:
+  selector:
+    matchLabels:
+      app: graphql-server
+  template:
+    metadata:
+      labels:
+        app: graphql-server
+    spec:
+      containers:
+        - name: graphql-server
+          image: graphql-server
+          ports:
+            - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: graphql-server
+spec:
+  type: ClusterIP
+  selector:
+    app: graphql-server
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: graphql-server
+data:
+  NODE_PORT: 8000
+  NODE_ENV: production
+  DATABASE_URL: tbd
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: graphql-server
+spec:
+  encryptedData:
+    DATABASE_PASS: AgA2+SbEY4aPedI3vKnYjw348Mr/UyD8VkWbKp07JLAyqJ3PWw8wiBtt1ZSM24nT4tfY05LmulGG8CYIts1aMEqggw/efpTQSu9kre/lE9Z57yGnuFNcmMEgIKiX3j+kX+MTHrqhyGuG0AplBWWqSoUV6RG24I51S/fAKdT2DWhJTVTk72V0mrEL0vnoqvJmiskQEHN457scxJMYOuueR+/w+6VbpRrA9OlbYbb1CU96G/wwo/Sof+oApscTfLO6wtwatrjdZFqrZc3JfkAF/2Ar9Suu5OTTgZzp/ri6bgXMrk44N5ZabArs7cv7z6oJ5NmeIFcTBu+DomsPExKqHCe2SJVxGEEQGw79eq91x8Jhi2u+0UfOikgT9WMbOgSrdZzIMVisgd95AAsYZEBBKhLomKWSp1/NoCrDyvBaYRzc/Q8AfGSvk+dXyK1H6KeDZMy9CCJV2AXrkVssHvW0wM93skvS84jkhlHH1Fu6XGbKP/y9EtmxDl6vsK+uLuWKlAiIyim45D8uteP+BLxTK+GfFL40jYZ+XBubwyYt0rqnB/ErIpgh/VYGpkbABIRfloZMuVcteFwJcuf8yt0FLcgWdSGKvcOCrb9ZF4w5+yXZguvcdYbLBRKusBfCC/JuOK2IInyhLYAXP/ooxx/LtBIYBSkxIycxYJLd2VDbYqFzfcZ0dCGO1xTx4I1+iSNfj70iBDosuGTZhElB3l2R
+    DATABASE_USER: AgBAJ8t8LkslBTfd6Qe7VPV+z3CXpcLCa2tYQ3bPkvEz9XSyPXOPwI3wYhuRokBiJ3GWwfclPkt4dTAWHp0cd9vXZ7302t9StV2KiloZdxV/bkGK+Y2CKRR87r8t1o2K7mNZB1Nen0BKQo3fqjZ8YRqUrBDy+14GCK722YawUSYOSq79KzCWGsXOmh8uz4OAiiFGXkz9MnhrLJJ47pbe4VmZ+G/Xq9bWEox2d9UDctQUYVdt5xlmQb9Eo5Bj941zS150iAkTt/to3GUYfbgKxYTzRAAeuacLZp4BOyCi/RVJ4RmkhCbCXQlQee7SAPXWVclyMMpV2jvHttqXmoS9skiaNoEM9s03yZhsM9qHs+o6gJnvyBwmedlUp+ZMDciiAdhKZ+hI7Zpa0EosyWHBq3bkbJz3LGjvI3YDIoORKeb0coUbbRymNM6zoXB7CvJdlPFCKw598FdVeHF6ZpDbc+scTUdwjH6NS2r5HELYJAGw3q1jtzRQ4alaOJME2daWZiLQggLZrgIxKgMr9K8/zGUNhw+Q98xUaRsryN5hJQAL0XoPWNXVoR30CsaWts/MfECxcM31OVAJFAnjbt5a2/Zmo4KxuPKnNZfNY7OVEiFtFToahuoquXpGWrzwJ5j7iUpl8aga98G2545EoAJDyfefuarxxsF3GmWO4V7jBDiaLi8q9UZ6XVbmJLFnowK2QwEhox5ro5AkOSTM
+  template:
+    metadata:
+      creationTimestamp: null
+      name: graphql-server
+
