@@ -14,7 +14,15 @@ Node.js GraphQL backend for Next.js Masters course.
 
 ## Deployment
 
-Server deployment using ArgoCD on RKE2 single node Kubernetes cluster.
+Server deployment using ArgoCD on RKE2 single node Kubernetes cluster.  
+
+Auto deployment workflow:
+
+- PR / push / merge to main.
+- CI build of new Docker image (commit SHA based versioning).
+- CI automatic update of image tag in Kubernetes manifest - auto-commit to main & skip CI.
+- ArgoCD hook triggers cluster update. 
+
 All production secrets are encrypted using sealed secrets controller - <https://github.com/bitnami-labs/sealed-secrets>.
 
 Required settings:
