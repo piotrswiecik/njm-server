@@ -19,8 +19,11 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    command: ["npm", "run", "dev"]
     restart: always
     environment:
       NODE_PORT: 8000
     ports:
       - "8000:8000"
+    volumes:
+      - ./:/app
