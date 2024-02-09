@@ -16,6 +16,11 @@ spec:
           image: db
           ports:
             - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: db
+            - secretRef:
+                name: db
 ---
 apiVersion: v1
 kind: Service

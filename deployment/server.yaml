@@ -16,6 +16,11 @@ spec:
           image: graphql-server
           ports:
             - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: graphql-server
+            - secretRef:
+                name: graphql-server
 ---
 apiVersion: v1
 kind: Service
