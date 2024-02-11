@@ -2,11 +2,11 @@ import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import bodyParser from "body-parser";
-import { typeDefs } from "./graphql/typeDefs.generated";
-import { resolvers } from "./graphql/resolvers.generated";
 
 import { config } from "./config/config";
 import { logger } from "./utils/logger";
+import { typeDefs } from "./typeDefs.generated";
+import { resolvers } from "./resolvers.generated";
 
 const app = express();
 const apolloServer = new ApolloServer({
@@ -21,11 +21,11 @@ apolloServer
 
 		app.use(bodyParser.json());
 
-    app.get("/^(?!\/graphql$).*$/", (_, res) => {
-      res.status(404).json({
-        status: "not found",
-      }); 
-    });
+		app.get("/^(?!/graphql$).*$/", (_, res) => {
+			res.status(404).json({
+				status: "not found",
+			});
+		});
 
 		// kubernetes health check endpoint
 		app.get("/status", (_, res) => {
@@ -48,5 +48,5 @@ apolloServer
 		});
 	})
 	.catch((err) => {
-    logger.error(`Server failed to start: ${err}`);
+		logger.error(`Server failed to start: ${err}`);
 	});

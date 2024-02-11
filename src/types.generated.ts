@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { GraphQLResolveInfo } from "graphql";
+import { type GraphQLResolveInfo } from "graphql";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -34,11 +33,14 @@ export type Scalars = {
 
 export type Product = {
 	__typename?: "Product";
+	artist: Scalars["String"]["output"];
+	coverImg: Scalars["String"]["output"];
 	description: Scalars["String"]["output"];
+	format: Scalars["String"]["output"];
+	genre: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
-	name: Scalars["String"]["output"];
 	price: Scalars["Int"]["output"];
-	slug: Scalars["String"]["output"];
+	title: Scalars["String"]["output"];
 };
 
 export type Query = {
@@ -180,11 +182,14 @@ export type ProductResolvers<
 	ParentType extends
 		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
+	artist?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	coverImg?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	description?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	format?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	genre?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	price?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-	slug?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
