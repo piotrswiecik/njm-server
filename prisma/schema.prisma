@@ -12,10 +12,13 @@ datasource db {
 
 model Product {
   id  String @id @default(cuid())
-  name String
-  slug String
+  artist String
+  title String
   description String
   price Int
+  coverImg String
+  genre String
+  format String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
