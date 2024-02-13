@@ -16,6 +16,10 @@ Node.js GraphQL backend for Next.js Masters course.
 - `pnpm ts-node prisma/manage.ts` to manage initial test data. Use `--drop` to clean all existing data.
 Use `--seed` to create mock data.
 
+## Mock data
+
+Data for app testing is provided by Spotify API.
+
 ## Deployment
 
 Server deployment using ArgoCD on RKE2 single node Kubernetes cluster.  
