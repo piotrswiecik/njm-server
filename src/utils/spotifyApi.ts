@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import axios from "axios";
 
+// load api key
 dotenv.config();
 
 type SpotifyToken = {
@@ -15,32 +16,51 @@ type ClientCredentials = {
 	secret: string;
 };
 
-type AlbumImage = {
+type AlbumImageResponseDto = {
 	url: string;
 	height: number;
 	width: number;
 };
 
-type Artist = {
+type ArtistResponseDto = {
 	name: string;
 	id: string;
 };
 
-type Track = {
-	album: {
-		album_type: string;
-		total_tracks: number;
-		id: string;
-		images: AlbumImage[];
-		name: string;
-		release_date: string;
-		release_date_precision: string;
-		artists: Artist[];
-	};
+// we are only interested in album part of the response
+type RecommendedTrackResponseDto = {
+	album: AlbumResponseDto;
 };
 
-type Recommendation = {
-	tracks: Track[];
+type AlbumResponseDto = {
+	album_type: string;
+	total_tracks: number;
+	id: string;
+	href: string;
+	images: AlbumImageResponseDto[];
+	name: string;
+	release_date: string;
+	release_date_precision: string;
+	artists: ArtistResponseDto[];
+};
+
+type RecommendationResponseDto = {
+	tracks: RecommendedTrackResponseDto[];
+};
+
+// processed output type
+type AlbumDto = {
+	name: string;
+	artists: string[];
+	images: {
+		url: string;
+		height: number;
+		width: number;
+	}[];
+	release_date: string;
+	album_type: string;
+	total_tracks: number;
+	genre: string;
 };
 
 const getClientCredentials = async (): Promise<ClientCredentials> => {
@@ -72,38 +92,54 @@ const getSpotifyToken = async ({
 	}
 };
 
+// return up to "limit" recommended tracks to be converted into album DTOs
 const getRecommendationsForGenre = async (
-	genres: string[],
+	genre: string,
 	limit: number,
-): Promise<Recommendation> => {
+): Promise<RecommendedTrackResponseDto[]> => {
 	const url = "https://api.spotify.com/v1/recommendations";
 	try {
 		const tokenResponse = await getSpotifyToken(await getClientCredentials());
-		const recommendationResponse = await axios.get<Recommendation>(url, {
+		const recommendationResponse = await axios.get<RecommendationResponseDto>(url, {
 			headers: {
 				Authorization: `Bearer ${tokenResponse.access_token}`,
 			},
 			params: {
-				seed_genres: genres.slice(0, 5).join(","),
+				seed_genres: genre + ",",
 				limit,
 			},
 		});
-		return recommendationResponse.data;
+		return recommendationResponse.data.tracks;
 	} catch (err) {
 		console.error(err);
 		return Promise.reject(err);
 	}
 };
 
-getRecommendationsForGenre(["electronica", "intelligent dance music", "ambient techno", "classical", "jazz"], 3)
+const mapRecommendationToAlbum = async (trackRecommendation: RecommendedTrackResponseDto, genre: string): Promise<AlbumDto> => {
+	const album = trackRecommendation.album;
+	return {
+		name: album.name,
+		artists: album.artists.map((artist) => artist.name),
+		images: album.images,
+		release_date: album.release_date,
+		album_type: album.album_type,
+		total_tracks: album.total_tracks,
+		genre,
+	};
+};
+
+// run data seed
+getRecommendationsForGenre("electronica,idm", 1)
 .then((recommendations) => {
-  recommendations.tracks.forEach((track) => {
-    console.log(track.album.name);
-    track.album.images.forEach((image) => {
-      console.log(image.url);
-    });
-  });
+  recommendations.forEach(
+		async (recommendation) => {
+			const album = await mapRecommendationToAlbum(recommendation, "electronic");
+			console.log(JSON.stringify(album));
+		}
+	);
 })
 .catch((err) => {
   console.error(err);
 });
+
