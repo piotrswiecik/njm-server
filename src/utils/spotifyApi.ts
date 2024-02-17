@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import dotenv from "dotenv";
 import axios from "axios";
 
@@ -100,15 +101,18 @@ const getRecommendationsForGenre = async (
 	const url = "https://api.spotify.com/v1/recommendations";
 	try {
 		const tokenResponse = await getSpotifyToken(await getClientCredentials());
-		const recommendationResponse = await axios.get<RecommendationResponseDto>(url, {
-			headers: {
-				Authorization: `Bearer ${tokenResponse.access_token}`,
+		const recommendationResponse = await axios.get<RecommendationResponseDto>(
+			url,
+			{
+				headers: {
+					Authorization: `Bearer ${tokenResponse.access_token}`,
+				},
+				params: {
+					seed_genres: genre + ",",
+					limit,
+				},
 			},
-			params: {
-				seed_genres: genre + ",",
-				limit,
-			},
-		});
+		);
 		return recommendationResponse.data.tracks;
 	} catch (err) {
 		console.error(err);
@@ -116,7 +120,10 @@ const getRecommendationsForGenre = async (
 	}
 };
 
-const mapRecommendationToAlbum = async (trackRecommendation: RecommendedTrackResponseDto, genre: string): Promise<AlbumDto> => {
+const mapRecommendationToAlbum = async (
+	trackRecommendation: RecommendedTrackResponseDto,
+	genre: string,
+): Promise<AlbumDto> => {
 	const album = trackRecommendation.album;
 	return {
 		name: album.name,
@@ -131,15 +138,20 @@ const mapRecommendationToAlbum = async (trackRecommendation: RecommendedTrackRes
 
 // run data seed
 getRecommendationsForGenre("electronica,idm", 1)
-.then((recommendations) => {
-  recommendations.forEach(
-		async (recommendation) => {
-			const album = await mapRecommendationToAlbum(recommendation, "electronic");
+	.then((recommendations) => {
+		recommendations.forEach(async (recommendation) => {
+			const album = await mapRecommendationToAlbum(
+				recommendation,
+				"electronic",
+			);
 			console.log(JSON.stringify(album));
-		}
-	);
-})
-.catch((err) => {
-  console.error(err);
-});
-
+			fs.writeFile("data.json", JSON.stringify(album), (err) => {
+				if (err) {
+					console.error(err);
+				}
+			});
+		});
+	})
+	.catch((err) => {
+		console.error(err);
+	});
