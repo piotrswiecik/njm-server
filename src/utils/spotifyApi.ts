@@ -59,7 +59,6 @@ type AlbumDto = {
 		width: number;
 	}[];
 	release_date: string;
-	album_type: string;
 	total_tracks: number;
 	genre: string;
 };
@@ -130,28 +129,29 @@ const mapRecommendationToAlbum = async (
 		artists: album.artists.map((artist) => artist.name),
 		images: album.images,
 		release_date: album.release_date,
-		album_type: album.album_type,
 		total_tracks: album.total_tracks,
 		genre,
 	};
 };
 
 // run data seed
-getRecommendationsForGenre("electronica,idm", 1)
+const data: AlbumDto[] = [];
+
+getRecommendationsForGenre("electronica,idm", 2)
 	.then((recommendations) => {
 		recommendations.forEach(async (recommendation) => {
 			const album = await mapRecommendationToAlbum(
 				recommendation,
 				"electronic",
 			);
-			console.log(JSON.stringify(album));
-			fs.writeFile("data.json", JSON.stringify(album), (err) => {
-				if (err) {
-					console.error(err);
-				}
-			});
+			data.push(album);
 		});
+	})
+	.then(() => {
+		console.log(data);
+		fs.writeFileSync("data.json", JSON.stringify(data));
 	})
 	.catch((err) => {
 		console.error(err);
 	});
+
