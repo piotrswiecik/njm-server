@@ -17,6 +17,19 @@ type ClientCredentials = {
 	secret: string;
 };
 
+type SimplifiedTrackObjectDto = {
+	uri: string;
+	name: string;
+	track_number: number;
+};
+
+type AlbumHrefResponseDto = {
+	total_tracks: number;
+	tracks: {
+		items: SimplifiedTrackObjectDto[];
+	};
+};
+
 type AlbumImageResponseDto = {
 	url: string;
 	height: number;
@@ -30,10 +43,10 @@ type ArtistResponseDto = {
 
 // we are only interested in album part of the response
 type RecommendedTrackResponseDto = {
-	album: AlbumResponseDto;
+	album: AlbumRecommendationResponseDto;
 };
 
-type AlbumResponseDto = {
+type AlbumRecommendationResponseDto = {
 	album_type: string;
 	total_tracks: number;
 	id: string;
@@ -50,7 +63,14 @@ type RecommendationResponseDto = {
 };
 
 // processed output type
-type AlbumDto = {
+export type TrackDto = {
+	name: string;
+	trackNumber: number;
+	url: string;
+};
+
+// processed output type
+export type AlbumDto = {
 	name: string;
 	artists: string[];
 	images: {
@@ -61,6 +81,7 @@ type AlbumDto = {
 	release_date: string;
 	total_tracks: number;
 	genre: string;
+	tracks: TrackDto[];
 };
 
 const getClientCredentials = async (): Promise<ClientCredentials> => {
@@ -96,15 +117,15 @@ const getSpotifyToken = async ({
 const getRecommendationsForGenre = async (
 	genre: string,
 	limit: number,
+	token: SpotifyToken,
 ): Promise<RecommendedTrackResponseDto[]> => {
 	const url = "https://api.spotify.com/v1/recommendations";
 	try {
-		const tokenResponse = await getSpotifyToken(await getClientCredentials());
 		const recommendationResponse = await axios.get<RecommendationResponseDto>(
 			url,
 			{
 				headers: {
-					Authorization: `Bearer ${tokenResponse.access_token}`,
+					Authorization: `Bearer ${token.access_token}`,
 				},
 				params: {
 					seed_genres: genre + ",",
@@ -115,7 +136,33 @@ const getRecommendationsForGenre = async (
 		return recommendationResponse.data.tracks;
 	} catch (err) {
 		console.error(err);
-		return Promise.reject(err);
+		process.exit(1);
+	}
+};
+
+const getTracksForAlbum = async (
+	albumId: string,
+	token: SpotifyToken,
+): Promise<TrackDto[]> => {
+	try {
+		const url = `https://api.spotify.com/v1/albums/${albumId}`;
+		const albumResponse = await axios.get<AlbumHrefResponseDto>(url, {
+			headers: {
+				Authorization: `Bearer ${token.access_token}`,
+			},
+		});
+		const albumData = albumResponse.data;
+		const tracks = albumData.tracks.items.map((track) => {
+			return {
+				name: track.name,
+				trackNumber: track.track_number,
+				url: track.uri,
+			};
+		});
+		return tracks;
+	} catch (err) {
+		console.error(err);
+		process.exit(1);
 	}
 };
 
@@ -129,29 +176,44 @@ const mapRecommendationToAlbum = async (
 		artists: album.artists.map((artist) => artist.name),
 		images: album.images,
 		release_date: album.release_date,
-		total_tracks: album.total_tracks,
+		total_tracks: album.total_tracks, // redundant
 		genre,
+		tracks: [],
 	};
 };
 
-// run data seed
-const data: AlbumDto[] = [];
-
-getRecommendationsForGenre("electronica,idm", 2)
-	.then((recommendations) => {
-		recommendations.forEach(async (recommendation) => {
-			const album = await mapRecommendationToAlbum(
-				recommendation,
-				"electronic",
+const generateSeedData = async (genres: string[], itemsPerGenre: number): Promise<AlbumDto[]> => {
+	try {
+		const credentials = await getClientCredentials();
+		const token = await getSpotifyToken(credentials);
+		const data: AlbumDto[] = [];
+		await Promise.all(genres.map(async (genre) => {
+			const responseItems = await getRecommendationsForGenre(
+				genre,
+				itemsPerGenre,
+				token,
 			);
-			data.push(album);
-		});
-	})
-	.then(() => {
-		console.log(data);
-		fs.writeFileSync("data.json", JSON.stringify(data));
-	})
-	.catch((err) => {
+			await Promise.all(responseItems.map(async (item) => {
+				let album = await mapRecommendationToAlbum(item, genre);
+				const tracks = await getTracksForAlbum(item.album.id, token);
+				album = { ...album, tracks };
+				data.push(album);
+			}));
+		}));
+		return data;
+	} catch (err) {
 		console.error(err);
-	});
+		process.exit(1);
+	}
+};
+
+generateSeedData(["electronica,idm"], 2)
+.then((albums) => {
+	console.log(albums);
+	fs.writeFileSync("data.json", JSON.stringify(albums));
+})
+.catch((err) => {
+	console.error(err);
+	process.exit(1);
+});
 
