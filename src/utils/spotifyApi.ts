@@ -183,6 +183,25 @@ const mapRecommendationToAlbum = async (
 };
 
 const generateSeedData = async (genres: string[], itemsPerGenre: number): Promise<AlbumDto[]> => {
+	const remapGenre = (genre: string): string => {
+		switch (genre) {
+			case "electronica,idm":
+				return "electronic";
+			case "classical,":
+				return "classical";
+			case "jazz,":
+				return "jazz";
+			case "metal,heavy-metal":
+				return "metal";
+			case "rock,hard-rock":
+				return "rock";
+			case "hip-hop,":
+				return "rap";
+			default:
+				return "Various";
+		}
+	};
+
 	try {
 		const credentials = await getClientCredentials();
 		const token = await getSpotifyToken(credentials);
@@ -194,7 +213,7 @@ const generateSeedData = async (genres: string[], itemsPerGenre: number): Promis
 				token,
 			);
 			await Promise.all(responseItems.map(async (item) => {
-				let album = await mapRecommendationToAlbum(item, genre);
+				let album = await mapRecommendationToAlbum(item, remapGenre(genre));
 				const tracks = await getTracksForAlbum(item.album.id, token);
 				album = { ...album, tracks };
 				data.push(album);
@@ -207,7 +226,7 @@ const generateSeedData = async (genres: string[], itemsPerGenre: number): Promis
 	}
 };
 
-generateSeedData(["electronica,idm"], 2)
+generateSeedData(["jazz,", "classical,", "electronica,idm", "metal,heavy-metal", "rock,hard-rock", "hip-hop,"], 2)
 .then((albums) => {
 	console.log(albums);
 	fs.writeFileSync("data.json", JSON.stringify(albums));
