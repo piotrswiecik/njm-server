@@ -75,4 +75,5 @@ model Product {
   stockId       String @unique
   stock         Stock @relation(fields: [stockId], references: [id])
   tracks        Track[]
+  releaseDate   DateTime
 }

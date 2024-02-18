@@ -198,7 +198,7 @@ const generateSeedData = async (genres: string[], itemsPerGenre: number): Promis
 			case "hip-hop,":
 				return "rap";
 			default:
-				return "Various";
+				return "various";
 		}
 	};
 
