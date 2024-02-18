@@ -113,7 +113,7 @@ async function seed() {
 		if (!artist) {
 			artist = await prisma.artist.create({
 				data: {
-					name: product.artists[0],
+					name: product.artists[0] !== undefined && product.artists[0] !== "" ? product.artists[0] : "Unknown Artist",
 				},
 			});
 		}
@@ -127,7 +127,7 @@ async function seed() {
 		});
 		await prisma.product.create({
 			data: {
-				title: product.name,
+				title: product.name !== undefined && product.name !== "" ? product.name : "Untitled",
 				releaseDate: new Date(product.release_date),
 				artist: {
 					connect: { id: artist.id },
