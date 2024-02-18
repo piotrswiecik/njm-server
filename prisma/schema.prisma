@@ -11,15 +11,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id            String @id @default(uuid())
+  name          String
+  products      Product[]
+}
+
+model Collection {
+  id            String @id @default(uuid())
+  name          String
+  products      Product[]
+}
+
+model Artist {
+  id            String @id @default(uuid())
+  name          String
+  albums        Product[]
+}
+
+model CoverImage {
+  id            String @id @default(uuid())
+  url           String
+  width         Int
+  height        Int
+}
+
+model Track {
+  id            String @id @default(uuid())
+  name          String
+  number        Int
+  url           String?
+  productId     String
+  product       Product @relation(fields: [productId], references: [id])
+}
+
+model Stock {
+  id            String @id @default(uuid())
+  qtyCd         Int
+  qtyLp         Int
+}
+
+model ProductCollection {
+  productId     String
+  product       Product @relation(fields: [productId], references: [id])
+  collectionId  String
+  collection    Collection @relation(fields: [collectionId], references: [id])
+}
+
 model Product {
-  id  String @id @default(cuid())
-  artist String
-  title String
-  description String
-  price Int
-  coverImg String
-  genre String
-  format String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id  String    @id @default(uuid())
+  title         String
+  artist        Artist
+  price         Int
+  coverImage    CoverImage
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  collections   Collection[]
+  stockId       String @unique
+  stock         Stock @relation(fields: [stockId], references: [id])
+  tracks        Track[]
 }
