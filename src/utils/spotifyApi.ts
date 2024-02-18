@@ -226,7 +226,7 @@ const generateSeedData = async (genres: string[], itemsPerGenre: number): Promis
 	}
 };
 
-generateSeedData(["jazz,", "classical,", "electronica,idm", "metal,heavy-metal", "rock,hard-rock", "hip-hop,"], 2)
+generateSeedData(["classical,"], 50)
 .then((albums) => {
 	console.log(albums);
 	fs.writeFileSync("data.json", JSON.stringify(albums));
