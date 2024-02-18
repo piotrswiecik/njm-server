@@ -65,7 +65,7 @@ export type Product = {
 	releaseDate: Scalars["String"]["output"];
 	stock: Stock;
 	title: Scalars["String"]["output"];
-	track: Array<Track>;
+	tracks: Array<Track>;
 };
 
 export type Query = {
@@ -90,7 +90,7 @@ export type Track = {
 	artist?: Maybe<Artist>;
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	product: Product;
+	product?: Maybe<Product>;
 	url: Scalars["String"]["output"];
 };
 
@@ -290,7 +290,7 @@ export type ProductResolvers<
 	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	stock?: Resolver<ResolversTypes["Stock"], ParentType, ContextType>;
 	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	track?: Resolver<Array<ResolversTypes["Track"]>, ParentType, ContextType>;
+	tracks?: Resolver<Array<ResolversTypes["Track"]>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -327,7 +327,7 @@ export type TrackResolvers<
 	artist?: Resolver<Maybe<ResolversTypes["Artist"]>, ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	product?: Resolver<Maybe<ResolversTypes["Product"]>, ParentType, ContextType>;
 	url?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

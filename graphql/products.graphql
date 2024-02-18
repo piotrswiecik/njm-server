@@ -11,7 +11,7 @@ type Product {
   category: String!
   collection: [Collection!]
   stock: Stock!
-  track: [Track!]!
+  tracks: [Track!]!
   releaseDate: String!
 }
 
@@ -46,6 +46,6 @@ type Track {
   id: ID!
   name: String!
   url: String!
-  product: Product!
+  product: Product
   artist: Artist
 }
