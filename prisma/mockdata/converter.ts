@@ -1,9 +1,6 @@
 import fs from "node:fs/promises";
 
-import { PrismaClient } from "@prisma/client";
 import { type AlbumDto } from "./spotifyApi";
-
-const prisma = new PrismaClient();
 
 // flatten data from all files into single array
 export const mockDataFromJson= async () => {

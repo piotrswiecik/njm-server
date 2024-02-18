@@ -81,7 +81,7 @@ async function seed() {
 
 	const mockData = await mockDataFromJson();
 
-	for (const product of mockData.slice(0, 10)) {
+	for (const product of mockData) {
 		// create image - only the first one from array
 		const coverImage = await prisma.coverImage.create({
 			data: {
