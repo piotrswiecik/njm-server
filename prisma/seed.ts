@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { mockDataFromJson } from "./mockdata/converter";
 
 const prisma = new PrismaClient();
@@ -85,9 +85,9 @@ async function seed() {
 		// create image - only the first one from array
 		const coverImage = await prisma.coverImage.create({
 			data: {
-				url: product.images[0].url,
-				width: product.images[0].width,
-				height: product.images[0].height,
+				url: product.images[0] !== undefined ? product.images[0].url : "https://via.placeholder.com/300",
+				width: product.images[0] !== undefined ? product.images[0].width : 300,
+				height: product.images[0] !== undefined ? product.images[0].height : 300,
 			},
 		});
 
@@ -159,5 +159,10 @@ async function seed() {
 }
 
 async function drop() {
-	await prisma.product.deleteMany({});
+  await prisma.track.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.coverImage.deleteMany();
+  await prisma.stock.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.artist.deleteMany();
 }
