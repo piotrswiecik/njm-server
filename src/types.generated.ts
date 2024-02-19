@@ -70,6 +70,7 @@ export type Product = {
 
 export type Query = {
 	__typename?: "Query";
+	count: Scalars["Int"]["output"];
 	product?: Maybe<Product>;
 	products?: Maybe<Array<Maybe<Product>>>;
 };
@@ -305,6 +306,7 @@ export type QueryResolvers<
 	ParentType extends
 		ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
+	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	product?: Resolver<
 		Maybe<ResolversTypes["Product"]>,
 		ParentType,

@@ -8,7 +8,7 @@ export const Product: ProductResolvers = {
 			where: { productId: parent.id },
 		});
 		return tracks.map((track) => {
-			return {	...track, url: track.url ?? "" };
+			return { ...track, url: track.url ?? "" };
 		});
-	}
+	},
 };

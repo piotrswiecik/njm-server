@@ -43,6 +43,6 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 		},
 		tracks: [],
 	};
-	
+
 	return mappedProduct;
 };
