@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from "graphql";
+import { type GraphQLResolveInfo } from "graphql";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -71,6 +71,7 @@ export type Product = {
 export type Query = {
 	__typename?: "Query";
 	product?: Maybe<Product>;
+	products?: Maybe<Array<Maybe<Product>>>;
 };
 
 export type QueryproductArgs = {
@@ -304,6 +305,11 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QueryproductArgs, "id">
+	>;
+	products?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		ParentType,
+		ContextType
 	>;
 };
 
