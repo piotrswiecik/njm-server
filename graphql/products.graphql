@@ -1,14 +1,53 @@
 extend type Query {
   product(id: ID!): Product
+  products(skip: Int, take: Int): [Product]
+  count: Int!
 }
 
 type Product {
   id: ID!
   artist: String!
   title: String!
-  description: String!
   price: Int!
-  coverImg: String!
-  genre: String!
-  format: String!
+  coverImg: CoverImage!
+  category: String!
+  collection: [Collection!]
+  stock: Stock!
+  tracks: [Track!]!
+  releaseDate: String!
+}
+
+type Artist {
+  id: ID!
+  name: String!
+  product: [Product!]
+}
+
+type CoverImage {
+  id: ID!
+  url: String!
+  width: Int!
+  height: Int!
+  product: Product
+}
+
+type Collection {
+  id: ID!
+  name: String!
+  product: [Product!]
+}
+
+type Stock {
+  id: ID!
+  qtyCd: Int!
+  qtyLp: Int!
+  product: Product
+}
+
+type Track {
+  id: ID!
+  name: String!
+  url: String!
+  product: Product
+  artist: Artist
 }
