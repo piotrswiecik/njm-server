@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { logger } from "../../../utils/logger";
 import type { QueryResolvers } from "./../../../types.generated";
 
 type QueryOptions = {
@@ -22,32 +23,37 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 		queryOptions.take = _arg.take;
 	}
 
-	const productQueryResponse = await prisma.product.findMany({
-		...queryOptions,
-		include: { artist: true, coverImage: true, stock: true, category: true },
-	});
+	try {
+		const productQueryResponse = await prisma.product.findMany({
+			...queryOptions,
+			include: { artist: true, coverImage: true, stock: true, category: true },
+		});
 
-	const productList = productQueryResponse.map((product) => {
-		return {
-			artist: product.artist.name,
-			category: product.category.name,
-			coverImg: {
-				id: product.coverImage.id,
-				width: product.coverImage.width,
-				height: product.coverImage.height,
-				url: product.coverImage.url,
-			},
-			id: product.id,
-			price: product.price,
-			releaseDate: product.releaseDate.toISOString(),
-			stock: {
-				id: product.stock.id,
-				qtyCd: product.stock.qtyCd,
-				qtyLp: product.stock.qtyLp,
-			},
-			title: product.title,
-			tracks: [],
-		};
-	});
-	return productList;
+		const productList = productQueryResponse.map((product) => {
+			return {
+				artist: product.artist.name,
+				category: product.category.name,
+				coverImg: {
+					id: product.coverImage.id,
+					width: product.coverImage.width,
+					height: product.coverImage.height,
+					url: product.coverImage.url,
+				},
+				id: product.id,
+				price: product.price,
+				releaseDate: product.releaseDate.toISOString(),
+				stock: {
+					id: product.stock.id,
+					qtyCd: product.stock.qtyCd,
+					qtyLp: product.stock.qtyLp,
+				},
+				title: product.title,
+				tracks: [],
+			};
+		});
+		return productList;
+	} catch (err) {
+		logger.error(err);
+		throw new Error("Error fetching product");
+	}
 };
