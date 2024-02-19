@@ -37,13 +37,11 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 				qtyLp: res.stock.qtyLp,
 			},
 			title: res.title,
-			tracks: [
-				{
-					id: "test",
-					name: "test",
-					url: "test",
-				},
-			],
+			tracks: res.tracks.map((track) => ({
+				id: track.id,
+				name: track.name,
+				url: track.url ?? "",
+			})),
 		};
 	});
 	return productList;
