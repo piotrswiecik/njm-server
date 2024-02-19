@@ -1,6 +1,6 @@
 extend type Query {
   product(id: ID!): Product
-  products: [Product]
+  products(skip: Int, take: Int): [Product]
 }
 
 type Product {

@@ -1,49 +1,53 @@
 import { PrismaClient } from "@prisma/client";
 import type { QueryResolvers } from "./../../../types.generated";
+
+type QueryOptions = {
+	skip?: number;
+	take?: number;
+};
+
 export const products: NonNullable<QueryResolvers["products"]> = async (
 	_parent,
 	_arg,
 	_ctx,
 ) => {
 	/* Implement Query.products resolver logic here */
-	console.log(_arg);
 	const prisma = new PrismaClient();
+
+	const queryOptions: QueryOptions = {
+		skip: typeof _arg.skip === "number" ? _arg.skip : 0,
+	};
+
+	if (typeof _arg.take === "number") {
+		queryOptions.take = _arg.take;
+	}
+
 	const productQueryResponse = await prisma.product.findMany({
-		include: {
-			artist: true,
-			category: true,
-			stock: true,
-			tracks: true,
-			coverImage: true,
-			collections: true,
-		},
+		...queryOptions,
+		include: { artist: true, coverImage: true, stock: true, category: true },
 	});
-	const productList = productQueryResponse.map((res) => {
+
+	const productList = productQueryResponse.map((product) => {
 		return {
-			artist: res.artist.name,
-			category: res.category.name,
+			artist: product.artist.name,
+			category: product.category.name,
 			coverImg: {
-				id: res.coverImage.id,
-				width: res.coverImage.width,
-				height: res.coverImage.height,
-				url: res.coverImage.url,
+				id: product.coverImage.id,
+				width: product.coverImage.width,
+				height: product.coverImage.height,
+				url: product.coverImage.url,
 			},
-			id: res.id,
-			price: res.price,
-			releaseDate: res.releaseDate.toISOString(),
+			id: product.id,
+			price: product.price,
+			releaseDate: product.releaseDate.toISOString(),
 			stock: {
-				id: res.stock.id,
-				qtyCd: res.stock.qtyCd,
-				qtyLp: res.stock.qtyLp,
+				id: product.stock.id,
+				qtyCd: product.stock.qtyCd,
+				qtyLp: product.stock.qtyLp,
 			},
-			title: res.title,
-			tracks: res.tracks.map((track) => ({
-				id: track.id,
-				name: track.name,
-				url: track.url ?? "",
-			})),
+			title: product.title,
+			tracks: [],
 		};
 	});
 	return productList;
-
 };

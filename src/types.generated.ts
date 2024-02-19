@@ -78,6 +78,11 @@ export type QueryproductArgs = {
 	id: Scalars["ID"]["input"];
 };
 
+export type QueryproductsArgs = {
+	skip?: InputMaybe<Scalars["Int"]["input"]>;
+	take?: InputMaybe<Scalars["Int"]["input"]>;
+};
+
 export type Stock = {
 	__typename?: "Stock";
 	id: Scalars["ID"]["output"];
@@ -309,7 +314,8 @@ export type QueryResolvers<
 	products?: Resolver<
 		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
 		ParentType,
-		ContextType
+		ContextType,
+		Partial<QueryproductsArgs>
 	>;
 };
 
