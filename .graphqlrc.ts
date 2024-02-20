@@ -9,6 +9,7 @@ const config = {
       typesPluginsConfig: {
         // setting from @graphql-codegen/typescript-resolvers 
         optionalInfoArgument: true,
+        contextType: "./context.js#ServerContext",
       },
       // setting from @eddeee888/gcg-typescript-resolver-files
       // overrides type or resolver impl

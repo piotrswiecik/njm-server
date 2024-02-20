@@ -8,8 +8,12 @@ import { logger } from "./utils/logger";
 import { typeDefs } from "./typeDefs.generated";
 import { resolvers } from "./resolvers.generated";
 
+import { prisma } from "./db";
+import { type ServerContext } from "./context";
+
 const app = express();
-const apolloServer = new ApolloServer({
+
+const apolloServer = new ApolloServer<ServerContext>({
 	typeDefs,
 	resolvers,
 });
@@ -37,10 +41,10 @@ apolloServer
 		// graphql endpoint
 		app.use(
 			"/graphql",
-			expressMiddleware(apolloServer, {
+			expressMiddleware<ServerContext>(apolloServer, {
 				// context function returns a context object that will be available in all resolvers
 				// may be useful later for authentication & other stuff
-				context: async ({ req }) => ({ headers: req.headers }),
+				context: async ({ req }) => ({ headers: req.headers, db: prisma }),
 			}),
 		);
 		app.listen(config.NODE_PORT, () => {
