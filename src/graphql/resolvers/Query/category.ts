@@ -14,9 +14,8 @@ export const category: NonNullable<QueryResolvers["category"]> = async (
 		if (!category) {
 			throw new Error();
 		} else {
-			return { ...category }
+			return { ...category };
 		}
-
 	} catch (err) {
 		logger.error(err);
 		throw new Error("Error fetching category");

@@ -21,8 +21,7 @@ type Product {
 type Category {
   id: ID!
   name: String!
-  products: [Product!]
-
+  products(skip: Int, take: Int): [Product]
 }
 
 type Artist {

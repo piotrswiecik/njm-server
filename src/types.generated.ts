@@ -43,7 +43,12 @@ export type Category = {
 	__typename?: "Category";
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	products?: Maybe<Array<Product>>;
+	products?: Maybe<Array<Maybe<Product>>>;
+};
+
+export type CategoryproductsArgs = {
+	skip?: InputMaybe<Scalars["Int"]["input"]>;
+	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type Collection = {
@@ -225,9 +230,9 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
 	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
 	Category: ResolverTypeWrapper<Category>;
+	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
 	Collection: ResolverTypeWrapper<Collection>;
 	CoverImage: ResolverTypeWrapper<CoverImage>;
-	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
 	Product: ResolverTypeWrapper<Product>;
 	Query: ResolverTypeWrapper<{}>;
 	Stock: ResolverTypeWrapper<Stock>;
@@ -241,9 +246,9 @@ export type ResolversParentTypes = {
 	ID: Scalars["ID"]["output"];
 	String: Scalars["String"]["output"];
 	Category: Category;
+	Int: Scalars["Int"]["output"];
 	Collection: Collection;
 	CoverImage: CoverImage;
-	Int: Scalars["Int"]["output"];
 	Product: Product;
 	Query: {};
 	Stock: Stock;
@@ -274,9 +279,10 @@ export type CategoryResolvers<
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	products?: Resolver<
-		Maybe<Array<ResolversTypes["Product"]>>,
+		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
 		ParentType,
-		ContextType
+		ContextType,
+		Partial<CategoryproductsArgs>
 	>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

@@ -1,11 +1,27 @@
 import type { CategoryResolvers } from "./../../types.generated";
+
+type QueryOptions = {
+	skip?: number;
+	take?: number;
+};
+
 export const Category: CategoryResolvers = {
 	/* Implement Category resolver logic here */
 	products: async (parent, _args, _ctx) => {
+		const queryOptions: QueryOptions = {
+			skip: typeof _args?.skip === "number" ? _args.skip : 0,
+		};
+	
+		if (typeof _args.take === "number") {
+			queryOptions.take = _args.take;
+		}
+
 		const productsQueryResponse = await _ctx.db.product.findMany({
+			...queryOptions,
 			where: { categoryId: parent.id },
 			include: { artist: true, coverImage: true, stock: true, category: true },
 		});
+		
 		return productsQueryResponse.map((product) => {
 			return {
 				artist: product.artist.name,
