@@ -5,7 +5,6 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 	_arg,
 	_ctx,
 ) => {
-
 	try {
 		const product = await _ctx.db.product.findUnique({
 			where: { id: _arg.id },
@@ -19,13 +18,13 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 		});
 
 		if (!product) {
-			return null;
+			throw new Error();
 		}
 
 		const mappedProduct = {
 			...product,
 			releaseDate: product.releaseDate.toISOString(),
-			category: product.category.name,
+			category: product.category,
 			coverImg: {
 				id: product.coverImage.id,
 				width: product.coverImage.width,

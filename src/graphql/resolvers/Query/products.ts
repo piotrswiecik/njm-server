@@ -29,7 +29,7 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 		const productList = productQueryResponse.map((product) => {
 			return {
 				artist: product.artist.name,
-				category: product.category.name,
+				category: product.category,
 				coverImg: {
 					id: product.coverImage.id,
 					width: product.coverImage.width,

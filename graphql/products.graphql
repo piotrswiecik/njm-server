@@ -2,6 +2,7 @@ extend type Query {
   product(id: ID!): Product
   products(skip: Int, take: Int): [Product]
   count: Int!
+  category(name: String!): Category
 }
 
 type Product {
@@ -10,11 +11,18 @@ type Product {
   title: String!
   price: Int!
   coverImg: CoverImage!
-  category: String!
+  category: Category!
   collection: [Collection!]
   stock: Stock!
   tracks: [Track!]!
   releaseDate: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  products: [Product!]
+
 }
 
 type Artist {

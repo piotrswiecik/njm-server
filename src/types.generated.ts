@@ -39,6 +39,13 @@ export type Artist = {
 	product?: Maybe<Array<Product>>;
 };
 
+export type Category = {
+	__typename?: "Category";
+	id: Scalars["ID"]["output"];
+	name: Scalars["String"]["output"];
+	products?: Maybe<Array<Product>>;
+};
+
 export type Collection = {
 	__typename?: "Collection";
 	id: Scalars["ID"]["output"];
@@ -58,7 +65,7 @@ export type CoverImage = {
 export type Product = {
 	__typename?: "Product";
 	artist: Scalars["String"]["output"];
-	category: Scalars["String"]["output"];
+	category: Category;
 	collection?: Maybe<Array<Collection>>;
 	coverImg: CoverImage;
 	id: Scalars["ID"]["output"];
@@ -71,9 +78,14 @@ export type Product = {
 
 export type Query = {
 	__typename?: "Query";
+	category?: Maybe<Category>;
 	count: Scalars["Int"]["output"];
 	product?: Maybe<Product>;
 	products?: Maybe<Array<Maybe<Product>>>;
+};
+
+export type QuerycategoryArgs = {
+	name: Scalars["String"]["input"];
 };
 
 export type QueryproductArgs = {
@@ -212,6 +224,7 @@ export type ResolversTypes = {
 	Artist: ResolverTypeWrapper<Artist>;
 	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
 	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
+	Category: ResolverTypeWrapper<Category>;
 	Collection: ResolverTypeWrapper<Collection>;
 	CoverImage: ResolverTypeWrapper<CoverImage>;
 	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
@@ -227,6 +240,7 @@ export type ResolversParentTypes = {
 	Artist: Artist;
 	ID: Scalars["ID"]["output"];
 	String: Scalars["String"]["output"];
+	Category: Category;
 	Collection: Collection;
 	CoverImage: CoverImage;
 	Int: Scalars["Int"]["output"];
@@ -245,6 +259,21 @@ export type ArtistResolvers<
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	product?: Resolver<
+		Maybe<Array<ResolversTypes["Product"]>>,
+		ParentType,
+		ContextType
+	>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CategoryResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["Category"] = ResolversParentTypes["Category"],
+> = {
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	products?: Resolver<
 		Maybe<Array<ResolversTypes["Product"]>>,
 		ParentType,
 		ContextType
@@ -286,7 +315,7 @@ export type ProductResolvers<
 		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
 	artist?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	category?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	category?: Resolver<ResolversTypes["Category"], ParentType, ContextType>;
 	collection?: Resolver<
 		Maybe<Array<ResolversTypes["Collection"]>>,
 		ParentType,
@@ -307,6 +336,12 @@ export type QueryResolvers<
 	ParentType extends
 		ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
+	category?: Resolver<
+		Maybe<ResolversTypes["Category"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QuerycategoryArgs, "name">
+	>;
 	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	product?: Resolver<
 		Maybe<ResolversTypes["Product"]>,
@@ -349,6 +384,7 @@ export type TrackResolvers<
 
 export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
+	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
 	CoverImage?: CoverImageResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
