@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { logger } from "../../../utils/logger";
 import type { QueryResolvers } from "./../../../types.generated";
 
@@ -13,8 +12,6 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 	_ctx,
 ) => {
 	/* Implement Query.products resolver logic here */
-	const prisma = new PrismaClient();
-
 	const queryOptions: QueryOptions = {
 		skip: typeof _arg.skip === "number" ? _arg.skip : 0,
 	};
@@ -24,7 +21,7 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 	}
 
 	try {
-		const productQueryResponse = await prisma.product.findMany({
+		const productQueryResponse = await _ctx.db.product.findMany({
 			...queryOptions,
 			include: { artist: true, coverImage: true, stock: true, category: true },
 		});
@@ -54,6 +51,6 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 		return productList;
 	} catch (err) {
 		logger.error(err);
-		throw new Error("Error fetching product");
+		throw new Error(`Error fetching product`);
 	}
 };

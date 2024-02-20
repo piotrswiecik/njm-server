@@ -1,4 +1,5 @@
-import { type GraphQLResolveInfo } from "graphql";
+import { GraphQLResolveInfo } from "graphql";
+import { ServerContext } from "./context.js";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -237,7 +238,7 @@ export type ResolversParentTypes = {
 };
 
 export type ArtistResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Artist"] = ResolversParentTypes["Artist"],
 > = {
@@ -252,7 +253,7 @@ export type ArtistResolvers<
 };
 
 export type CollectionResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Collection"] = ResolversParentTypes["Collection"],
 > = {
@@ -267,7 +268,7 @@ export type CollectionResolvers<
 };
 
 export type CoverImageResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["CoverImage"] = ResolversParentTypes["CoverImage"],
 > = {
@@ -280,7 +281,7 @@ export type CoverImageResolvers<
 };
 
 export type ProductResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
@@ -302,7 +303,7 @@ export type ProductResolvers<
 };
 
 export type QueryResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
@@ -322,7 +323,7 @@ export type QueryResolvers<
 };
 
 export type StockResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Stock"] = ResolversParentTypes["Stock"],
 > = {
@@ -334,7 +335,7 @@ export type StockResolvers<
 };
 
 export type TrackResolvers<
-	ContextType = any,
+	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Track"] = ResolversParentTypes["Track"],
 > = {
@@ -346,7 +347,7 @@ export type TrackResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = any> = {
+export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
 	CoverImage?: CoverImageResolvers<ContextType>;

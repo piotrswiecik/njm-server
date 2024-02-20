@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { logger } from "../../../utils/logger";
 import type { QueryResolvers } from "./../../../types.generated";
 export const product: NonNullable<QueryResolvers["product"]> = async (
@@ -6,12 +5,9 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 	_arg,
 	_ctx,
 ) => {
-	// TODO refactor into server context later
-
-	const prisma = new PrismaClient();
 
 	try {
-		const product = await prisma.product.findUnique({
+		const product = await _ctx.db.product.findUnique({
 			where: { id: _arg.id },
 			include: {
 				artist: true,
