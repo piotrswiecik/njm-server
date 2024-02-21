@@ -87,6 +87,7 @@ export type Query = {
 	categoryCount: Scalars["Int"]["output"];
 	count: Scalars["Int"]["output"];
 	product?: Maybe<Product>;
+	productSearch?: Maybe<Array<Maybe<Product>>>;
 	products?: Maybe<Array<Maybe<Product>>>;
 };
 
@@ -100,6 +101,12 @@ export type QuerycategoryCountArgs = {
 
 export type QueryproductArgs = {
 	id: Scalars["ID"]["input"];
+};
+
+export type QueryproductSearchArgs = {
+	query: Scalars["String"]["input"];
+	skip?: InputMaybe<Scalars["Int"]["input"]>;
+	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type QueryproductsArgs = {
@@ -365,6 +372,12 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QueryproductArgs, "id">
+	>;
+	productSearch?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		ParentType,
+		ContextType,
+		RequireFields<QueryproductSearchArgs, "query">
 	>;
 	products?: Resolver<
 		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
