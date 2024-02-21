@@ -1,0 +1,9 @@
+extend type Query {
+  collection(name: String!): Collection
+}
+
+type Collection {
+  id: ID!
+  name: String!
+  products: [Product!]
+}

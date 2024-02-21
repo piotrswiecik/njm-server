@@ -7,6 +7,7 @@ import { CoverImage } from "./graphql/resolvers/CoverImage";
 import { Product } from "./graphql/resolvers/Product";
 import { category as Query_category } from "./graphql/resolvers/Query/category";
 import { categoryCount as Query_categoryCount } from "./graphql/resolvers/Query/categoryCount";
+import { collection as Query_collection } from "./graphql/resolvers/Query/collection";
 import { count as Query_count } from "./graphql/resolvers/Query/count";
 import { product as Query_product } from "./graphql/resolvers/Query/product";
 import { productSearch as Query_productSearch } from "./graphql/resolvers/Query/productSearch";
@@ -17,6 +18,7 @@ export const resolvers: Resolvers = {
 	Query: {
 		category: Query_category,
 		categoryCount: Query_categoryCount,
+		collection: Query_collection,
 		count: Query_count,
 		product: Query_product,
 		productSearch: Query_productSearch,

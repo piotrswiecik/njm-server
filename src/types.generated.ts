@@ -56,6 +56,7 @@ export type Collection = {
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
 	product?: Maybe<Array<Product>>;
+	products?: Maybe<Array<Product>>;
 };
 
 export type CoverImage = {
@@ -85,6 +86,7 @@ export type Query = {
 	__typename?: "Query";
 	category?: Maybe<Category>;
 	categoryCount: Scalars["Int"]["output"];
+	collection?: Maybe<Collection>;
 	count: Scalars["Int"]["output"];
 	product?: Maybe<Product>;
 	productSearch?: Maybe<Array<Maybe<Product>>>;
@@ -96,6 +98,10 @@ export type QuerycategoryArgs = {
 };
 
 export type QuerycategoryCountArgs = {
+	name: Scalars["String"]["input"];
+};
+
+export type QuerycollectionArgs = {
 	name: Scalars["String"]["input"];
 };
 
@@ -309,6 +315,11 @@ export type CollectionResolvers<
 		ParentType,
 		ContextType
 	>;
+	products?: Resolver<
+		Maybe<Array<ResolversTypes["Product"]>>,
+		ParentType,
+		ContextType
+	>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -363,6 +374,12 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QuerycategoryCountArgs, "name">
+	>;
+	collection?: Resolver<
+		Maybe<ResolversTypes["Collection"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QuerycollectionArgs, "name">
 	>;
 	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	product?: Resolver<
