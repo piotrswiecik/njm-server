@@ -105,8 +105,6 @@ export type QueryproductArgs = {
 
 export type QueryproductSearchArgs = {
 	query: Scalars["String"]["input"];
-	skip?: InputMaybe<Scalars["Int"]["input"]>;
-	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
 export type QueryproductsArgs = {

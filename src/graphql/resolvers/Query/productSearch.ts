@@ -1,27 +1,14 @@
 import { logger } from "../../../utils/logger";
 import type { QueryResolvers } from "./../../../types.generated";
 
-type QueryOptions = {
-	skip?: number;
-	take?: number;
-};
-
 export const productSearch: NonNullable<
 	QueryResolvers["productSearch"]
 > = async (_parent, _arg, _ctx) => {
 	/* Implement Query.productSearch resolver logic here */
-	const queryOptions: QueryOptions = {
-		skip: typeof _arg.skip === "number" ? _arg.skip : 0,
-	};
-
-	if (typeof _arg.take === "number") {
-		queryOptions.take = _arg.take;
-	}
 
 	try {
 		logger.error(_arg.query);
 		const productQueryResponse = await _ctx.db.product.findMany({
-			...queryOptions,
 			include: { artist: true, coverImage: true, stock: true, category: true },
 			where: {
 				title: {
