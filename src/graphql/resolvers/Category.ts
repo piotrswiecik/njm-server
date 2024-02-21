@@ -11,7 +11,7 @@ export const Category: CategoryResolvers = {
 		const queryOptions: QueryOptions = {
 			skip: typeof _args?.skip === "number" ? _args.skip : 0,
 		};
-	
+
 		if (typeof _args.take === "number") {
 			queryOptions.take = _args.take;
 		}
@@ -21,7 +21,7 @@ export const Category: CategoryResolvers = {
 			where: { categoryId: parent.id },
 			include: { artist: true, coverImage: true, stock: true, category: true },
 		});
-		
+
 		return productsQueryResponse.map((product) => {
 			return {
 				artist: product.artist.name,

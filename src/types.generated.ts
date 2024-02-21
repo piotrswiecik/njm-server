@@ -84,12 +84,17 @@ export type Product = {
 export type Query = {
 	__typename?: "Query";
 	category?: Maybe<Category>;
+	categoryCount: Scalars["Int"]["output"];
 	count: Scalars["Int"]["output"];
 	product?: Maybe<Product>;
 	products?: Maybe<Array<Maybe<Product>>>;
 };
 
 export type QuerycategoryArgs = {
+	name: Scalars["String"]["input"];
+};
+
+export type QuerycategoryCountArgs = {
 	name: Scalars["String"]["input"];
 };
 
@@ -347,6 +352,12 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QuerycategoryArgs, "name">
+	>;
+	categoryCount?: Resolver<
+		ResolversTypes["Int"],
+		ParentType,
+		ContextType,
+		RequireFields<QuerycategoryCountArgs, "name">
 	>;
 	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	product?: Resolver<
