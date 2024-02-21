@@ -87,6 +87,7 @@ export type Query = {
 	category?: Maybe<Category>;
 	categoryCount: Scalars["Int"]["output"];
 	collection?: Maybe<Collection>;
+	collections?: Maybe<Array<Collection>>;
 	count: Scalars["Int"]["output"];
 	product?: Maybe<Product>;
 	productSearch?: Maybe<Array<Maybe<Product>>>;
@@ -380,6 +381,11 @@ export type QueryResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<QuerycollectionArgs, "name">
+	>;
+	collections?: Resolver<
+		Maybe<Array<ResolversTypes["Collection"]>>,
+		ParentType,
+		ContextType
 	>;
 	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	product?: Resolver<

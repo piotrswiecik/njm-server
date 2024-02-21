@@ -1,5 +1,6 @@
 extend type Query {
   collection(name: String!): Collection
+  collections: [Collection!]
 }
 
 type Collection {
