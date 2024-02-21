@@ -17,7 +17,7 @@ Based on _@graphql-codegen/cli_ package with <https://www.npmjs.com/package/@edd
 - `DATABASE_URL=postgresql://admin:password@localhost:5432/njm pnpm exec prisma migrate dev` to update migrations locally.
 - `pnpm exec prisma generate` to init/refresh prisma client.
 - `DATABASE_URL=postgresql://admin:password@localhost:5432/njm pnpm exec ts-node prisma/seed.ts` to manage initial test data. Use `--drop` to clean all existing data.
-Use `--seed` to create mock data. See _mock data generator_ for details.
+Use `--seed` to create mock data. Used `--seed-collections` to generate random collections. See _mock data generator_ for details.
 
 ## Mock data generator
 
