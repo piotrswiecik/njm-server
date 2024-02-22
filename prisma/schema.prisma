@@ -40,7 +40,8 @@ model Track {
 
 model Variant {
   id            String @id @default(uuid())
-  Product       Product?
+  productId     String
+  Product       Product @relation(fields: [productId], references: [id])
   name          String
   price         Int
   stock         Int
@@ -51,13 +52,11 @@ model Product {
   title         String
   artistId      String
   artist        Artist @relation(fields: [artistId], references: [id])
-  price         Int
   coverImageUrl String
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])
   collections   Collection[]
-  variantId     String @unique
-  variant       Variant @relation(fields: [variantId], references: [id])
+  variants      Variant[]
   tracks        Track[]
   releaseDate   DateTime
 }
