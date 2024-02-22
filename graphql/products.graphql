@@ -12,4 +12,6 @@ type Product {
   releaseDate: String!
   artist: Artist
   artistId: ID!
+  categoryId: ID!
+  category: Category
 }

@@ -60,6 +60,8 @@ export type Product = {
 	__typename?: "Product";
 	artist?: Maybe<Artist>;
 	artistId: Scalars["ID"]["output"];
+	category?: Maybe<Category>;
+	categoryId: Scalars["ID"]["output"];
 	coverImageUrl: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
 	releaseDate: Scalars["String"]["output"];
@@ -306,6 +308,12 @@ export type ProductResolvers<
 > = {
 	artist?: Resolver<Maybe<ResolversTypes["Artist"]>, ParentType, ContextType>;
 	artistId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	category?: Resolver<
+		Maybe<ResolversTypes["Category"]>,
+		ParentType,
+		ContextType
+	>;
+	categoryId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	coverImageUrl?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
