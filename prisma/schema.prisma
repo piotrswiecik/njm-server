@@ -20,7 +20,7 @@ model Category {
 model Collection {
   id            String @id @default(uuid())
   name          String
-  products      ProductCollection[]
+  products      Product[]
 }
 
 model Artist {
@@ -53,14 +53,6 @@ model Stock {
   qtyLp         Int
 }
 
-model ProductCollection {
-  @@id([collectionId, productId])
-  productId     String
-  product       Product @relation(fields: [productId], references: [id])
-  collectionId  String
-  collection    Collection @relation(fields: [collectionId], references: [id])
-}
-
 model Product {
   id  String    @id @default(uuid())
   title         String
@@ -71,7 +63,7 @@ model Product {
   coverImage    CoverImage @relation(fields: [coverImageId], references: [id])
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])
-  collections   ProductCollection[]
+  collections   Collection[]
   stockId       String @unique
   stock         Stock @relation(fields: [stockId], references: [id])
   tracks        Track[]
