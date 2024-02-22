@@ -35,13 +35,13 @@ model Track {
   number        Int
   url           String?
   productId     String
-  product       Product @relation(fields: [productId], references: [id])
+  product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Variant {
   id            String @id @default(uuid())
   productId     String
-  Product       Product @relation(fields: [productId], references: [id])
+  Product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   name          String
   price         Int
   stock         Int
@@ -51,7 +51,7 @@ model Product {
   id            String @id @default(uuid())
   title         String
   artistId      String
-  artist        Artist @relation(fields: [artistId], references: [id])
+  artist        Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
   coverImageUrl String
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])
