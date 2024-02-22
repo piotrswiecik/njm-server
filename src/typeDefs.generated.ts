@@ -3,8 +3,37 @@ export const typeDefs = {
 	kind: "Document",
 	definitions: [
 		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Artist", loc: { start: 5, end: 11 } },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "name", loc: { start: 16, end: 20 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "String",
+								loc: { start: 22, end: 28 },
+							},
+							loc: { start: 22, end: 28 },
+						},
+						loc: { start: 22, end: 29 },
+					},
+					directives: [],
+					loc: { start: 16, end: 29 },
+				},
+			],
+			loc: { start: 0, end: 31 },
+		},
+		{
 			kind: "ObjectTypeExtension",
-			name: { kind: "Name", value: "Query", loc: { start: 12, end: 17 } },
+			name: { kind: "Name", value: "Query", loc: { start: 44, end: 49 } },
 			interfaces: [],
 			directives: [],
 			fields: [
@@ -12,8 +41,8 @@ export const typeDefs = {
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
-						value: "collection",
-						loc: { start: 22, end: 32 },
+						value: "categoryCount",
+						loc: { start: 54, end: 67 },
 					},
 					arguments: [
 						{
@@ -21,7 +50,7 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "name",
-								loc: { start: 33, end: 37 },
+								loc: { start: 68, end: 72 },
 							},
 							type: {
 								kind: "NonNullType",
@@ -30,14 +59,227 @@ export const typeDefs = {
 									name: {
 										kind: "Name",
 										value: "String",
-										loc: { start: 39, end: 45 },
+										loc: { start: 74, end: 80 },
 									},
-									loc: { start: 39, end: 45 },
+									loc: { start: 74, end: 80 },
 								},
-								loc: { start: 39, end: 46 },
+								loc: { start: 74, end: 81 },
 							},
 							directives: [],
-							loc: { start: 33, end: 46 },
+							loc: { start: 68, end: 81 },
+						},
+					],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: { kind: "Name", value: "Int", loc: { start: 84, end: 87 } },
+							loc: { start: 84, end: 87 },
+						},
+						loc: { start: 84, end: 88 },
+					},
+					directives: [],
+					loc: { start: 54, end: 88 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: {
+						kind: "Name",
+						value: "category",
+						loc: { start: 91, end: 99 },
+					},
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: {
+								kind: "Name",
+								value: "name",
+								loc: { start: 100, end: 104 },
+							},
+							type: {
+								kind: "NonNullType",
+								type: {
+									kind: "NamedType",
+									name: {
+										kind: "Name",
+										value: "String",
+										loc: { start: 106, end: 112 },
+									},
+									loc: { start: 106, end: 112 },
+								},
+								loc: { start: 106, end: 113 },
+							},
+							directives: [],
+							loc: { start: 100, end: 113 },
+						},
+					],
+					type: {
+						kind: "NamedType",
+						name: {
+							kind: "Name",
+							value: "Category",
+							loc: { start: 116, end: 124 },
+						},
+						loc: { start: 116, end: 124 },
+					},
+					directives: [],
+					loc: { start: 91, end: 124 },
+				},
+			],
+			loc: { start: 32, end: 126 },
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Category", loc: { start: 133, end: 141 } },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "id", loc: { start: 146, end: 148 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "ID",
+								loc: { start: 150, end: 152 },
+							},
+							loc: { start: 150, end: 152 },
+						},
+						loc: { start: 150, end: 153 },
+					},
+					directives: [],
+					loc: { start: 146, end: 153 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "name", loc: { start: 156, end: 160 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "String",
+								loc: { start: 162, end: 168 },
+							},
+							loc: { start: 162, end: 168 },
+						},
+						loc: { start: 162, end: 169 },
+					},
+					directives: [],
+					loc: { start: 156, end: 169 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: {
+						kind: "Name",
+						value: "products",
+						loc: { start: 172, end: 180 },
+					},
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: {
+								kind: "Name",
+								value: "skip",
+								loc: { start: 181, end: 185 },
+							},
+							type: {
+								kind: "NamedType",
+								name: {
+									kind: "Name",
+									value: "Int",
+									loc: { start: 187, end: 190 },
+								},
+								loc: { start: 187, end: 190 },
+							},
+							directives: [],
+							loc: { start: 181, end: 190 },
+						},
+						{
+							kind: "InputValueDefinition",
+							name: {
+								kind: "Name",
+								value: "take",
+								loc: { start: 192, end: 196 },
+							},
+							type: {
+								kind: "NamedType",
+								name: {
+									kind: "Name",
+									value: "Int",
+									loc: { start: 198, end: 201 },
+								},
+								loc: { start: 198, end: 201 },
+							},
+							directives: [],
+							loc: { start: 192, end: 201 },
+						},
+					],
+					type: {
+						kind: "ListType",
+						type: {
+							kind: "NonNullType",
+							type: {
+								kind: "NamedType",
+								name: {
+									kind: "Name",
+									value: "Product",
+									loc: { start: 205, end: 212 },
+								},
+								loc: { start: 205, end: 212 },
+							},
+							loc: { start: 205, end: 213 },
+						},
+						loc: { start: 204, end: 214 },
+					},
+					directives: [],
+					loc: { start: 172, end: 214 },
+				},
+			],
+			loc: { start: 128, end: 216 },
+		},
+		{
+			kind: "ObjectTypeExtension",
+			name: { kind: "Name", value: "Query", loc: { start: 229, end: 234 } },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: {
+						kind: "Name",
+						value: "collection",
+						loc: { start: 239, end: 249 },
+					},
+					arguments: [
+						{
+							kind: "InputValueDefinition",
+							name: {
+								kind: "Name",
+								value: "name",
+								loc: { start: 250, end: 254 },
+							},
+							type: {
+								kind: "NonNullType",
+								type: {
+									kind: "NamedType",
+									name: {
+										kind: "Name",
+										value: "String",
+										loc: { start: 256, end: 262 },
+									},
+									loc: { start: 256, end: 262 },
+								},
+								loc: { start: 256, end: 263 },
+							},
+							directives: [],
+							loc: { start: 250, end: 263 },
 						},
 					],
 					type: {
@@ -45,19 +287,19 @@ export const typeDefs = {
 						name: {
 							kind: "Name",
 							value: "Collection",
-							loc: { start: 49, end: 59 },
+							loc: { start: 266, end: 276 },
 						},
-						loc: { start: 49, end: 59 },
+						loc: { start: 266, end: 276 },
 					},
 					directives: [],
-					loc: { start: 22, end: 59 },
+					loc: { start: 239, end: 276 },
 				},
 				{
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
 						value: "collections",
-						loc: { start: 62, end: 73 },
+						loc: { start: 279, end: 290 },
 					},
 					arguments: [],
 					type: {
@@ -69,29 +311,33 @@ export const typeDefs = {
 								name: {
 									kind: "Name",
 									value: "Collection",
-									loc: { start: 76, end: 86 },
+									loc: { start: 293, end: 303 },
 								},
-								loc: { start: 76, end: 86 },
+								loc: { start: 293, end: 303 },
 							},
-							loc: { start: 76, end: 87 },
+							loc: { start: 293, end: 304 },
 						},
-						loc: { start: 75, end: 88 },
+						loc: { start: 292, end: 305 },
 					},
 					directives: [],
-					loc: { start: 62, end: 88 },
+					loc: { start: 279, end: 305 },
 				},
 			],
-			loc: { start: 0, end: 90 },
+			loc: { start: 217, end: 307 },
 		},
 		{
 			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Collection", loc: { start: 97, end: 107 } },
+			name: {
+				kind: "Name",
+				value: "Collection",
+				loc: { start: 314, end: 324 },
+			},
 			interfaces: [],
 			directives: [],
 			fields: [
 				{
 					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 112, end: 114 } },
+					name: { kind: "Name", value: "id", loc: { start: 329, end: 331 } },
 					arguments: [],
 					type: {
 						kind: "NonNullType",
@@ -100,18 +346,18 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "ID",
-								loc: { start: 116, end: 118 },
+								loc: { start: 333, end: 335 },
 							},
-							loc: { start: 116, end: 118 },
+							loc: { start: 333, end: 335 },
 						},
-						loc: { start: 116, end: 119 },
+						loc: { start: 333, end: 336 },
 					},
 					directives: [],
-					loc: { start: 112, end: 119 },
+					loc: { start: 329, end: 336 },
 				},
 				{
 					kind: "FieldDefinition",
-					name: { kind: "Name", value: "name", loc: { start: 122, end: 126 } },
+					name: { kind: "Name", value: "name", loc: { start: 339, end: 343 } },
 					arguments: [],
 					type: {
 						kind: "NonNullType",
@@ -120,21 +366,21 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "String",
-								loc: { start: 128, end: 134 },
+								loc: { start: 345, end: 351 },
 							},
-							loc: { start: 128, end: 134 },
+							loc: { start: 345, end: 351 },
 						},
-						loc: { start: 128, end: 135 },
+						loc: { start: 345, end: 352 },
 					},
 					directives: [],
-					loc: { start: 122, end: 135 },
+					loc: { start: 339, end: 352 },
 				},
 				{
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
 						value: "products",
-						loc: { start: 138, end: 146 },
+						loc: { start: 355, end: 363 },
 					},
 					arguments: [],
 					type: {
@@ -146,23 +392,23 @@ export const typeDefs = {
 								name: {
 									kind: "Name",
 									value: "Product",
-									loc: { start: 149, end: 156 },
+									loc: { start: 366, end: 373 },
 								},
-								loc: { start: 149, end: 156 },
+								loc: { start: 366, end: 373 },
 							},
-							loc: { start: 149, end: 157 },
+							loc: { start: 366, end: 374 },
 						},
-						loc: { start: 148, end: 158 },
+						loc: { start: 365, end: 375 },
 					},
 					directives: [],
-					loc: { start: 138, end: 158 },
+					loc: { start: 355, end: 375 },
 				},
 			],
-			loc: { start: 92, end: 160 },
+			loc: { start: 309, end: 377 },
 		},
 		{
 			kind: "ObjectTypeExtension",
-			name: { kind: "Name", value: "Query", loc: { start: 173, end: 178 } },
+			name: { kind: "Name", value: "Query", loc: { start: 390, end: 395 } },
 			interfaces: [],
 			directives: [],
 			fields: [
@@ -171,7 +417,7 @@ export const typeDefs = {
 					name: {
 						kind: "Name",
 						value: "product",
-						loc: { start: 183, end: 190 },
+						loc: { start: 400, end: 407 },
 					},
 					arguments: [
 						{
@@ -179,7 +425,7 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "id",
-								loc: { start: 191, end: 193 },
+								loc: { start: 408, end: 410 },
 							},
 							type: {
 								kind: "NonNullType",
@@ -188,14 +434,14 @@ export const typeDefs = {
 									name: {
 										kind: "Name",
 										value: "ID",
-										loc: { start: 195, end: 197 },
+										loc: { start: 412, end: 414 },
 									},
-									loc: { start: 195, end: 197 },
+									loc: { start: 412, end: 414 },
 								},
-								loc: { start: 195, end: 198 },
+								loc: { start: 412, end: 415 },
 							},
 							directives: [],
-							loc: { start: 191, end: 198 },
+							loc: { start: 408, end: 415 },
 						},
 					],
 					type: {
@@ -203,19 +449,19 @@ export const typeDefs = {
 						name: {
 							kind: "Name",
 							value: "Product",
-							loc: { start: 201, end: 208 },
+							loc: { start: 418, end: 425 },
 						},
-						loc: { start: 201, end: 208 },
+						loc: { start: 418, end: 425 },
 					},
 					directives: [],
-					loc: { start: 183, end: 208 },
+					loc: { start: 400, end: 425 },
 				},
 				{
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
 						value: "products",
-						loc: { start: 211, end: 219 },
+						loc: { start: 428, end: 436 },
 					},
 					arguments: [
 						{
@@ -223,38 +469,38 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "skip",
-								loc: { start: 220, end: 224 },
+								loc: { start: 437, end: 441 },
 							},
 							type: {
 								kind: "NamedType",
 								name: {
 									kind: "Name",
 									value: "Int",
-									loc: { start: 226, end: 229 },
+									loc: { start: 443, end: 446 },
 								},
-								loc: { start: 226, end: 229 },
+								loc: { start: 443, end: 446 },
 							},
 							directives: [],
-							loc: { start: 220, end: 229 },
+							loc: { start: 437, end: 446 },
 						},
 						{
 							kind: "InputValueDefinition",
 							name: {
 								kind: "Name",
 								value: "take",
-								loc: { start: 231, end: 235 },
+								loc: { start: 448, end: 452 },
 							},
 							type: {
 								kind: "NamedType",
 								name: {
 									kind: "Name",
 									value: "Int",
-									loc: { start: 237, end: 240 },
+									loc: { start: 454, end: 457 },
 								},
-								loc: { start: 237, end: 240 },
+								loc: { start: 454, end: 457 },
 							},
 							directives: [],
-							loc: { start: 231, end: 240 },
+							loc: { start: 448, end: 457 },
 						},
 					],
 					type: {
@@ -264,21 +510,21 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "Product",
-								loc: { start: 244, end: 251 },
+								loc: { start: 461, end: 468 },
 							},
-							loc: { start: 244, end: 251 },
+							loc: { start: 461, end: 468 },
 						},
-						loc: { start: 243, end: 252 },
+						loc: { start: 460, end: 469 },
 					},
 					directives: [],
-					loc: { start: 211, end: 252 },
+					loc: { start: 428, end: 469 },
 				},
 				{
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
 						value: "productSearch",
-						loc: { start: 255, end: 268 },
+						loc: { start: 472, end: 485 },
 					},
 					arguments: [
 						{
@@ -286,7 +532,7 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "query",
-								loc: { start: 269, end: 274 },
+								loc: { start: 486, end: 491 },
 							},
 							type: {
 								kind: "NonNullType",
@@ -295,14 +541,14 @@ export const typeDefs = {
 									name: {
 										kind: "Name",
 										value: "String",
-										loc: { start: 276, end: 282 },
+										loc: { start: 493, end: 499 },
 									},
-									loc: { start: 276, end: 282 },
+									loc: { start: 493, end: 499 },
 								},
-								loc: { start: 276, end: 283 },
+								loc: { start: 493, end: 500 },
 							},
 							directives: [],
-							loc: { start: 269, end: 283 },
+							loc: { start: 486, end: 500 },
 						},
 					],
 					type: {
@@ -312,18 +558,22 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "Product",
-								loc: { start: 287, end: 294 },
+								loc: { start: 504, end: 511 },
 							},
-							loc: { start: 287, end: 294 },
+							loc: { start: 504, end: 511 },
 						},
-						loc: { start: 286, end: 295 },
+						loc: { start: 503, end: 512 },
 					},
 					directives: [],
-					loc: { start: 255, end: 295 },
+					loc: { start: 472, end: 512 },
 				},
 				{
 					kind: "FieldDefinition",
-					name: { kind: "Name", value: "count", loc: { start: 298, end: 303 } },
+					name: {
+						kind: "Name",
+						value: "productCount",
+						loc: { start: 515, end: 527 },
+					},
 					arguments: [],
 					type: {
 						kind: "NonNullType",
@@ -332,119 +582,27 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "Int",
-								loc: { start: 305, end: 308 },
+								loc: { start: 529, end: 532 },
 							},
-							loc: { start: 305, end: 308 },
+							loc: { start: 529, end: 532 },
 						},
-						loc: { start: 305, end: 309 },
+						loc: { start: 529, end: 533 },
 					},
 					directives: [],
-					loc: { start: 298, end: 309 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "categoryCount",
-						loc: { start: 312, end: 325 },
-					},
-					arguments: [
-						{
-							kind: "InputValueDefinition",
-							name: {
-								kind: "Name",
-								value: "name",
-								loc: { start: 326, end: 330 },
-							},
-							type: {
-								kind: "NonNullType",
-								type: {
-									kind: "NamedType",
-									name: {
-										kind: "Name",
-										value: "String",
-										loc: { start: 332, end: 338 },
-									},
-									loc: { start: 332, end: 338 },
-								},
-								loc: { start: 332, end: 339 },
-							},
-							directives: [],
-							loc: { start: 326, end: 339 },
-						},
-					],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Int",
-								loc: { start: 342, end: 345 },
-							},
-							loc: { start: 342, end: 345 },
-						},
-						loc: { start: 342, end: 346 },
-					},
-					directives: [],
-					loc: { start: 312, end: 346 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "category",
-						loc: { start: 349, end: 357 },
-					},
-					arguments: [
-						{
-							kind: "InputValueDefinition",
-							name: {
-								kind: "Name",
-								value: "name",
-								loc: { start: 358, end: 362 },
-							},
-							type: {
-								kind: "NonNullType",
-								type: {
-									kind: "NamedType",
-									name: {
-										kind: "Name",
-										value: "String",
-										loc: { start: 364, end: 370 },
-									},
-									loc: { start: 364, end: 370 },
-								},
-								loc: { start: 364, end: 371 },
-							},
-							directives: [],
-							loc: { start: 358, end: 371 },
-						},
-					],
-					type: {
-						kind: "NamedType",
-						name: {
-							kind: "Name",
-							value: "Category",
-							loc: { start: 374, end: 382 },
-						},
-						loc: { start: 374, end: 382 },
-					},
-					directives: [],
-					loc: { start: 349, end: 382 },
+					loc: { start: 515, end: 533 },
 				},
 			],
-			loc: { start: 161, end: 384 },
+			loc: { start: 378, end: 535 },
 		},
 		{
 			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Product", loc: { start: 391, end: 398 } },
+			name: { kind: "Name", value: "Product", loc: { start: 542, end: 549 } },
 			interfaces: [],
 			directives: [],
 			fields: [
 				{
 					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 403, end: 405 } },
+					name: { kind: "Name", value: "id", loc: { start: 554, end: 556 } },
 					arguments: [],
 					type: {
 						kind: "NonNullType",
@@ -453,21 +611,41 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "ID",
-								loc: { start: 407, end: 409 },
+								loc: { start: 558, end: 560 },
 							},
-							loc: { start: 407, end: 409 },
+							loc: { start: 558, end: 560 },
 						},
-						loc: { start: 407, end: 410 },
+						loc: { start: 558, end: 561 },
 					},
 					directives: [],
-					loc: { start: 403, end: 410 },
+					loc: { start: 554, end: 561 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "title", loc: { start: 564, end: 569 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "String",
+								loc: { start: 571, end: 577 },
+							},
+							loc: { start: 571, end: 577 },
+						},
+						loc: { start: 571, end: 578 },
+					},
+					directives: [],
+					loc: { start: 564, end: 578 },
 				},
 				{
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
-						value: "artist",
-						loc: { start: 413, end: 419 },
+						value: "coverImageUrl",
+						loc: { start: 581, end: 594 },
 					},
 					arguments: [],
 					type: {
@@ -477,189 +655,21 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "String",
-								loc: { start: 421, end: 427 },
+								loc: { start: 596, end: 602 },
 							},
-							loc: { start: 421, end: 427 },
+							loc: { start: 596, end: 602 },
 						},
-						loc: { start: 421, end: 428 },
+						loc: { start: 596, end: 603 },
 					},
 					directives: [],
-					loc: { start: 413, end: 428 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "title", loc: { start: 431, end: 436 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 438, end: 444 },
-							},
-							loc: { start: 438, end: 444 },
-						},
-						loc: { start: 438, end: 445 },
-					},
-					directives: [],
-					loc: { start: 431, end: 445 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "price", loc: { start: 448, end: 453 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Int",
-								loc: { start: 455, end: 458 },
-							},
-							loc: { start: 455, end: 458 },
-						},
-						loc: { start: 455, end: 459 },
-					},
-					directives: [],
-					loc: { start: 448, end: 459 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "coverImg",
-						loc: { start: 462, end: 470 },
-					},
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "CoverImage",
-								loc: { start: 472, end: 482 },
-							},
-							loc: { start: 472, end: 482 },
-						},
-						loc: { start: 472, end: 483 },
-					},
-					directives: [],
-					loc: { start: 462, end: 483 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "category",
-						loc: { start: 486, end: 494 },
-					},
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Category",
-								loc: { start: 496, end: 504 },
-							},
-							loc: { start: 496, end: 504 },
-						},
-						loc: { start: 496, end: 505 },
-					},
-					directives: [],
-					loc: { start: 486, end: 505 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "collection",
-						loc: { start: 508, end: 518 },
-					},
-					arguments: [],
-					type: {
-						kind: "ListType",
-						type: {
-							kind: "NonNullType",
-							type: {
-								kind: "NamedType",
-								name: {
-									kind: "Name",
-									value: "Collection",
-									loc: { start: 521, end: 531 },
-								},
-								loc: { start: 521, end: 531 },
-							},
-							loc: { start: 521, end: 532 },
-						},
-						loc: { start: 520, end: 533 },
-					},
-					directives: [],
-					loc: { start: 508, end: 533 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "stock", loc: { start: 536, end: 541 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Stock",
-								loc: { start: 543, end: 548 },
-							},
-							loc: { start: 543, end: 548 },
-						},
-						loc: { start: 543, end: 549 },
-					},
-					directives: [],
-					loc: { start: 536, end: 549 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "tracks",
-						loc: { start: 552, end: 558 },
-					},
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "ListType",
-							type: {
-								kind: "NonNullType",
-								type: {
-									kind: "NamedType",
-									name: {
-										kind: "Name",
-										value: "Track",
-										loc: { start: 561, end: 566 },
-									},
-									loc: { start: 561, end: 566 },
-								},
-								loc: { start: 561, end: 567 },
-							},
-							loc: { start: 560, end: 568 },
-						},
-						loc: { start: 560, end: 569 },
-					},
-					directives: [],
-					loc: { start: 552, end: 569 },
+					loc: { start: 581, end: 603 },
 				},
 				{
 					kind: "FieldDefinition",
 					name: {
 						kind: "Name",
 						value: "releaseDate",
-						loc: { start: 572, end: 583 },
+						loc: { start: 606, end: 617 },
 					},
 					arguments: [],
 					type: {
@@ -669,615 +679,193 @@ export const typeDefs = {
 							name: {
 								kind: "Name",
 								value: "String",
-								loc: { start: 585, end: 591 },
+								loc: { start: 619, end: 625 },
 							},
-							loc: { start: 585, end: 591 },
+							loc: { start: 619, end: 625 },
 						},
-						loc: { start: 585, end: 592 },
+						loc: { start: 619, end: 626 },
 					},
 					directives: [],
-					loc: { start: 572, end: 592 },
+					loc: { start: 606, end: 626 },
 				},
 			],
-			loc: { start: 386, end: 594 },
+			loc: { start: 537, end: 628 },
 		},
 		{
 			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Category", loc: { start: 601, end: 609 } },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 614, end: 616 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "ID",
-								loc: { start: 618, end: 620 },
-							},
-							loc: { start: 618, end: 620 },
-						},
-						loc: { start: 618, end: 621 },
-					},
-					directives: [],
-					loc: { start: 614, end: 621 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "name", loc: { start: 624, end: 628 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 630, end: 636 },
-							},
-							loc: { start: 630, end: 636 },
-						},
-						loc: { start: 630, end: 637 },
-					},
-					directives: [],
-					loc: { start: 624, end: 637 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "products",
-						loc: { start: 640, end: 648 },
-					},
-					arguments: [
-						{
-							kind: "InputValueDefinition",
-							name: {
-								kind: "Name",
-								value: "skip",
-								loc: { start: 649, end: 653 },
-							},
-							type: {
-								kind: "NamedType",
-								name: {
-									kind: "Name",
-									value: "Int",
-									loc: { start: 655, end: 658 },
-								},
-								loc: { start: 655, end: 658 },
-							},
-							directives: [],
-							loc: { start: 649, end: 658 },
-						},
-						{
-							kind: "InputValueDefinition",
-							name: {
-								kind: "Name",
-								value: "take",
-								loc: { start: 660, end: 664 },
-							},
-							type: {
-								kind: "NamedType",
-								name: {
-									kind: "Name",
-									value: "Int",
-									loc: { start: 666, end: 669 },
-								},
-								loc: { start: 666, end: 669 },
-							},
-							directives: [],
-							loc: { start: 660, end: 669 },
-						},
-					],
-					type: {
-						kind: "ListType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Product",
-								loc: { start: 673, end: 680 },
-							},
-							loc: { start: 673, end: 680 },
-						},
-						loc: { start: 672, end: 681 },
-					},
-					directives: [],
-					loc: { start: 640, end: 681 },
-				},
-			],
-			loc: { start: 596, end: 683 },
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Artist", loc: { start: 690, end: 696 } },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 701, end: 703 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "ID",
-								loc: { start: 705, end: 707 },
-							},
-							loc: { start: 705, end: 707 },
-						},
-						loc: { start: 705, end: 708 },
-					},
-					directives: [],
-					loc: { start: 701, end: 708 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "name", loc: { start: 711, end: 715 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 717, end: 723 },
-							},
-							loc: { start: 717, end: 723 },
-						},
-						loc: { start: 717, end: 724 },
-					},
-					directives: [],
-					loc: { start: 711, end: 724 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "product",
-						loc: { start: 727, end: 734 },
-					},
-					arguments: [],
-					type: {
-						kind: "ListType",
-						type: {
-							kind: "NonNullType",
-							type: {
-								kind: "NamedType",
-								name: {
-									kind: "Name",
-									value: "Product",
-									loc: { start: 737, end: 744 },
-								},
-								loc: { start: 737, end: 744 },
-							},
-							loc: { start: 737, end: 745 },
-						},
-						loc: { start: 736, end: 746 },
-					},
-					directives: [],
-					loc: { start: 727, end: 746 },
-				},
-			],
-			loc: { start: 685, end: 748 },
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: {
-				kind: "Name",
-				value: "CoverImage",
-				loc: { start: 755, end: 765 },
-			},
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 770, end: 772 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "ID",
-								loc: { start: 774, end: 776 },
-							},
-							loc: { start: 774, end: 776 },
-						},
-						loc: { start: 774, end: 777 },
-					},
-					directives: [],
-					loc: { start: 770, end: 777 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "url", loc: { start: 780, end: 783 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 785, end: 791 },
-							},
-							loc: { start: 785, end: 791 },
-						},
-						loc: { start: 785, end: 792 },
-					},
-					directives: [],
-					loc: { start: 780, end: 792 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "width", loc: { start: 795, end: 800 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Int",
-								loc: { start: 802, end: 805 },
-							},
-							loc: { start: 802, end: 805 },
-						},
-						loc: { start: 802, end: 806 },
-					},
-					directives: [],
-					loc: { start: 795, end: 806 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "height",
-						loc: { start: 809, end: 815 },
-					},
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Int",
-								loc: { start: 817, end: 820 },
-							},
-							loc: { start: 817, end: 820 },
-						},
-						loc: { start: 817, end: 821 },
-					},
-					directives: [],
-					loc: { start: 809, end: 821 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "product",
-						loc: { start: 824, end: 831 },
-					},
-					arguments: [],
-					type: {
-						kind: "NamedType",
-						name: {
-							kind: "Name",
-							value: "Product",
-							loc: { start: 833, end: 840 },
-						},
-						loc: { start: 833, end: 840 },
-					},
-					directives: [],
-					loc: { start: 824, end: 840 },
-				},
-			],
-			loc: { start: 750, end: 842 },
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: {
-				kind: "Name",
-				value: "Collection",
-				loc: { start: 849, end: 859 },
-			},
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 864, end: 866 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "ID",
-								loc: { start: 868, end: 870 },
-							},
-							loc: { start: 868, end: 870 },
-						},
-						loc: { start: 868, end: 871 },
-					},
-					directives: [],
-					loc: { start: 864, end: 871 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "name", loc: { start: 874, end: 878 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 880, end: 886 },
-							},
-							loc: { start: 880, end: 886 },
-						},
-						loc: { start: 880, end: 887 },
-					},
-					directives: [],
-					loc: { start: 874, end: 887 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "product",
-						loc: { start: 890, end: 897 },
-					},
-					arguments: [],
-					type: {
-						kind: "ListType",
-						type: {
-							kind: "NonNullType",
-							type: {
-								kind: "NamedType",
-								name: {
-									kind: "Name",
-									value: "Product",
-									loc: { start: 900, end: 907 },
-								},
-								loc: { start: 900, end: 907 },
-							},
-							loc: { start: 900, end: 908 },
-						},
-						loc: { start: 899, end: 909 },
-					},
-					directives: [],
-					loc: { start: 890, end: 909 },
-				},
-			],
-			loc: { start: 844, end: 911 },
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Stock", loc: { start: 918, end: 923 } },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 928, end: 930 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "ID",
-								loc: { start: 932, end: 934 },
-							},
-							loc: { start: 932, end: 934 },
-						},
-						loc: { start: 932, end: 935 },
-					},
-					directives: [],
-					loc: { start: 928, end: 935 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "qtyCd", loc: { start: 938, end: 943 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Int",
-								loc: { start: 945, end: 948 },
-							},
-							loc: { start: 945, end: 948 },
-						},
-						loc: { start: 945, end: 949 },
-					},
-					directives: [],
-					loc: { start: 938, end: 949 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "qtyLp", loc: { start: 952, end: 957 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "Int",
-								loc: { start: 959, end: 962 },
-							},
-							loc: { start: 959, end: 962 },
-						},
-						loc: { start: 959, end: 963 },
-					},
-					directives: [],
-					loc: { start: 952, end: 963 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "product",
-						loc: { start: 966, end: 973 },
-					},
-					arguments: [],
-					type: {
-						kind: "NamedType",
-						name: {
-							kind: "Name",
-							value: "Product",
-							loc: { start: 975, end: 982 },
-						},
-						loc: { start: 975, end: 982 },
-					},
-					directives: [],
-					loc: { start: 966, end: 982 },
-				},
-			],
-			loc: { start: 913, end: 984 },
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Track", loc: { start: 991, end: 996 } },
-			interfaces: [],
-			directives: [],
-			fields: [
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "id", loc: { start: 1001, end: 1003 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "ID",
-								loc: { start: 1005, end: 1007 },
-							},
-							loc: { start: 1005, end: 1007 },
-						},
-						loc: { start: 1005, end: 1008 },
-					},
-					directives: [],
-					loc: { start: 1001, end: 1008 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "name",
-						loc: { start: 1011, end: 1015 },
-					},
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 1017, end: 1023 },
-							},
-							loc: { start: 1017, end: 1023 },
-						},
-						loc: { start: 1017, end: 1024 },
-					},
-					directives: [],
-					loc: { start: 1011, end: 1024 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: { kind: "Name", value: "url", loc: { start: 1027, end: 1030 } },
-					arguments: [],
-					type: {
-						kind: "NonNullType",
-						type: {
-							kind: "NamedType",
-							name: {
-								kind: "Name",
-								value: "String",
-								loc: { start: 1032, end: 1038 },
-							},
-							loc: { start: 1032, end: 1038 },
-						},
-						loc: { start: 1032, end: 1039 },
-					},
-					directives: [],
-					loc: { start: 1027, end: 1039 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "product",
-						loc: { start: 1042, end: 1049 },
-					},
-					arguments: [],
-					type: {
-						kind: "NamedType",
-						name: {
-							kind: "Name",
-							value: "Product",
-							loc: { start: 1051, end: 1058 },
-						},
-						loc: { start: 1051, end: 1058 },
-					},
-					directives: [],
-					loc: { start: 1042, end: 1058 },
-				},
-				{
-					kind: "FieldDefinition",
-					name: {
-						kind: "Name",
-						value: "artist",
-						loc: { start: 1061, end: 1067 },
-					},
-					arguments: [],
-					type: {
-						kind: "NamedType",
-						name: {
-							kind: "Name",
-							value: "Artist",
-							loc: { start: 1069, end: 1075 },
-						},
-						loc: { start: 1069, end: 1075 },
-					},
-					directives: [],
-					loc: { start: 1061, end: 1075 },
-				},
-			],
-			loc: { start: 986, end: 1077 },
-		},
-		{
-			kind: "ObjectTypeDefinition",
-			name: { kind: "Name", value: "Query", loc: { start: 1083, end: 1088 } },
+			name: { kind: "Name", value: "Query", loc: { start: 634, end: 639 } },
 			interfaces: [],
 			directives: [],
 			fields: [],
-			loc: { start: 1078, end: 1088 },
+			loc: { start: 629, end: 639 },
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Stock", loc: { start: 645, end: 650 } },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "qtyCd", loc: { start: 655, end: 660 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "Int",
+								loc: { start: 662, end: 665 },
+							},
+							loc: { start: 662, end: 665 },
+						},
+						loc: { start: 662, end: 666 },
+					},
+					directives: [],
+					loc: { start: 655, end: 666 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "qtyLp", loc: { start: 669, end: 674 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "Int",
+								loc: { start: 676, end: 679 },
+							},
+							loc: { start: 676, end: 679 },
+						},
+						loc: { start: 676, end: 680 },
+					},
+					directives: [],
+					loc: { start: 669, end: 680 },
+				},
+			],
+			loc: { start: 640, end: 682 },
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Track", loc: { start: 688, end: 693 } },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "name", loc: { start: 698, end: 702 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "String",
+								loc: { start: 704, end: 710 },
+							},
+							loc: { start: 704, end: 710 },
+						},
+						loc: { start: 704, end: 711 },
+					},
+					directives: [],
+					loc: { start: 698, end: 711 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "url", loc: { start: 714, end: 717 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "String",
+								loc: { start: 719, end: 725 },
+							},
+							loc: { start: 719, end: 725 },
+						},
+						loc: { start: 719, end: 726 },
+					},
+					directives: [],
+					loc: { start: 714, end: 726 },
+				},
+			],
+			loc: { start: 683, end: 728 },
+		},
+		{
+			kind: "ObjectTypeDefinition",
+			name: { kind: "Name", value: "Variant", loc: { start: 734, end: 741 } },
+			interfaces: [],
+			directives: [],
+			fields: [
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "name", loc: { start: 746, end: 750 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "String",
+								loc: { start: 752, end: 758 },
+							},
+							loc: { start: 752, end: 758 },
+						},
+						loc: { start: 752, end: 759 },
+					},
+					directives: [],
+					loc: { start: 746, end: 759 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "price", loc: { start: 762, end: 767 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "Int",
+								loc: { start: 769, end: 772 },
+							},
+							loc: { start: 769, end: 772 },
+						},
+						loc: { start: 769, end: 773 },
+					},
+					directives: [],
+					loc: { start: 762, end: 773 },
+				},
+				{
+					kind: "FieldDefinition",
+					name: { kind: "Name", value: "stock", loc: { start: 776, end: 781 } },
+					arguments: [],
+					type: {
+						kind: "NonNullType",
+						type: {
+							kind: "NamedType",
+							name: {
+								kind: "Name",
+								value: "Int",
+								loc: { start: 783, end: 786 },
+							},
+							loc: { start: 783, end: 786 },
+						},
+						loc: { start: 783, end: 787 },
+					},
+					directives: [],
+					loc: { start: 776, end: 787 },
+				},
+			],
+			loc: { start: 729, end: 789 },
 		},
 	],
-	loc: { start: 0, end: 1089 },
+	loc: { start: 0, end: 790 },
 } as unknown as DocumentNode;

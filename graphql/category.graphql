@@ -1,0 +1,10 @@
+extend type Query {
+  categoryCount(name: String!): Int!
+  category(name: String!): Category
+}
+
+type Category {
+  id: ID!
+  name: String!
+  products(skip: Int, take: Int): [Product!]
+}

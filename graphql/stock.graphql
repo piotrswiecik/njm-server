@@ -1,0 +1,4 @@
+type Stock {
+  qtyCd: Int!
+  qtyLp: Int!
+}
