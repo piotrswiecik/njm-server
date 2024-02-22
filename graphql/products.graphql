@@ -10,4 +10,6 @@ type Product {
   title: String!
   coverImageUrl: String!
   releaseDate: String!
+  artist: Artist
+  artistId: ID!
 }

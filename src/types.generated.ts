@@ -58,6 +58,8 @@ export type Collection = {
 
 export type Product = {
 	__typename?: "Product";
+	artist?: Maybe<Artist>;
+	artistId: Scalars["ID"]["output"];
 	coverImageUrl: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
 	releaseDate: Scalars["String"]["output"];
@@ -302,6 +304,8 @@ export type ProductResolvers<
 	ParentType extends
 		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
+	artist?: Resolver<Maybe<ResolversTypes["Artist"]>, ParentType, ContextType>;
+	artistId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	coverImageUrl?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
