@@ -23,16 +23,6 @@ CREATE TABLE "Artist" (
 );
 
 -- CreateTable
-CREATE TABLE "CoverImage" (
-    "id" TEXT NOT NULL,
-    "url" TEXT NOT NULL,
-    "width" INTEGER NOT NULL,
-    "height" INTEGER NOT NULL,
-
-    CONSTRAINT "CoverImage_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Track" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -44,12 +34,13 @@ CREATE TABLE "Track" (
 );
 
 -- CreateTable
-CREATE TABLE "Stock" (
+CREATE TABLE "Variant" (
     "id" TEXT NOT NULL,
-    "qtyCd" INTEGER NOT NULL,
-    "qtyLp" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
+    "stock" INTEGER NOT NULL,
 
-    CONSTRAINT "Stock_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Variant_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -58,9 +49,9 @@ CREATE TABLE "Product" (
     "title" TEXT NOT NULL,
     "artistId" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
-    "coverImageId" TEXT NOT NULL,
+    "coverImageUrl" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
-    "stockId" TEXT NOT NULL,
+    "variantId" TEXT NOT NULL,
     "releaseDate" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -73,10 +64,7 @@ CREATE TABLE "_CollectionToProduct" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_coverImageId_key" ON "Product"("coverImageId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Product_stockId_key" ON "Product"("stockId");
+CREATE UNIQUE INDEX "Product_variantId_key" ON "Product"("variantId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_CollectionToProduct_AB_unique" ON "_CollectionToProduct"("A", "B");
@@ -91,13 +79,10 @@ ALTER TABLE "Track" ADD CONSTRAINT "Track_productId_fkey" FOREIGN KEY ("productI
 ALTER TABLE "Product" ADD CONSTRAINT "Product_artistId_fkey" FOREIGN KEY ("artistId") REFERENCES "Artist"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_coverImageId_fkey" FOREIGN KEY ("coverImageId") REFERENCES "CoverImage"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Product" ADD CONSTRAINT "Product_stockId_fkey" FOREIGN KEY ("stockId") REFERENCES "Stock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Product" ADD CONSTRAINT "Product_variantId_fkey" FOREIGN KEY ("variantId") REFERENCES "Variant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_CollectionToProduct" ADD CONSTRAINT "_CollectionToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "Collection"("id") ON DELETE CASCADE ON UPDATE CASCADE;

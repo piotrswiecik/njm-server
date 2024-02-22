@@ -29,14 +29,6 @@ model Artist {
   albums        Product[]
 }
 
-model CoverImage {
-  id            String @id @default(uuid())
-  url           String
-  width         Int
-  height        Int
-  product       Product?
-}
-
 model Track {
   id            String @id @default(uuid())
   name          String
@@ -46,26 +38,26 @@ model Track {
   product       Product @relation(fields: [productId], references: [id])
 }
 
-model Stock {
+model Variant {
   id            String @id @default(uuid())
-  product       Product?
-  qtyCd         Int
-  qtyLp         Int
+  Product       Product?
+  name          String
+  price         Int
+  stock         Int
 }
 
 model Product {
-  id  String    @id @default(uuid())
+  id            String @id @default(uuid())
   title         String
   artistId      String
   artist        Artist @relation(fields: [artistId], references: [id])
   price         Int
-  coverImageId  String @unique
-  coverImage    CoverImage @relation(fields: [coverImageId], references: [id])
+  coverImageUrl String
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])
   collections   Collection[]
-  stockId       String @unique
-  stock         Stock @relation(fields: [stockId], references: [id])
+  variantId     String @unique
+  variant       Variant @relation(fields: [variantId], references: [id])
   tracks        Track[]
   releaseDate   DateTime
 }
