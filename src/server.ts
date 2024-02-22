@@ -11,6 +11,7 @@ import { resolvers } from "./resolvers.generated";
 import { prisma } from "./db";
 import { type ServerContext } from "./context";
 
+
 const app = express();
 
 const apolloServer = new ApolloServer<ServerContext>({
