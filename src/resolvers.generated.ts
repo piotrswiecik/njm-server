@@ -12,6 +12,7 @@ import { product as Query_product } from "./graphql/resolvers/Query/product";
 import { productCount as Query_productCount } from "./graphql/resolvers/Query/productCount";
 import { productSearch as Query_productSearch } from "./graphql/resolvers/Query/productSearch";
 import { products as Query_products } from "./graphql/resolvers/Query/products";
+import { Stock } from "./graphql/resolvers/Stock";
 import { Track } from "./graphql/resolvers/Track";
 import { Variant } from "./graphql/resolvers/Variant";
 export const resolvers: Resolvers = {
@@ -30,6 +31,7 @@ export const resolvers: Resolvers = {
 	Category: Category,
 	Collection: Collection,
 	Product: Product,
+	Stock: Stock,
 	Track: Track,
 	Variant: Variant,
 };

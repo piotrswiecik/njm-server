@@ -10,7 +10,7 @@ type Product {
   title: String!
   coverImageUrl: String!
   releaseDate: String!
-  artist: Artist
+  artist: Artist!
   category: Category
   tracks: [Track]
   variants: [Variant]

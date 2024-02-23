@@ -1,5 +1,5 @@
-import { GraphQLResolveInfo } from "graphql";
-import { ServerContext } from "./context.js";
+import { type GraphQLResolveInfo } from "graphql";
+import { type ServerContext, type Mapper } from "./types";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -58,7 +58,7 @@ export type Collection = {
 
 export type Product = {
 	__typename?: "Product";
-	artist?: Maybe<Artist>;
+	artist: Artist;
 	category?: Maybe<Category>;
 	coverImageUrl: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
@@ -232,40 +232,39 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-	Artist: ResolverTypeWrapper<Artist>;
-	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
-	Category: ResolverTypeWrapper<Category>;
-	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
-	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
-	Collection: ResolverTypeWrapper<Collection>;
-	Product: ResolverTypeWrapper<Product>;
+	Artist: ResolverTypeWrapper<Mapper<Artist>>;
+	String: ResolverTypeWrapper<Mapper<Scalars["String"]["output"]>>;
+	Category: ResolverTypeWrapper<Mapper<Category>>;
+	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
+	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
+	Collection: ResolverTypeWrapper<Mapper<Collection>>;
+	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
-	Stock: ResolverTypeWrapper<Stock>;
-	Track: ResolverTypeWrapper<Track>;
-	Variant: ResolverTypeWrapper<Variant>;
-	Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
+	Stock: ResolverTypeWrapper<Mapper<Stock>>;
+	Track: ResolverTypeWrapper<Mapper<Track>>;
+	Variant: ResolverTypeWrapper<Mapper<Variant>>;
+	Boolean: ResolverTypeWrapper<Mapper<Scalars["Boolean"]["output"]>>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-	Artist: Artist;
-	String: Scalars["String"]["output"];
-	Category: Category;
-	ID: Scalars["ID"]["output"];
-	Int: Scalars["Int"]["output"];
-	Collection: Collection;
-	Product: Product;
+	Artist: Mapper<Artist>;
+	String: Mapper<Scalars["String"]["output"]>;
+	Category: Mapper<Category>;
+	ID: Mapper<Scalars["ID"]["output"]>;
+	Int: Mapper<Scalars["Int"]["output"]>;
+	Collection: Mapper<Collection>;
+	Product: Mapper<Product>;
 	Query: {};
-	Stock: Stock;
-	Track: Track;
-	Variant: Variant;
-	Boolean: Scalars["Boolean"]["output"];
+	Stock: Mapper<Stock>;
+	Track: Mapper<Track>;
+	Variant: Mapper<Variant>;
+	Boolean: Mapper<Scalars["Boolean"]["output"]>;
 };
 
 export type ArtistResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Artist"] = ResolversParentTypes["Artist"],
+	ParentType extends ResolversParentTypes["Artist"] = ResolversParentTypes["Artist"],
 > = {
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -273,8 +272,7 @@ export type ArtistResolvers<
 
 export type CategoryResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Category"] = ResolversParentTypes["Category"],
+	ParentType extends ResolversParentTypes["Category"] = ResolversParentTypes["Category"],
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
@@ -289,8 +287,7 @@ export type CategoryResolvers<
 
 export type CollectionResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Collection"] = ResolversParentTypes["Collection"],
+	ParentType extends ResolversParentTypes["Collection"] = ResolversParentTypes["Collection"],
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
@@ -304,10 +301,9 @@ export type CollectionResolvers<
 
 export type ProductResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
+	ParentType extends ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
-	artist?: Resolver<Maybe<ResolversTypes["Artist"]>, ParentType, ContextType>;
+	artist?: Resolver<ResolversTypes["Artist"], ParentType, ContextType>;
 	category?: Resolver<
 		Maybe<ResolversTypes["Category"]>,
 		ParentType,
@@ -332,8 +328,7 @@ export type ProductResolvers<
 
 export type QueryResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
+	ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
 	category?: Resolver<
 		Maybe<ResolversTypes["Category"]>,
@@ -381,8 +376,7 @@ export type QueryResolvers<
 
 export type StockResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Stock"] = ResolversParentTypes["Stock"],
+	ParentType extends ResolversParentTypes["Stock"] = ResolversParentTypes["Stock"],
 > = {
 	qtyCd?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	qtyLp?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
@@ -391,8 +385,7 @@ export type StockResolvers<
 
 export type TrackResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Track"] = ResolversParentTypes["Track"],
+	ParentType extends ResolversParentTypes["Track"] = ResolversParentTypes["Track"],
 > = {
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	number?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
@@ -402,8 +395,7 @@ export type TrackResolvers<
 
 export type VariantResolvers<
 	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Variant"] = ResolversParentTypes["Variant"],
+	ParentType extends ResolversParentTypes["Variant"] = ResolversParentTypes["Variant"],
 > = {
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	price?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
