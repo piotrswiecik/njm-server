@@ -12,7 +12,10 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 		if (!dbProduct) {
 			throw new Error("not found");
 		}
-		return { ...dbProduct, releaseDate: dbProduct.releaseDate.toISOString() };
+		return {
+			...dbProduct,
+			releaseDate: dbProduct.releaseDate.toISOString(),
+		};
 	} catch (err) {
 		logger.error(err);
 		throw new Error(

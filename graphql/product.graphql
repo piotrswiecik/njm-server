@@ -11,7 +11,7 @@ type Product {
   coverImageUrl: String!
   releaseDate: String!
   artist: Artist!
-  category: Category
-  tracks: [Track]
-  variants: [Variant]
+  category: Category!
+  tracks: [Track!]!
+  variants: [Variant!]!
 }

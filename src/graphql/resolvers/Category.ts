@@ -8,7 +8,9 @@ import type { CategoryResolvers } from "./../../types.generated";
 export const Category: CategoryResolvers = {
 	/* Implement Category resolver logic here */
 	products: async (parent, _args, _ctx) => {
-		const dbProducts = await _ctx.db.category.findUnique({ where: { id: parent.id } }).products();
+		const dbProducts = await _ctx.db.category
+			.findUnique({ where: { id: parent.id } })
+			.products();
 		if (!dbProducts) {
 			throw new Error("not found");
 		}
@@ -16,5 +18,5 @@ export const Category: CategoryResolvers = {
 			...product,
 			releaseDate: product.releaseDate.toISOString(),
 		}));
-	}
+	},
 };
