@@ -9,7 +9,8 @@ const config = {
       typesPluginsConfig: {
         // setting from @graphql-codegen/typescript-resolvers 
         optionalInfoArgument: true,
-        contextType: "./context.js#ServerContext",
+        contextType: "./types.js#ServerContext",
+        defaultMapper: "./types.js#Mapper<{T}>",
       },
       // setting from @eddeee888/gcg-typescript-resolver-files
       // overrides type or resolver impl

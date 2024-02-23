@@ -1,0 +1,17 @@
+extend type Query {
+  product(id: ID!): Product
+  products(skip: Int, take: Int): [Product!]!
+  productSearch(query: String!): [Product!]
+  productCount: Int!
+}
+
+type Product {
+  id: ID!
+  title: String!
+  coverImageUrl: String!
+  releaseDate: String!
+  artist: Artist!
+  category: Category!
+  tracks: [Track!]!
+  variants: [Variant!]!
+}

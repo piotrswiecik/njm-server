@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from "graphql";
-import { ServerContext } from "./context.js";
+import { ServerContext, Mapper } from "./types.js";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -34,16 +34,14 @@ export type Scalars = {
 
 export type Artist = {
 	__typename?: "Artist";
-	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	product?: Maybe<Array<Product>>;
 };
 
 export type Category = {
 	__typename?: "Category";
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	products?: Maybe<Array<Maybe<Product>>>;
+	products: Array<Product>;
 };
 
 export type CategoryproductsArgs = {
@@ -55,40 +53,31 @@ export type Collection = {
 	__typename?: "Collection";
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	product?: Maybe<Array<Product>>;
-};
-
-export type CoverImage = {
-	__typename?: "CoverImage";
-	height: Scalars["Int"]["output"];
-	id: Scalars["ID"]["output"];
-	product?: Maybe<Product>;
-	url: Scalars["String"]["output"];
-	width: Scalars["Int"]["output"];
+	products: Array<Product>;
 };
 
 export type Product = {
 	__typename?: "Product";
-	artist: Scalars["String"]["output"];
+	artist: Artist;
 	category: Category;
-	collection?: Maybe<Array<Collection>>;
-	coverImg: CoverImage;
+	coverImageUrl: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
-	price: Scalars["Int"]["output"];
 	releaseDate: Scalars["String"]["output"];
-	stock: Stock;
 	title: Scalars["String"]["output"];
 	tracks: Array<Track>;
+	variants: Array<Variant>;
 };
 
 export type Query = {
 	__typename?: "Query";
 	category?: Maybe<Category>;
 	categoryCount: Scalars["Int"]["output"];
-	count: Scalars["Int"]["output"];
+	collection?: Maybe<Collection>;
+	collections?: Maybe<Array<Collection>>;
 	product?: Maybe<Product>;
-	productSearch?: Maybe<Array<Maybe<Product>>>;
-	products?: Maybe<Array<Maybe<Product>>>;
+	productCount: Scalars["Int"]["output"];
+	productSearch?: Maybe<Array<Product>>;
+	products: Array<Product>;
 };
 
 export type QuerycategoryArgs = {
@@ -96,6 +85,10 @@ export type QuerycategoryArgs = {
 };
 
 export type QuerycategoryCountArgs = {
+	name: Scalars["String"]["input"];
+};
+
+export type QuerycollectionArgs = {
 	name: Scalars["String"]["input"];
 };
 
@@ -112,21 +105,18 @@ export type QueryproductsArgs = {
 	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
-export type Stock = {
-	__typename?: "Stock";
-	id: Scalars["ID"]["output"];
-	product?: Maybe<Product>;
-	qtyCd: Scalars["Int"]["output"];
-	qtyLp: Scalars["Int"]["output"];
-};
-
 export type Track = {
 	__typename?: "Track";
-	artist?: Maybe<Artist>;
-	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	product?: Maybe<Product>;
-	url: Scalars["String"]["output"];
+	number: Scalars["Int"]["output"];
+	url?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type Variant = {
+	__typename?: "Variant";
+	name: Scalars["String"]["output"];
+	price: Scalars["Int"]["output"];
+	stock: Scalars["Int"]["output"];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -236,34 +226,32 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-	Artist: ResolverTypeWrapper<Artist>;
-	ID: ResolverTypeWrapper<Scalars["ID"]["output"]>;
-	String: ResolverTypeWrapper<Scalars["String"]["output"]>;
-	Category: ResolverTypeWrapper<Category>;
-	Int: ResolverTypeWrapper<Scalars["Int"]["output"]>;
-	Collection: ResolverTypeWrapper<Collection>;
-	CoverImage: ResolverTypeWrapper<CoverImage>;
-	Product: ResolverTypeWrapper<Product>;
+	Artist: ResolverTypeWrapper<Mapper<Artist>>;
+	String: ResolverTypeWrapper<Mapper<Scalars["String"]["output"]>>;
+	Category: ResolverTypeWrapper<Mapper<Category>>;
+	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
+	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
+	Collection: ResolverTypeWrapper<Mapper<Collection>>;
+	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
-	Stock: ResolverTypeWrapper<Stock>;
-	Track: ResolverTypeWrapper<Track>;
-	Boolean: ResolverTypeWrapper<Scalars["Boolean"]["output"]>;
+	Track: ResolverTypeWrapper<Mapper<Track>>;
+	Variant: ResolverTypeWrapper<Mapper<Variant>>;
+	Boolean: ResolverTypeWrapper<Mapper<Scalars["Boolean"]["output"]>>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-	Artist: Artist;
-	ID: Scalars["ID"]["output"];
-	String: Scalars["String"]["output"];
-	Category: Category;
-	Int: Scalars["Int"]["output"];
-	Collection: Collection;
-	CoverImage: CoverImage;
-	Product: Product;
+	Artist: Mapper<Artist>;
+	String: Mapper<Scalars["String"]["output"]>;
+	Category: Mapper<Category>;
+	ID: Mapper<Scalars["ID"]["output"]>;
+	Int: Mapper<Scalars["Int"]["output"]>;
+	Collection: Mapper<Collection>;
+	Product: Mapper<Product>;
 	Query: {};
-	Stock: Stock;
-	Track: Track;
-	Boolean: Scalars["Boolean"]["output"];
+	Track: Mapper<Track>;
+	Variant: Mapper<Variant>;
+	Boolean: Mapper<Scalars["Boolean"]["output"]>;
 };
 
 export type ArtistResolvers<
@@ -271,13 +259,7 @@ export type ArtistResolvers<
 	ParentType extends
 		ResolversParentTypes["Artist"] = ResolversParentTypes["Artist"],
 > = {
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	product?: Resolver<
-		Maybe<Array<ResolversTypes["Product"]>>,
-		ParentType,
-		ContextType
-	>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -289,7 +271,7 @@ export type CategoryResolvers<
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	products?: Resolver<
-		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		Array<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType,
 		Partial<CategoryproductsArgs>
@@ -304,24 +286,11 @@ export type CollectionResolvers<
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	product?: Resolver<
-		Maybe<Array<ResolversTypes["Product"]>>,
+	products?: Resolver<
+		Array<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType
 	>;
-	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type CoverImageResolvers<
-	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["CoverImage"] = ResolversParentTypes["CoverImage"],
-> = {
-	height?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	product?: Resolver<Maybe<ResolversTypes["Product"]>, ParentType, ContextType>;
-	url?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	width?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -330,20 +299,18 @@ export type ProductResolvers<
 	ParentType extends
 		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
-	artist?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	artist?: Resolver<ResolversTypes["Artist"], ParentType, ContextType>;
 	category?: Resolver<ResolversTypes["Category"], ParentType, ContextType>;
-	collection?: Resolver<
-		Maybe<Array<ResolversTypes["Collection"]>>,
+	coverImageUrl?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	tracks?: Resolver<Array<ResolversTypes["Track"]>, ParentType, ContextType>;
+	variants?: Resolver<
+		Array<ResolversTypes["Variant"]>,
 		ParentType,
 		ContextType
 	>;
-	coverImg?: Resolver<ResolversTypes["CoverImage"], ParentType, ContextType>;
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	price?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	stock?: Resolver<ResolversTypes["Stock"], ParentType, ContextType>;
-	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	tracks?: Resolver<Array<ResolversTypes["Track"]>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -364,37 +331,36 @@ export type QueryResolvers<
 		ContextType,
 		RequireFields<QuerycategoryCountArgs, "name">
 	>;
-	count?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	collection?: Resolver<
+		Maybe<ResolversTypes["Collection"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QuerycollectionArgs, "name">
+	>;
+	collections?: Resolver<
+		Maybe<Array<ResolversTypes["Collection"]>>,
+		ParentType,
+		ContextType
+	>;
 	product?: Resolver<
 		Maybe<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType,
 		RequireFields<QueryproductArgs, "id">
 	>;
+	productCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	productSearch?: Resolver<
-		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		Maybe<Array<ResolversTypes["Product"]>>,
 		ParentType,
 		ContextType,
 		RequireFields<QueryproductSearchArgs, "query">
 	>;
 	products?: Resolver<
-		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		Array<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType,
 		Partial<QueryproductsArgs>
 	>;
-};
-
-export type StockResolvers<
-	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Stock"] = ResolversParentTypes["Stock"],
-> = {
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	product?: Resolver<Maybe<ResolversTypes["Product"]>, ParentType, ContextType>;
-	qtyCd?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-	qtyLp?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type TrackResolvers<
@@ -402,11 +368,20 @@ export type TrackResolvers<
 	ParentType extends
 		ResolversParentTypes["Track"] = ResolversParentTypes["Track"],
 > = {
-	artist?: Resolver<Maybe<ResolversTypes["Artist"]>, ParentType, ContextType>;
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	product?: Resolver<Maybe<ResolversTypes["Product"]>, ParentType, ContextType>;
-	url?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	number?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type VariantResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["Variant"] = ResolversParentTypes["Variant"],
+> = {
+	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	price?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	stock?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -414,9 +389,8 @@ export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
-	CoverImage?: CoverImageResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
-	Stock?: StockResolvers<ContextType>;
 	Track?: TrackResolvers<ContextType>;
+	Variant?: VariantResolvers<ContextType>;
 };

@@ -1,0 +1,5 @@
+type Track {
+  name: String!
+  url: String
+  number: Int!
+}

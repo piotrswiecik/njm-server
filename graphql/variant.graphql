@@ -1,0 +1,5 @@
+type Variant {
+  name: String!
+  price: Int!
+  stock: Int!
+}

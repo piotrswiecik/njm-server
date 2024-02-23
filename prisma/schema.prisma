@@ -20,7 +20,7 @@ model Category {
 model Collection {
   id            String @id @default(uuid())
   name          String
-  products      ProductCollection[]
+  products      Product[]
 }
 
 model Artist {
@@ -29,51 +29,34 @@ model Artist {
   albums        Product[]
 }
 
-model CoverImage {
-  id            String @id @default(uuid())
-  url           String
-  width         Int
-  height        Int
-  product       Product?
-}
-
 model Track {
   id            String @id @default(uuid())
   name          String
   number        Int
   url           String?
   productId     String
-  product       Product @relation(fields: [productId], references: [id])
+  product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
-model Stock {
+model Variant {
   id            String @id @default(uuid())
-  product       Product?
-  qtyCd         Int
-  qtyLp         Int
-}
-
-model ProductCollection {
-  @@id([collectionId, productId])
   productId     String
-  product       Product @relation(fields: [productId], references: [id])
-  collectionId  String
-  collection    Collection @relation(fields: [collectionId], references: [id])
+  Product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name          String
+  price         Int
+  stock         Int
 }
 
 model Product {
-  id  String    @id @default(uuid())
+  id            String @id @default(uuid())
   title         String
   artistId      String
-  artist        Artist @relation(fields: [artistId], references: [id])
-  price         Int
-  coverImageId  String @unique
-  coverImage    CoverImage @relation(fields: [coverImageId], references: [id])
+  artist        Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  coverImageUrl String
   categoryId    String
   category      Category @relation(fields: [categoryId], references: [id])
-  collections   ProductCollection[]
-  stockId       String @unique
-  stock         Stock @relation(fields: [stockId], references: [id])
+  collections   Collection[]
+  variants      Variant[]
   tracks        Track[]
   releaseDate   DateTime
 }

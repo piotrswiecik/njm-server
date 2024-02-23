@@ -109,30 +109,6 @@ async function seed() {
 	const mockData = await mockDataFromJson();
 
 	for (const product of mockData) {
-		// create image - only the first one from array
-		const coverImage = await prisma.coverImage.create({
-			data: {
-				url:
-					product.images[0] !== undefined
-						? product.images[0].url
-						: "https://via.placeholder.com/300",
-				width: product.images[0] !== undefined ? product.images[0].width : 300,
-				height:
-					product.images[0] !== undefined ? product.images[0].height : 300,
-			},
-		});
-
-		// create random stock amount - 20% chance of being out of stock
-		const stockCd = Math.floor(Math.random() < 0.2 ? 0 : Math.random() * 100);
-		const stockVinyl = Math.floor(
-			Math.random() < 0.2 ? 0 : Math.random() * 100,
-		);
-		const stock = await prisma.stock.create({
-			data: {
-				qtyCd: stockCd,
-				qtyLp: stockVinyl,
-			},
-		});
 
 		// create artist if not exists
 		let artist;
@@ -154,6 +130,7 @@ async function seed() {
 		if (artist === null) throw new Error("Error creating artist.");
 
 		// create product
+		const imageUrl = product.images[0] !== undefined ? product.images[0].url : "https://via.placeholder.com/300";
 		const productCategory = await prisma.category.findFirst({
 			where: {
 				name: product.genre,
@@ -169,15 +146,26 @@ async function seed() {
 				artist: {
 					connect: { id: artist.id },
 				},
-				price: Math.floor(20 + Math.random() * 40),
-				coverImage: {
-					connect: { id: coverImage.id },
-				},
+				coverImageUrl: imageUrl,
 				category: {
 					connect: { id: productCategory!.id },
 				},
-				stock: {
-					connect: { id: stock.id },
+				variants: {
+					createMany: {
+						// create 2 variants for each product, 20% chance of being out of stock
+						data: [
+							{
+								name: "cd",
+								stock: Math.floor(Math.random() < 0.2 ? 0 : Math.random() * 100),
+								price: Math.floor(20 + Math.random() * 40),
+							},
+							{
+								name: "lp",
+								stock: Math.floor(Math.random() < 0.2 ? 0 : Math.random() * 100),
+								price: Math.floor(20 + Math.random() * 40),
+							},
+						],
+					}
 				},
 				tracks: {
 					createMany: {
@@ -236,39 +224,33 @@ async function seedCollections() {
 	});
 
 	for (const product of newProducts) {
-		await prisma.productCollection.create({
+		await prisma.collection.update({
+			where: { id: newCollection!.id },
 			data: {
-				product: {
+				products: {
 					connect: { id: product.id },
-				},
-				collection: {
-					connect: { id: newCollection!.id },
 				},
 			},
 		});
 	}
 
 	for (const product of bestsellers) {
-		await prisma.productCollection.create({
+		await prisma.collection.update({
+			where: { id: bestsellersCollection!.id },
 			data: {
-				product: {
+				products: {
 					connect: { id: product.id },
-				},
-				collection: {
-					connect: { id: bestsellersCollection!.id },
 				},
 			},
 		});
 	}
 
 	for (const product of staffpicks) {
-		await prisma.productCollection.create({
+		await prisma.collection.update({
+			where: { id: staffpicksCollection!.id },
 			data: {
-				product: {
+				products: {
 					connect: { id: product.id },
-				},
-				collection: {
-					connect: { id: staffpicksCollection!.id },
 				},
 			},
 		});
@@ -277,10 +259,8 @@ async function seedCollections() {
 }
 
 async function drop() {
-	await prisma.track.deleteMany();
 	await prisma.product.deleteMany();
-	await prisma.coverImage.deleteMany();
-	await prisma.stock.deleteMany();
 	await prisma.category.deleteMany();
+	await prisma.collection.deleteMany();
 	await prisma.artist.deleteMany();
 }

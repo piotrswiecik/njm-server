@@ -1,25 +1,22 @@
 import { logger } from "../../../utils/logger";
 import type { QueryResolvers } from "./../../../types.generated";
-export const product: NonNullable<QueryResolvers["product"]> = async (
+export const collection: NonNullable<QueryResolvers["collection"]> = async (
 	_parent,
 	_arg,
 	_ctx,
 ) => {
 	try {
-		const dbProduct = await _ctx.db.product.findUnique({
-			where: { id: _arg.id },
+		const dbCollection = await _ctx.db.collection.findFirst({
+			where: { name: _arg.name },
 		});
-		if (!dbProduct) {
+		if (!dbCollection) {
 			throw new Error("not found");
 		}
-		return {
-			...dbProduct,
-			releaseDate: dbProduct.releaseDate.toISOString(),
-		};
+		return { ...dbCollection };
 	} catch (err) {
 		logger.error(err);
 		throw new Error(
-			`Error fetching product with id=${_arg.id}: ${
+			`Error fetching collection with name=${_arg.name}: ${
 				err instanceof Error ? err.message : "unknown error"
 			}`,
 		);

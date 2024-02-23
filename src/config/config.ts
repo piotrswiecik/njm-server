@@ -1,3 +1,7 @@
+import { configDotenv } from "dotenv";
+
+configDotenv();
+
 export type NodeConfig = {
 	NODE_PORT: number;
 	NODE_ENV: string;
