@@ -6,5 +6,5 @@ extend type Query {
 type Collection {
   id: ID!
   name: String!
-  products: [Product!]
+  products: [Product!]!
 }

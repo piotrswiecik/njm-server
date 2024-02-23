@@ -1,5 +1,5 @@
-import { type GraphQLResolveInfo } from "graphql";
-import { type ServerContext, type Mapper } from "./types";
+import { GraphQLResolveInfo } from "graphql";
+import { ServerContext, Mapper } from "./types.js";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -41,7 +41,7 @@ export type Category = {
 	__typename?: "Category";
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	products?: Maybe<Array<Product>>;
+	products: Array<Product>;
 };
 
 export type CategoryproductsArgs = {
@@ -53,7 +53,7 @@ export type Collection = {
 	__typename?: "Collection";
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
-	products?: Maybe<Array<Product>>;
+	products: Array<Product>;
 };
 
 export type Product = {
@@ -271,7 +271,7 @@ export type CategoryResolvers<
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	products?: Resolver<
-		Maybe<Array<ResolversTypes["Product"]>>,
+		Array<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType,
 		Partial<CategoryproductsArgs>
@@ -287,7 +287,7 @@ export type CollectionResolvers<
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	products?: Resolver<
-		Maybe<Array<ResolversTypes["Product"]>>,
+		Array<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType
 	>;

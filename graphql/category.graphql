@@ -6,5 +6,5 @@ extend type Query {
 type Category {
   id: ID!
   name: String!
-  products(skip: Int, take: Int): [Product!]
+  products(skip: Int, take: Int): [Product!]!
 }
