@@ -21,36 +21,13 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 	}
 
 	try {
-		const productQueryResponse = await _ctx.db.product.findMany({
-			...queryOptions,
-			include: { artist: true, coverImage: true, stock: true, category: true },
-		});
-
-		const productList = productQueryResponse.map((product) => {
-			return {
-				artist: product.artist.name,
-				category: product.category,
-				coverImg: {
-					id: product.coverImage.id,
-					width: product.coverImage.width,
-					height: product.coverImage.height,
-					url: product.coverImage.url,
-				},
-				id: product.id,
-				price: product.price,
-				releaseDate: product.releaseDate.toISOString(),
-				stock: {
-					id: product.stock.id,
-					qtyCd: product.stock.qtyCd,
-					qtyLp: product.stock.qtyLp,
-				},
-				title: product.title,
-				tracks: [],
-			};
-		});
-		return productList;
+		const dbProducts = await _ctx.db.product.findMany({ ...queryOptions });
+		return dbProducts.map((product) => ({
+			...product,
+			releaseDate: product.releaseDate.toISOString(),
+		}));
 	} catch (err) {
 		logger.error(err);
-		throw new Error(`Error fetching product`);
+		throw new Error(`Error fetching products`);
 	}
 };

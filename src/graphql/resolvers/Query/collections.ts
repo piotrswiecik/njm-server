@@ -5,5 +5,5 @@ export const collections: NonNullable<QueryResolvers["collections"]> = async (
 	_ctx,
 ) => {
 	/* Implement Query.collections resolver logic here */
-	return _ctx.db.collection.findMany();
+	return _ctx.db.collection.findMany({});
 };

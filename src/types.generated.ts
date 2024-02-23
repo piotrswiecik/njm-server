@@ -59,13 +59,13 @@ export type Collection = {
 export type Product = {
 	__typename?: "Product";
 	artist?: Maybe<Artist>;
-	artistId: Scalars["ID"]["output"];
 	category?: Maybe<Category>;
-	categoryId: Scalars["ID"]["output"];
 	coverImageUrl: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
 	releaseDate: Scalars["String"]["output"];
 	title: Scalars["String"]["output"];
+	tracks?: Maybe<Array<Maybe<Track>>>;
+	variants?: Maybe<Array<Maybe<Variant>>>;
 };
 
 export type Query = {
@@ -114,7 +114,8 @@ export type Stock = {
 export type Track = {
 	__typename?: "Track";
 	name: Scalars["String"]["output"];
-	url: Scalars["String"]["output"];
+	number: Scalars["Int"]["output"];
+	url?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type Variant = {
@@ -307,17 +308,25 @@ export type ProductResolvers<
 		ResolversParentTypes["Product"] = ResolversParentTypes["Product"],
 > = {
 	artist?: Resolver<Maybe<ResolversTypes["Artist"]>, ParentType, ContextType>;
-	artistId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	category?: Resolver<
 		Maybe<ResolversTypes["Category"]>,
 		ParentType,
 		ContextType
 	>;
-	categoryId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	coverImageUrl?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	tracks?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes["Track"]>>>,
+		ParentType,
+		ContextType
+	>;
+	variants?: Resolver<
+		Maybe<Array<Maybe<ResolversTypes["Variant"]>>>,
+		ParentType,
+		ContextType
+	>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -386,7 +395,8 @@ export type TrackResolvers<
 		ResolversParentTypes["Track"] = ResolversParentTypes["Track"],
 > = {
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	url?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	number?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	url?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

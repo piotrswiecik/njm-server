@@ -1,4 +1,5 @@
 type Track {
   name: String!
-  url: String!
+  url: String
+  number: Int!
 }

@@ -4,17 +4,19 @@ export const Product: ProductResolvers = {
 	/* Implement Product resolver logic here */
 	artist: async (parent, _args, _ctx) => {
 		try {
-			const artist = await _ctx.db.artist.findFirst({
-				where: { id: parent.artistId },
-			});
-			if (!artist) {
+			const dbArtist = await _ctx.db.product
+				.findUnique({
+					where: { id: parent.id },
+				})
+				.artist();
+			if (!dbArtist) {
 				throw new Error("not found");
 			}
-			return artist;
+			return dbArtist;
 		} catch (err) {
 			logger.error(err);
 			throw new Error(
-				`Error fetching artist with id=${parent.artistId}: ${
+				`Error fetching artist with id=${parent.id}: ${
 					err instanceof Error ? err.message : "unknown error"
 				}`,
 			);
@@ -22,35 +24,62 @@ export const Product: ProductResolvers = {
 	},
 	category: async (parent, _args, _ctx) => {
 		try {
-			const category = await _ctx.db.category.findFirst({
-				where: { id: parent.categoryId },
-			});
-			if (!category) {
+			const dbCategory = await _ctx.db.product
+				.findUnique({
+					where: { id: parent.id },
+				})
+				.category();
+			if (!dbCategory) {
 				throw new Error("not found");
 			}
-			return category;
+			return dbCategory;
 		} catch (err) {
 			logger.error(err);
 			throw new Error(
-				`Error fetching category with id=${parent.categoryId}: ${
+				`Error fetching category with id=${parent.id}: ${
 					err instanceof Error ? err.message : "unknown error"
 				}`,
 			);
 		}
-	}
-
-	// tracks: async (parent, _args, _ctx) => {
-	// 	const tracks = await _ctx.db.track.findMany({
-	// 		where: { productId: parent.id },
-	// 	});
-	// 	return tracks.map((track) => {
-	// 		return { ...track, url: track.url ?? "" };
-	// 	});
-	// },
-	// category: async (parent, _args, _ctx) => {
-	// 	const result = await _ctx.db.category.findFirstOrThrow({
-	// 		where: { id: parent.category.id },
-	// 	});
-	// 	return result;
-	// },
+	},
+	tracks: async (parent, _args, _ctx) => {
+		try {
+			const dbTracks = await _ctx.db.product
+				.findUnique({
+					where: { id: parent.id },
+				})
+				.tracks();
+			if (!dbTracks) {
+				throw new Error("not found");
+			}
+			return dbTracks;
+		} catch (err) {
+			logger.error(err);
+			throw new Error(
+				`Error fetching tracks with id=${parent.id}: ${
+					err instanceof Error ? err.message : "unknown error"
+				}`,
+			);
+		}
+	},
+	variants: async (parent, _args, _ctx) => {
+		try {
+			const dbVariants = await _ctx.db.product
+				.findUnique({
+					where: { id: parent.id },
+				})
+				.variants();
+			if (!dbVariants) {
+				throw new Error("not found");
+			}
+			return dbVariants;
+		} catch (err) {
+			logger.error(err);
+			throw new Error(
+				`Error fetching variants with id=${parent.id}: ${
+					err instanceof Error ? err.message : "unknown error"
+				}`,
+			);
+		}
+	},
 };
