@@ -1,7 +1,7 @@
 extend type Query {
   product(id: ID!): Product
-  products(skip: Int, take: Int): [Product]
-  productSearch(query: String!): [Product]
+  products(skip: Int, take: Int): [Product!]!
+  productSearch(query: String!): [Product!]
   productCount: Int!
 }
 

@@ -1,5 +1,5 @@
-import { GraphQLResolveInfo } from "graphql";
-import { ServerContext, Mapper } from "./types.js";
+import { type GraphQLResolveInfo } from "graphql";
+import { type ServerContext, type Mapper } from "./types";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -76,8 +76,8 @@ export type Query = {
 	collections?: Maybe<Array<Collection>>;
 	product?: Maybe<Product>;
 	productCount: Scalars["Int"]["output"];
-	productSearch?: Maybe<Array<Maybe<Product>>>;
-	products?: Maybe<Array<Maybe<Product>>>;
+	productSearch?: Maybe<Array<Product>>;
+	products: Array<Product>;
 };
 
 export type QuerycategoryArgs = {
@@ -350,13 +350,13 @@ export type QueryResolvers<
 	>;
 	productCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	productSearch?: Resolver<
-		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		Maybe<Array<ResolversTypes["Product"]>>,
 		ParentType,
 		ContextType,
 		RequireFields<QueryproductSearchArgs, "query">
 	>;
 	products?: Resolver<
-		Maybe<Array<Maybe<ResolversTypes["Product"]>>>,
+		Array<ResolversTypes["Product"]>,
 		ParentType,
 		ContextType,
 		Partial<QueryproductsArgs>
