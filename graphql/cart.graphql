@@ -1,0 +1,17 @@
+extend type Query {
+  cart(id: ID!): Cart
+  carts: [Cart!]!
+}
+
+type Cart {
+  id: ID!
+  cartItems: [CartItem!]
+  user: User!
+  isPlaced: Boolean!
+  datePlaced: String
+}
+
+type CartItem {
+  id: ID!
+  variant: Variant!
+}

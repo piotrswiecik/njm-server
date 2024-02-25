@@ -1,0 +1,10 @@
+extend type Query {
+  user(id: ID!): User
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  email: String!
+  isActive: Boolean!
+}

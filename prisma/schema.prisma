@@ -73,8 +73,8 @@ model CartItem {
   id            String @id @default(uuid())
   variantId     String
   variant       Variant @relation(fields: [variantId], references: [id])
-  cartId        String
-  cart          Cart @relation(fields: [cartId], references: [id])
+  cartId        String?
+  cart          Cart? @relation(fields: [cartId], references: [id])
 }
 
 model Cart {
