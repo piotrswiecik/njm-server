@@ -1,5 +1,5 @@
-import { GraphQLResolveInfo } from "graphql";
-import { ServerContext, Mapper } from "./types.js";
+import { type GraphQLResolveInfo } from "graphql";
+import { type ServerContext, type Mapper } from "./types";
 export type Maybe<T> = T | null | undefined;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -37,21 +37,6 @@ export type Artist = {
 	name: Scalars["String"]["output"];
 };
 
-export type Cart = {
-	__typename?: "Cart";
-	cartItems?: Maybe<Array<CartItem>>;
-	datePlaced?: Maybe<Scalars["String"]["output"]>;
-	id: Scalars["ID"]["output"];
-	isPlaced: Scalars["Boolean"]["output"];
-	user: User;
-};
-
-export type CartItem = {
-	__typename?: "CartItem";
-	id: Scalars["ID"]["output"];
-	variant: Variant;
-};
-
 export type Category = {
 	__typename?: "Category";
 	id: Scalars["ID"]["output"];
@@ -71,6 +56,21 @@ export type Collection = {
 	products: Array<Product>;
 };
 
+export type Order = {
+	__typename?: "Order";
+	datePlaced?: Maybe<Scalars["String"]["output"]>;
+	id: Scalars["ID"]["output"];
+	orderItems?: Maybe<Array<OrderItem>>;
+	status: Status;
+	user: User;
+};
+
+export type OrderItem = {
+	__typename?: "OrderItem";
+	id: Scalars["ID"]["output"];
+	variant: Variant;
+};
+
 export type Product = {
 	__typename?: "Product";
 	artist: Artist;
@@ -85,22 +85,18 @@ export type Product = {
 
 export type Query = {
 	__typename?: "Query";
-	cart?: Maybe<Cart>;
-	carts: Array<Cart>;
 	category?: Maybe<Category>;
 	categoryCount: Scalars["Int"]["output"];
 	collection?: Maybe<Collection>;
 	collections?: Maybe<Array<Collection>>;
+	order?: Maybe<Order>;
+	orders: Array<Order>;
 	product?: Maybe<Product>;
 	productCount: Scalars["Int"]["output"];
 	productSearch?: Maybe<Array<Product>>;
 	products: Array<Product>;
 	user?: Maybe<User>;
 	users: Array<User>;
-};
-
-export type QuerycartArgs = {
-	id: Scalars["ID"]["input"];
 };
 
 export type QuerycategoryArgs = {
@@ -113,6 +109,11 @@ export type QuerycategoryCountArgs = {
 
 export type QuerycollectionArgs = {
 	name: Scalars["String"]["input"];
+};
+
+export type QueryorderArgs = {
+	id: Scalars["ID"]["input"];
+	status?: InputMaybe<Status>;
 };
 
 export type QueryproductArgs = {
@@ -131,6 +132,13 @@ export type QueryproductsArgs = {
 export type QueryuserArgs = {
 	id: Scalars["ID"]["input"];
 };
+
+export type Status =
+	| "AWAIT_PAY"
+	| "AWAIT_SHIP"
+	| "CANCELLED"
+	| "CART"
+	| "SHIPPED";
 
 export type Track = {
 	__typename?: "Track";
@@ -263,17 +271,18 @@ export type DirectiveResolverFn<
 export type ResolversTypes = {
 	Artist: ResolverTypeWrapper<Mapper<Artist>>;
 	String: ResolverTypeWrapper<Mapper<Scalars["String"]["output"]>>;
-	Cart: ResolverTypeWrapper<Mapper<Cart>>;
-	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
-	Boolean: ResolverTypeWrapper<Mapper<Scalars["Boolean"]["output"]>>;
-	CartItem: ResolverTypeWrapper<Mapper<CartItem>>;
 	Category: ResolverTypeWrapper<Mapper<Category>>;
+	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
 	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
 	Collection: ResolverTypeWrapper<Mapper<Collection>>;
+	Order: ResolverTypeWrapper<Mapper<Order>>;
+	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
+	Status: ResolverTypeWrapper<Mapper<Status>>;
 	Track: ResolverTypeWrapper<Mapper<Track>>;
 	User: ResolverTypeWrapper<Mapper<User>>;
+	Boolean: ResolverTypeWrapper<Mapper<Scalars["Boolean"]["output"]>>;
 	Variant: ResolverTypeWrapper<Mapper<Variant>>;
 };
 
@@ -281,17 +290,17 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
 	Artist: Mapper<Artist>;
 	String: Mapper<Scalars["String"]["output"]>;
-	Cart: Mapper<Cart>;
-	ID: Mapper<Scalars["ID"]["output"]>;
-	Boolean: Mapper<Scalars["Boolean"]["output"]>;
-	CartItem: Mapper<CartItem>;
 	Category: Mapper<Category>;
+	ID: Mapper<Scalars["ID"]["output"]>;
 	Int: Mapper<Scalars["Int"]["output"]>;
 	Collection: Mapper<Collection>;
+	Order: Mapper<Order>;
+	OrderItem: Mapper<OrderItem>;
 	Product: Mapper<Product>;
 	Query: {};
 	Track: Mapper<Track>;
 	User: Mapper<User>;
+	Boolean: Mapper<Scalars["Boolean"]["output"]>;
 	Variant: Mapper<Variant>;
 };
 
@@ -301,37 +310,6 @@ export type ArtistResolvers<
 		ResolversParentTypes["Artist"] = ResolversParentTypes["Artist"],
 > = {
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type CartResolvers<
-	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["Cart"] = ResolversParentTypes["Cart"],
-> = {
-	cartItems?: Resolver<
-		Maybe<Array<ResolversTypes["CartItem"]>>,
-		ParentType,
-		ContextType
-	>;
-	datePlaced?: Resolver<
-		Maybe<ResolversTypes["String"]>,
-		ParentType,
-		ContextType
-	>;
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	isPlaced?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
-	user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
-	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type CartItemResolvers<
-	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["CartItem"] = ResolversParentTypes["CartItem"],
-> = {
-	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-	variant?: Resolver<ResolversTypes["Variant"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -366,6 +344,37 @@ export type CollectionResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type OrderResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
+> = {
+	datePlaced?: Resolver<
+		Maybe<ResolversTypes["String"]>,
+		ParentType,
+		ContextType
+	>;
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	orderItems?: Resolver<
+		Maybe<Array<ResolversTypes["OrderItem"]>>,
+		ParentType,
+		ContextType
+	>;
+	status?: Resolver<ResolversTypes["Status"], ParentType, ContextType>;
+	user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type OrderItemResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["OrderItem"] = ResolversParentTypes["OrderItem"],
+> = {
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	variant?: Resolver<ResolversTypes["Variant"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ProductResolvers<
 	ContextType = ServerContext,
 	ParentType extends
@@ -391,13 +400,6 @@ export type QueryResolvers<
 	ParentType extends
 		ResolversParentTypes["Query"] = ResolversParentTypes["Query"],
 > = {
-	cart?: Resolver<
-		Maybe<ResolversTypes["Cart"]>,
-		ParentType,
-		ContextType,
-		RequireFields<QuerycartArgs, "id">
-	>;
-	carts?: Resolver<Array<ResolversTypes["Cart"]>, ParentType, ContextType>;
 	category?: Resolver<
 		Maybe<ResolversTypes["Category"]>,
 		ParentType,
@@ -421,6 +423,13 @@ export type QueryResolvers<
 		ParentType,
 		ContextType
 	>;
+	order?: Resolver<
+		Maybe<ResolversTypes["Order"]>,
+		ParentType,
+		ContextType,
+		RequireFields<QueryorderArgs, "id">
+	>;
+	orders?: Resolver<Array<ResolversTypes["Order"]>, ParentType, ContextType>;
 	product?: Resolver<
 		Maybe<ResolversTypes["Product"]>,
 		ParentType,
@@ -485,10 +494,10 @@ export type VariantResolvers<
 
 export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
-	Cart?: CartResolvers<ContextType>;
-	CartItem?: CartItemResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
+	Order?: OrderResolvers<ContextType>;
+	OrderItem?: OrderItemResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
 	Track?: TrackResolvers<ContextType>;

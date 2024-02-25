@@ -1,0 +1,25 @@
+extend type Query {
+  order(id: ID!, status: Status): Order
+  orders: [Order!]!
+}
+
+type Order {
+  id: ID!
+  orderItems: [OrderItem!]
+  user: User!
+  status: Status!
+  datePlaced: String
+}
+
+type OrderItem {
+  id: ID!
+  variant: Variant!
+}
+
+enum Status {
+  CART
+  AWAIT_PAY
+  AWAIT_SHIP
+  SHIPPED
+  CANCELLED
+}

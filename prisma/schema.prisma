@@ -45,7 +45,7 @@ model Variant {
   name          String
   price         Int
   stock         Int
-  cartItems     CartItem[]
+  orderItems    OrderItem[]
 }
 
 model Product {
@@ -66,22 +66,30 @@ model User {
   id            String @id @default(uuid())
   email         String @unique
   isActive      Boolean
-  cart          Cart?
+  order         Order[]
 }
 
-model CartItem {
+model OrderItem {
   id            String @id @default(uuid())
   variantId     String
   variant       Variant @relation(fields: [variantId], references: [id])
-  cartId        String?
-  cart          Cart? @relation(fields: [cartId], references: [id])
+  orderId       String?
+  order         Order? @relation(fields: [orderId], references: [id])
 }
 
-model Cart {
+enum Status {
+  CART
+  AWAIT_PAY
+  AWAIT_SHIP
+  SHIPPED
+  CANCELLED
+}
+
+model Order {
   id            String @id @default(uuid())
-  cartItems     CartItem[]
-  userId        String @unique
+  orderItems    OrderItem[]
+  userId        String
   user          User @relation(fields: [userId], references: [id])
-  isPlaced      Boolean
+  status        Status @default(CART)
   datePlaced    DateTime?
 }
