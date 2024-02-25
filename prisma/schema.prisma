@@ -45,6 +45,7 @@ model Variant {
   name          String
   price         Int
   stock         Int
+  cartItems     CartItem[]
 }
 
 model Product {
@@ -59,4 +60,28 @@ model Product {
   variants      Variant[]
   tracks        Track[]
   releaseDate   DateTime
+}
+
+model User {
+  id            String @id @default(uuid())
+  email         String @unique
+  isActive      Boolean
+  cart          Cart?
+}
+
+model CartItem {
+  id            String @id @default(uuid())
+  variantId     String
+  variant       Variant @relation(fields: [variantId], references: [id])
+  cartId        String
+  cart          Cart @relation(fields: [cartId], references: [id])
+}
+
+model Cart {
+  id            String @id @default(uuid())
+  cartItems     CartItem[]
+  userId        String @unique
+  user          User @relation(fields: [userId], references: [id])
+  isPlaced      Boolean
+  datePlaced    DateTime?
 }
