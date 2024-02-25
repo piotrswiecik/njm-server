@@ -1492,9 +1492,29 @@ export const typeDefs = {
 					directives: [],
 					loc: { start: 1280, end: 1291 },
 				},
+				{
+					kind: "FieldDefinition",
+					name: {
+						kind: "Name",
+						value: "product",
+						loc: { start: 1294, end: 1301 },
+					},
+					arguments: [],
+					type: {
+						kind: "NamedType",
+						name: {
+							kind: "Name",
+							value: "Product",
+							loc: { start: 1303, end: 1310 },
+						},
+						loc: { start: 1303, end: 1310 },
+					},
+					directives: [],
+					loc: { start: 1294, end: 1310 },
+				},
 			],
-			loc: { start: 1223, end: 1293 },
+			loc: { start: 1223, end: 1312 },
 		},
 	],
-	loc: { start: 0, end: 1294 },
+	loc: { start: 0, end: 1313 },
 } as unknown as DocumentNode;
