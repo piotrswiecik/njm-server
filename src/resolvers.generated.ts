@@ -3,6 +3,7 @@ import type { Resolvers } from "./types.generated";
 import { Artist } from "./graphql/resolvers/Artist";
 import { Category } from "./graphql/resolvers/Category";
 import { Collection } from "./graphql/resolvers/Collection";
+import { createOrder as Mutation_createOrder } from "./graphql/resolvers/Mutation/createOrder";
 import { Order } from "./graphql/resolvers/Order";
 import { OrderItem } from "./graphql/resolvers/OrderItem";
 import { Product } from "./graphql/resolvers/Product";
@@ -36,6 +37,7 @@ export const resolvers: Resolvers = {
 		user: Query_user,
 		users: Query_users,
 	},
+	Mutation: { createOrder: Mutation_createOrder },
 
 	Artist: Artist,
 	Category: Category,

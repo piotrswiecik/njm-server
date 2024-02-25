@@ -24,3 +24,10 @@ enum Status {
   CANCELLED
 }
 
+extend type Mutation {
+  createOrder(input: CreateOrderInput!): Order
+}
+
+input CreateOrderInput {
+  userId: ID!
+}

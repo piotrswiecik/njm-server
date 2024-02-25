@@ -56,6 +56,19 @@ export type Collection = {
 	products: Array<Product>;
 };
 
+export type CreateOrderInput = {
+	userId: Scalars["ID"]["input"];
+};
+
+export type Mutation = {
+	__typename?: "Mutation";
+	createOrder?: Maybe<Order>;
+};
+
+export type MutationcreateOrderArgs = {
+	input: CreateOrderInput;
+};
+
 export type Order = {
 	__typename?: "Order";
 	datePlaced?: Maybe<Scalars["String"]["output"]>;
@@ -276,6 +289,8 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
 	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
 	Collection: ResolverTypeWrapper<Mapper<Collection>>;
+	CreateOrderInput: ResolverTypeWrapper<Mapper<CreateOrderInput>>;
+	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
@@ -295,6 +310,8 @@ export type ResolversParentTypes = {
 	ID: Mapper<Scalars["ID"]["output"]>;
 	Int: Mapper<Scalars["Int"]["output"]>;
 	Collection: Mapper<Collection>;
+	CreateOrderInput: Mapper<CreateOrderInput>;
+	Mutation: {};
 	Order: Mapper<Order>;
 	OrderItem: Mapper<OrderItem>;
 	Product: Mapper<Product>;
@@ -343,6 +360,19 @@ export type CollectionResolvers<
 		ContextType
 	>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MutationResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
+> = {
+	createOrder?: Resolver<
+		Maybe<ResolversTypes["Order"]>,
+		ParentType,
+		ContextType,
+		RequireFields<MutationcreateOrderArgs, "input">
+	>;
 };
 
 export type OrderResolvers<
@@ -498,6 +528,7 @@ export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
+	Mutation?: MutationResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
 	OrderItem?: OrderItemResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
