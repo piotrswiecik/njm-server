@@ -34,7 +34,6 @@ export const createOrder: NonNullable<
 				status: "CART",
 			},
 		});
-		logger.info(`createOrder mutation, order created=${JSON.stringify(order)}`);
 		return {
 			id: order.id,
 			user,
