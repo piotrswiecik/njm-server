@@ -27,7 +27,7 @@ export const createOrder: NonNullable<
 			}
 		}
 
-	// create empty initialized order
+		// create empty initialized order
 		const order = await _ctx.db.order.create({
 			data: {
 				userId: _arg.userId,

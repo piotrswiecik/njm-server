@@ -13,6 +13,7 @@ type Order {
 type OrderItem {
   id: ID!
   variant: Variant!
+  quantity: Int!
 }
 
 enum Status {

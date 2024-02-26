@@ -76,6 +76,7 @@ export type Order = {
 export type OrderItem = {
 	__typename?: "OrderItem";
 	id: Scalars["ID"]["output"];
+	quantity: Scalars["Int"]["output"];
 	variant: Variant;
 };
 
@@ -390,6 +391,7 @@ export type OrderItemResolvers<
 		ResolversParentTypes["OrderItem"] = ResolversParentTypes["OrderItem"],
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	quantity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	variant?: Resolver<ResolversTypes["Variant"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
