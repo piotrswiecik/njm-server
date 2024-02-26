@@ -6,6 +6,7 @@ import { Collection } from "./graphql/resolvers/Collection";
 import { createOrder as Mutation_createOrder } from "./graphql/resolvers/Mutation/createOrder";
 import { Order } from "./graphql/resolvers/Order";
 import { OrderItem } from "./graphql/resolvers/OrderItem";
+import { OrderResponse } from "./graphql/resolvers/OrderResponse";
 import { Product } from "./graphql/resolvers/Product";
 import { category as Query_category } from "./graphql/resolvers/Query/category";
 import { categoryCount as Query_categoryCount } from "./graphql/resolvers/Query/categoryCount";
@@ -44,6 +45,7 @@ export const resolvers: Resolvers = {
 	Collection: Collection,
 	Order: Order,
 	OrderItem: OrderItem,
+	OrderResponse: OrderResponse,
 	Product: Product,
 	Track: Track,
 	User: User,
