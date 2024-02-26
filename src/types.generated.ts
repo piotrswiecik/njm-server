@@ -58,7 +58,7 @@ export type Collection = {
 
 export type Mutation = {
 	__typename?: "Mutation";
-	createOrder: OrderResponse;
+	createOrder: Order;
 };
 
 export type MutationcreateOrderArgs = {
@@ -67,7 +67,6 @@ export type MutationcreateOrderArgs = {
 
 export type Order = {
 	__typename?: "Order";
-	datePlaced?: Maybe<Scalars["String"]["output"]>;
 	id: Scalars["ID"]["output"];
 	orderItems?: Maybe<Array<OrderItem>>;
 	status: Status;
@@ -78,11 +77,6 @@ export type OrderItem = {
 	__typename?: "OrderItem";
 	id: Scalars["ID"]["output"];
 	variant: Variant;
-};
-
-export type OrderResponse = {
-	__typename?: "OrderResponse";
-	orderId: Scalars["ID"]["output"];
 };
 
 export type Product = {
@@ -293,7 +287,6 @@ export type ResolversTypes = {
 	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
-	OrderResponse: ResolverTypeWrapper<Mapper<OrderResponse>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
 	Status: ResolverTypeWrapper<Mapper<Status>>;
@@ -314,7 +307,6 @@ export type ResolversParentTypes = {
 	Mutation: {};
 	Order: Mapper<Order>;
 	OrderItem: Mapper<OrderItem>;
-	OrderResponse: Mapper<OrderResponse>;
 	Product: Mapper<Product>;
 	Query: {};
 	Track: Mapper<Track>;
@@ -369,7 +361,7 @@ export type MutationResolvers<
 		ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
 > = {
 	createOrder?: Resolver<
-		ResolversTypes["OrderResponse"],
+		ResolversTypes["Order"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderArgs, "userId">
@@ -381,11 +373,6 @@ export type OrderResolvers<
 	ParentType extends
 		ResolversParentTypes["Order"] = ResolversParentTypes["Order"],
 > = {
-	datePlaced?: Resolver<
-		Maybe<ResolversTypes["String"]>,
-		ParentType,
-		ContextType
-	>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	orderItems?: Resolver<
 		Maybe<Array<ResolversTypes["OrderItem"]>>,
@@ -404,15 +391,6 @@ export type OrderItemResolvers<
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	variant?: Resolver<ResolversTypes["Variant"], ParentType, ContextType>;
-	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type OrderResponseResolvers<
-	ContextType = ServerContext,
-	ParentType extends
-		ResolversParentTypes["OrderResponse"] = ResolversParentTypes["OrderResponse"],
-> = {
-	orderId?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -541,7 +519,6 @@ export type Resolvers<ContextType = ServerContext> = {
 	Mutation?: MutationResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
 	OrderItem?: OrderItemResolvers<ContextType>;
-	OrderResponse?: OrderResponseResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
 	Track?: TrackResolvers<ContextType>;

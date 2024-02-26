@@ -8,7 +8,6 @@ type Order {
   orderItems: [OrderItem!]
   user: User!
   status: Status!
-  datePlaced: String
 }
 
 type OrderItem {
@@ -25,9 +24,5 @@ enum Status {
 }
 
 extend type Mutation {
-  createOrder(userId: ID!): OrderResponse!
-}
-
-type OrderResponse {
-  orderId: ID!
+  createOrder(userId: ID!): Order!
 }
