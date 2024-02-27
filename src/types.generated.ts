@@ -56,9 +56,14 @@ export type Collection = {
 	products: Array<Product>;
 };
 
+export type CreateOrderResponse = {
+	__typename?: "CreateOrderResponse";
+	id: Scalars["ID"]["output"];
+};
+
 export type Mutation = {
 	__typename?: "Mutation";
-	createOrder: Order;
+	createOrder: CreateOrderResponse;
 };
 
 export type MutationcreateOrderArgs = {
@@ -285,6 +290,7 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
 	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
 	Collection: ResolverTypeWrapper<Mapper<Collection>>;
+	CreateOrderResponse: ResolverTypeWrapper<Mapper<CreateOrderResponse>>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
@@ -305,6 +311,7 @@ export type ResolversParentTypes = {
 	ID: Mapper<Scalars["ID"]["output"]>;
 	Int: Mapper<Scalars["Int"]["output"]>;
 	Collection: Mapper<Collection>;
+	CreateOrderResponse: Mapper<CreateOrderResponse>;
 	Mutation: {};
 	Order: Mapper<Order>;
 	OrderItem: Mapper<OrderItem>;
@@ -356,13 +363,22 @@ export type CollectionResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CreateOrderResponseResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["CreateOrderResponse"] = ResolversParentTypes["CreateOrderResponse"],
+> = {
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<
 	ContextType = ServerContext,
 	ParentType extends
 		ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
 > = {
 	createOrder?: Resolver<
-		ResolversTypes["Order"],
+		ResolversTypes["CreateOrderResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderArgs, "userId">
@@ -518,6 +534,7 @@ export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
+	CreateOrderResponse?: CreateOrderResponseResolvers<ContextType>;
 	Mutation?: MutationResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
 	OrderItem?: OrderItemResolvers<ContextType>;

@@ -25,5 +25,9 @@ enum Status {
 }
 
 extend type Mutation {
-  createOrder(userId: ID!): Order!
+  createOrder(userId: ID!): CreateOrderResponse!
+}
+
+type CreateOrderResponse {
+  id: ID!
 }

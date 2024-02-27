@@ -28,18 +28,14 @@ export const createOrder: NonNullable<
 		}
 
 		// create empty initialized order
+		// TODO: currently user can create infinite number of carts, limit this to 1
 		const order = await _ctx.db.order.create({
 			data: {
 				userId: _arg.userId,
 				status: "CART",
 			},
 		});
-		return {
-			id: order.id,
-			user,
-			orderItems: [],
-			status: order.status,
-		};
+		return { id: order.id };
 	} catch (err) {
 		logger.error(err);
 		throw new GraphQLError(
