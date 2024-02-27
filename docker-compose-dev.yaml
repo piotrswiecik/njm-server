@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: njm
     ports:
       - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
   adminer:
     image: adminer
     restart: always
@@ -31,3 +33,6 @@ services:
       - "8000:8000"
     volumes:
       - ./:/app
+
+volumes:
+  db-data:
