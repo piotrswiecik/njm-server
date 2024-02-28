@@ -75,7 +75,7 @@ export const addToOrder: NonNullable<MutationResolvers["addToOrder"]> = async (
 		logger.info(
 			`addToOrder ok, order ${_arg.to} updated with product ${_arg.product} and variant ${_arg.variant}`,
 		);
-		return updatedOrder;
+		return { ...updatedOrder, total: 0 };
 	} catch (err) {
 		logger.error(err);
 		if (err instanceof PrismaClientKnownRequestError) {

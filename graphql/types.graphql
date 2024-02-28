@@ -13,6 +13,7 @@ type Order {
   orderItems: [OrderItem!]
   user: User!
   status: StatusEnum!
+  total: Int!
 }
 
 type OrderItem {
@@ -27,7 +28,7 @@ type Collection {
   products: [Product!]!
 }
 
-type CreateOrderResponse {
+type DefaultOrderResponse {
   id: ID!
 }
 

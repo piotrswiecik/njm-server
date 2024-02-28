@@ -12,7 +12,7 @@ export const deleteOrder: NonNullable<
 				id: _arg.id,
 			},
 		});
-		return _arg.id;
+		return { id: _arg.id };
 	} catch (err) {
 		logger.error(err);
 		if (err instanceof PrismaClientKnownRequestError) {

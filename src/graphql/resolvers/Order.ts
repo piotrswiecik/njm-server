@@ -27,4 +27,18 @@ export const Order: OrderResolvers = {
 			...dbUser,
 		};
 	},
+	total: async (_parent, _arg, _ctx) => {
+		const items = await _ctx.db.orderItem.findMany({
+			where: {
+				orderId: _parent.id,
+			},
+			include: {
+				variant: true,
+			},
+		});
+		const total = items.reduce((acc, item) => {
+			return acc + item.quantity * item.variant.price;
+		}, 0);
+		return total ? total : 0;
+	},
 };

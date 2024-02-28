@@ -64,7 +64,7 @@ export const removeFromOrder: NonNullable<
 		logger.info(
 			`removeFromOrder ok, order ${_arg.from} updated with product ${_arg.product} and variant ${_arg.variant}`,
 		);
-		return updatedOrder;
+		return { ...updatedOrder, total: 0 };
 	} catch (err) {
 		logger.error(err);
 		if (err instanceof PrismaClientKnownRequestError) {

@@ -56,18 +56,18 @@ export type Collection = {
 	products: Array<Product>;
 };
 
-export type CreateOrderResponse = {
-	__typename?: "CreateOrderResponse";
+export type DefaultOrderResponse = {
+	__typename?: "DefaultOrderResponse";
 	id: Scalars["ID"]["output"];
 };
 
 export type Mutation = {
 	__typename?: "Mutation";
 	addToOrder: Order;
-	createOrder: CreateOrderResponse;
-	deleteOrder: Scalars["ID"]["output"];
+	createOrder: DefaultOrderResponse;
+	deleteOrder: DefaultOrderResponse;
 	removeFromOrder: Order;
-	setOrderStatus: Scalars["ID"]["output"];
+	setOrderStatus: DefaultOrderResponse;
 };
 
 export type MutationaddToOrderArgs = {
@@ -100,6 +100,7 @@ export type Order = {
 	id: Scalars["ID"]["output"];
 	orderItems?: Maybe<Array<OrderItem>>;
 	status: StatusEnum;
+	total: Scalars["Int"]["output"];
 	user: User;
 };
 
@@ -322,7 +323,7 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
 	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
 	Collection: ResolverTypeWrapper<Mapper<Collection>>;
-	CreateOrderResponse: ResolverTypeWrapper<Mapper<CreateOrderResponse>>;
+	DefaultOrderResponse: ResolverTypeWrapper<Mapper<DefaultOrderResponse>>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
@@ -345,7 +346,7 @@ export type ResolversParentTypes = {
 	ID: Mapper<Scalars["ID"]["output"]>;
 	Int: Mapper<Scalars["Int"]["output"]>;
 	Collection: Mapper<Collection>;
-	CreateOrderResponse: Mapper<CreateOrderResponse>;
+	DefaultOrderResponse: Mapper<DefaultOrderResponse>;
 	Mutation: {};
 	Order: Mapper<Order>;
 	OrderItem: Mapper<OrderItem>;
@@ -398,10 +399,10 @@ export type CollectionResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CreateOrderResponseResolvers<
+export type DefaultOrderResponseResolvers<
 	ContextType = ServerContext,
 	ParentType extends
-		ResolversParentTypes["CreateOrderResponse"] = ResolversParentTypes["CreateOrderResponse"],
+		ResolversParentTypes["DefaultOrderResponse"] = ResolversParentTypes["DefaultOrderResponse"],
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -419,13 +420,13 @@ export type MutationResolvers<
 		RequireFields<MutationaddToOrderArgs, "product" | "to" | "variant">
 	>;
 	createOrder?: Resolver<
-		ResolversTypes["CreateOrderResponse"],
+		ResolversTypes["DefaultOrderResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderArgs, "userId">
 	>;
 	deleteOrder?: Resolver<
-		ResolversTypes["ID"],
+		ResolversTypes["DefaultOrderResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationdeleteOrderArgs, "id">
@@ -437,7 +438,7 @@ export type MutationResolvers<
 		RequireFields<MutationremoveFromOrderArgs, "from" | "product" | "variant">
 	>;
 	setOrderStatus?: Resolver<
-		ResolversTypes["ID"],
+		ResolversTypes["DefaultOrderResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationsetOrderStatusArgs, "status" | "where">
@@ -456,6 +457,7 @@ export type OrderResolvers<
 		ContextType
 	>;
 	status?: Resolver<ResolversTypes["StatusEnum"], ParentType, ContextType>;
+	total?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -593,7 +595,7 @@ export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
-	CreateOrderResponse?: CreateOrderResponseResolvers<ContextType>;
+	DefaultOrderResponse?: DefaultOrderResponseResolvers<ContextType>;
 	Mutation?: MutationResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
 	OrderItem?: OrderItemResolvers<ContextType>;

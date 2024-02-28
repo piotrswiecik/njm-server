@@ -1,4 +1,5 @@
 import { GraphQLError } from "graphql";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { logger } from "../../../utils/logger";
 import type { MutationResolvers } from "./../../../types.generated";
 export const setOrderStatus: NonNullable<
@@ -17,8 +18,17 @@ export const setOrderStatus: NonNullable<
 		logger.info(
 			`setOrderStatus mutation, updated order with id=${_arg.where} to status=${_arg.status}`,
 		);
-		return _arg.where;
+		return { id: _arg.where };
 	} catch (err) {
+		if (err instanceof PrismaClientKnownRequestError) {
+			logger.error(`prisma error code: ${err.code}`);
+			if (err.code === "P2025") {
+				throw new GraphQLError(
+					`setOrderStatus mutation failed - order with id=${_arg.where} not found.`,
+				);
+			}
+			throw new GraphQLError(`setOrderStatus mutation failed - ${err.message}`);
+		}
 		logger.error(err);
 		throw new GraphQLError(
 			"setOrderStatus mutation failed - internal error, see logs for details.",

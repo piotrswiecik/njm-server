@@ -17,5 +17,5 @@ export const order: NonNullable<QueryResolvers["order"]> = async (
 		logger.info(`Order not found: ${_arg.id}`);
 		return null;
 	}
-	return { ...order, datePlaced: order.datePlaced?.toISOString() };
+	return { ...order, datePlaced: order.datePlaced?.toISOString(), total: 0 };
 };

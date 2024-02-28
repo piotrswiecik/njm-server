@@ -1,8 +1,8 @@
 extend type Mutation {
-  createOrder(userId: ID!): CreateOrderResponse!
+  createOrder(userId: ID!): DefaultOrderResponse!
   addToOrder(to: ID!, product: ID!, variant: VariantEnum!): Order!
   removeFromOrder(from: ID!, product: ID!, variant: VariantEnum!): Order!
-  deleteOrder(id: ID!): ID!
-  setOrderStatus(where: ID!, status: StatusEnum!): ID!
+  deleteOrder(id: ID!): DefaultOrderResponse!
+  setOrderStatus(where: ID!, status: StatusEnum!): DefaultOrderResponse!
 }
 
