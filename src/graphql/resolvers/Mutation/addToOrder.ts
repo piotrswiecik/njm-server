@@ -24,9 +24,10 @@ export const addToOrder: NonNullable<MutationResolvers["addToOrder"]> = async (
 		// check if order has this product & variant combo already
 		const dbOrderItem = await _ctx.db.orderItem.findFirst({
 			where: {
-				orderId: _arg.product,
+				orderId: _arg.to,
 				variant: {
 					name: _arg.variant,
+					productId: _arg.product,
 				},
 			},
 		});
@@ -72,7 +73,7 @@ export const addToOrder: NonNullable<MutationResolvers["addToOrder"]> = async (
 			);
 		}
 		logger.info(
-			`Order ${_arg.to} updated with product ${_arg.product} and variant ${_arg.variant}`,
+			`addToOrder ok, order ${_arg.to} updated with product ${_arg.product} and variant ${_arg.variant}`,
 		);
 		return updatedOrder;
 	} catch (err) {
@@ -80,6 +81,8 @@ export const addToOrder: NonNullable<MutationResolvers["addToOrder"]> = async (
 		if (err instanceof PrismaClientKnownRequestError) {
 			logger.error(`prisma error code: ${err.code}`);
 			throw new GraphQLError(`addToOrder mutation failed - ${err.message}`);
+		} else if (err instanceof GraphQLError) {
+			throw err;
 		}
 		throw new GraphQLError(
 			"addToOrder mutation failed - internal error, see logs for details.",
