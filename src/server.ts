@@ -1,5 +1,6 @@
 import express from "express";
 import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
 import { expressMiddleware } from "@apollo/server/express4";
 import bodyParser from "body-parser";
 
@@ -11,13 +12,19 @@ import { resolvers } from "./resolvers.generated";
 import { prisma } from "./db";
 import { type ServerContext } from "./context";
 
-
 const app = express();
 
 const apolloServer = new ApolloServer<ServerContext>({
 	typeDefs,
 	resolvers,
 });
+
+// startStandaloneServer(apolloServer).then(({ url }) => {
+// 	logger.info(`🚀 Server ready at ${url}`);
+// })
+// .catch((err) => {
+// 	logger.error(`Server failed to start: ${err}`);
+// });
 
 apolloServer
 	.start()

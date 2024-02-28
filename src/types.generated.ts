@@ -64,10 +64,15 @@ export type CreateOrderResponse = {
 export type Mutation = {
 	__typename?: "Mutation";
 	createOrder: CreateOrderResponse;
+	updateOrder: Order;
 };
 
 export type MutationcreateOrderArgs = {
 	userId: Scalars["ID"]["input"];
+};
+
+export type MutationupdateOrderArgs = {
+	input: OrderInput;
 };
 
 export type Order = {
@@ -78,11 +83,22 @@ export type Order = {
 	user: User;
 };
 
+export type OrderInput = {
+	orderId: Scalars["ID"]["input"];
+	orderItems?: InputMaybe<Array<OrderItemInput>>;
+	status?: InputMaybe<Status>;
+};
+
 export type OrderItem = {
 	__typename?: "OrderItem";
 	id: Scalars["ID"]["output"];
 	quantity: Scalars["Int"]["output"];
 	variant: Variant;
+};
+
+export type OrderItemInput = {
+	quantity: Scalars["Int"]["input"];
+	variantId: Scalars["ID"]["input"];
 };
 
 export type Product = {
@@ -293,7 +309,9 @@ export type ResolversTypes = {
 	CreateOrderResponse: ResolverTypeWrapper<Mapper<CreateOrderResponse>>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
+	OrderInput: ResolverTypeWrapper<Mapper<OrderInput>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
+	OrderItemInput: ResolverTypeWrapper<Mapper<OrderItemInput>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
 	Status: ResolverTypeWrapper<Mapper<Status>>;
@@ -314,7 +332,9 @@ export type ResolversParentTypes = {
 	CreateOrderResponse: Mapper<CreateOrderResponse>;
 	Mutation: {};
 	Order: Mapper<Order>;
+	OrderInput: Mapper<OrderInput>;
 	OrderItem: Mapper<OrderItem>;
+	OrderItemInput: Mapper<OrderItemInput>;
 	Product: Mapper<Product>;
 	Query: {};
 	Track: Mapper<Track>;
@@ -382,6 +402,12 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderArgs, "userId">
+	>;
+	updateOrder?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationupdateOrderArgs, "input">
 	>;
 };
 

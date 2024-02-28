@@ -26,8 +26,20 @@ enum Status {
 
 extend type Mutation {
   createOrder(userId: ID!): CreateOrderResponse!
+  updateOrder(input: OrderInput!): Order!
 }
 
 type CreateOrderResponse {
   id: ID!
+}
+
+input OrderInput {
+  orderId: ID!
+  orderItems: [OrderItemInput!]
+  status: Status
+}
+
+input OrderItemInput {
+  variantId: ID!
+  quantity: Int!
 }
