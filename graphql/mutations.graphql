@@ -1,0 +1,5 @@
+extend type Mutation {
+  createOrder(userId: ID!): CreateOrderResponse!
+  updateOrder(input: OrderInput!): Order!
+}
+

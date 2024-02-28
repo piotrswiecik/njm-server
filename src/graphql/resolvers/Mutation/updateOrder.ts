@@ -10,10 +10,9 @@ export const updateOrder: NonNullable<
 	// input":{"orderId":"5c1b3c9b-3275-4a42-990e-935dce3f46b8","orderItems":[{"variantId":"e9e50fe9-7cc3-4f0b-a86c-0f9e13355bee","quantity":1}],"status":"CART"}}
 
 	try {
-
 		await _ctx.db.orderItem.deleteMany({
 			where: {
-				orderId: _arg.input.orderId
+				orderId: _arg.input.orderId,
 			},
 		});
 
@@ -27,19 +26,19 @@ export const updateOrder: NonNullable<
 			data: _arg.input.orderItems.map((item) => ({
 				orderId: _arg.input.orderId,
 				variantId: item.variantId,
-				quantity: item.quantity
-			}))
+				quantity: item.quantity,
+			})),
 		});
 
 		logger.info("Created order items");
 
 		const dbOrder = await _ctx.db.order.findUnique({
 			where: {
-				id: _arg.input.orderId
+				id: _arg.input.orderId,
 			},
 			include: {
-				user: true
-			}
+				user: true,
+			},
 		});
 
 		logger.info("Order after update:");
@@ -48,13 +47,12 @@ export const updateOrder: NonNullable<
 		if (!dbOrder) {
 			// FIXME: bleh...
 			throw new Error("Internal server error");
-		}	
+		}
 
 		return {
 			...dbOrder,
-			user: dbOrder.user
+			user: dbOrder.user,
 		};
-
 	} catch (err) {
 		// TODO: graceful error handling
 		logger.error(err);

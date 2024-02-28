@@ -1,0 +1,26 @@
+extend type Query {
+  user(id: ID!): User
+  users: [User!]!
+}
+
+extend type Query {
+  collection(name: String!): Collection
+  collections: [Collection!]
+}
+
+extend type Query {
+  order(id: ID!, status: Status): Order
+  orders: [Order!]!
+}
+
+extend type Query {
+  product(id: ID!): Product
+  products(skip: Int, take: Int): [Product!]!
+  productSearch(query: String!): [Product!]
+  productCount: Int!
+}
+
+extend type Query {
+  categoryCount(name: String!): Int!
+  category(name: String!): Category
+}

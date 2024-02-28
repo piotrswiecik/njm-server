@@ -1,7 +1,0 @@
-type Variant {
-  id: ID!
-  name: String!
-  price: Int!
-  stock: Int!
-  product: Product
-}

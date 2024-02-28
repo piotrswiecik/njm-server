@@ -1,0 +1,71 @@
+type Artist {
+  name: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  products(skip: Int, take: Int): [Product!]!
+}
+
+type Order {
+  id: ID!
+  orderItems: [OrderItem!]
+  user: User!
+  status: Status!
+}
+
+type OrderItem {
+  id: ID!
+  variant: Variant!
+  quantity: Int!
+}
+
+type Collection {
+  id: ID!
+  name: String!
+  products: [Product!]!
+}
+
+type CreateOrderResponse {
+  id: ID!
+}
+
+type User {
+  id: ID!
+  email: String!
+  isActive: Boolean!
+}
+
+type Variant {
+  id: ID!
+  name: String!
+  price: Int!
+  stock: Int!
+  product: Product
+}
+
+type Track {
+  name: String!
+  url: String
+  number: Int!
+}
+
+type Product {
+  id: ID!
+  title: String!
+  coverImageUrl: String!
+  releaseDate: String!
+  artist: Artist!
+  category: Category!
+  tracks: [Track!]!
+  variants: [Variant!]!
+}
+
+enum Status {
+  CART
+  AWAIT_PAY
+  AWAIT_SHIP
+  SHIPPED
+  CANCELLED
+}
