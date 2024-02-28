@@ -39,9 +39,7 @@ export const createOrder: NonNullable<
 	} catch (err) {
 		logger.error(err);
 		throw new GraphQLError(
-			`Error creating order for user with id=${_arg.userId}: ${
-				err instanceof Error ? err.message : "unknown error"
-			}`,
+			`createOrder mutation failed - internal error, see logs for details.`,
 		);
 	}
 };
