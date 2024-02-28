@@ -1,15 +1,26 @@
+import { logger } from "../../utils/logger";
 import type { OrderItemResolvers } from "./../../types.generated";
 export const OrderItem: OrderItemResolvers = {
 	/* Implement OrderItem resolver logic here */
 	variant: async (_parent, _arg, _ctx) => {
-		const variant = await _ctx.db.variant.findUnique({
-			where: {
-				id: _parent.variant?.id,
-			},
-		});
-		if (!variant) {
-			throw new Error("Variant not found");
+		try {
+			// const variant = await _ctx.db.variant.findUnique({
+			// 	where: {
+			// 		id: _parent.variantId,
+			// 	},
+			// });
+			const variant = await _ctx.db.orderItem.findUnique({
+				where: {
+					id: _parent.id,
+				},
+			}).variant();
+			if (!variant) {
+				throw new Error("Variant not found");
+			}
+			return variant;
+		} catch (err) {
+			logger.error(err);
+			throw err;
 		}
-		return variant;
 	},
 };

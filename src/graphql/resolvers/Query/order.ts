@@ -1,3 +1,4 @@
+import { logger } from "../../../utils/logger";
 import type { QueryResolvers, Status } from "./../../../types.generated";
 export const order: NonNullable<QueryResolvers["order"]> = async (
 	_parent,
@@ -13,6 +14,7 @@ export const order: NonNullable<QueryResolvers["order"]> = async (
 		},
 	});
 	if (!order) {
+		logger.info(`Order not found: ${_arg.id}`);
 		return null;
 	}
 	return { ...order, datePlaced: order.datePlaced?.toISOString() };
