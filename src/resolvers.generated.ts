@@ -4,8 +4,11 @@ import { Artist } from "./graphql/resolvers/Artist";
 import { Category } from "./graphql/resolvers/Category";
 import { Collection } from "./graphql/resolvers/Collection";
 import { CreateOrderResponse } from "./graphql/resolvers/CreateOrderResponse";
+import { addToOrder as Mutation_addToOrder } from "./graphql/resolvers/Mutation/addToOrder";
 import { createOrder as Mutation_createOrder } from "./graphql/resolvers/Mutation/createOrder";
-import { updateOrder as Mutation_updateOrder } from "./graphql/resolvers/Mutation/updateOrder";
+import { deleteOrder as Mutation_deleteOrder } from "./graphql/resolvers/Mutation/deleteOrder";
+import { removeFromOrder as Mutation_removeFromOrder } from "./graphql/resolvers/Mutation/removeFromOrder";
+import { setOrderStatus as Mutation_setOrderStatus } from "./graphql/resolvers/Mutation/setOrderStatus";
 import { Order } from "./graphql/resolvers/Order";
 import { OrderItem } from "./graphql/resolvers/OrderItem";
 import { Product } from "./graphql/resolvers/Product";
@@ -40,8 +43,11 @@ export const resolvers: Resolvers = {
 		users: Query_users,
 	},
 	Mutation: {
+		addToOrder: Mutation_addToOrder,
 		createOrder: Mutation_createOrder,
-		updateOrder: Mutation_updateOrder,
+		deleteOrder: Mutation_deleteOrder,
+		removeFromOrder: Mutation_removeFromOrder,
+		setOrderStatus: Mutation_setOrderStatus,
 	},
 
 	Artist: Artist,

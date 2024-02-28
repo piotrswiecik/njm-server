@@ -1,5 +1,5 @@
 import { logger } from "../../../utils/logger";
-import type { QueryResolvers, Status } from "./../../../types.generated";
+import type { QueryResolvers, StatusEnum } from "./../../../types.generated";
 export const order: NonNullable<QueryResolvers["order"]> = async (
 	_parent,
 	_arg,
@@ -10,7 +10,7 @@ export const order: NonNullable<QueryResolvers["order"]> = async (
 	const order = await _ctx.db.order.findUnique({
 		where: {
 			id: _arg.id,
-			status: _arg.status as Status, //ok, graphql checks this automatically and throws as needed
+			status: _arg.status as StatusEnum, //ok, graphql checks this automatically and throws as needed
 		},
 	});
 	if (!order) {

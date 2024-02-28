@@ -9,7 +9,7 @@ extend type Query {
 }
 
 extend type Query {
-  order(id: ID!, status: Status): Order
+  order(id: ID!, status: StatusEnum): Order
   orders: [Order!]!
 }
 

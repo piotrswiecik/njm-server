@@ -12,7 +12,7 @@ type Order {
   id: ID!
   orderItems: [OrderItem!]
   user: User!
-  status: Status!
+  status: StatusEnum!
 }
 
 type OrderItem {
@@ -62,10 +62,15 @@ type Product {
   variants: [Variant!]!
 }
 
-enum Status {
+enum StatusEnum {
   CART
   AWAIT_PAY
   AWAIT_SHIP
   SHIPPED
   CANCELLED
+}
+
+enum VariantEnum {
+  cd
+  lp
 }

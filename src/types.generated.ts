@@ -63,30 +63,44 @@ export type CreateOrderResponse = {
 
 export type Mutation = {
 	__typename?: "Mutation";
+	addToOrder: Order;
 	createOrder: CreateOrderResponse;
-	updateOrder: Order;
+	deleteOrder: Scalars["ID"]["output"];
+	removeFromOrder: Order;
+	setOrderStatus: Scalars["ID"]["output"];
+};
+
+export type MutationaddToOrderArgs = {
+	product: Scalars["ID"]["input"];
+	to: Scalars["ID"]["input"];
+	variant: VariantEnum;
 };
 
 export type MutationcreateOrderArgs = {
 	userId: Scalars["ID"]["input"];
 };
 
-export type MutationupdateOrderArgs = {
-	input: OrderInput;
+export type MutationdeleteOrderArgs = {
+	id: Scalars["ID"]["input"];
+};
+
+export type MutationremoveFromOrderArgs = {
+	from: Scalars["ID"]["input"];
+	product: Scalars["ID"]["input"];
+	variant: VariantEnum;
+};
+
+export type MutationsetOrderStatusArgs = {
+	status: StatusEnum;
+	where: Scalars["ID"]["input"];
 };
 
 export type Order = {
 	__typename?: "Order";
 	id: Scalars["ID"]["output"];
 	orderItems?: Maybe<Array<OrderItem>>;
-	status: Status;
+	status: StatusEnum;
 	user: User;
-};
-
-export type OrderInput = {
-	orderId: Scalars["ID"]["input"];
-	orderItems?: InputMaybe<Array<OrderItemInput>>;
-	status?: InputMaybe<Status>;
 };
 
 export type OrderItem = {
@@ -143,7 +157,7 @@ export type QuerycollectionArgs = {
 
 export type QueryorderArgs = {
 	id: Scalars["ID"]["input"];
-	status?: InputMaybe<Status>;
+	status?: InputMaybe<StatusEnum>;
 };
 
 export type QueryproductArgs = {
@@ -163,7 +177,7 @@ export type QueryuserArgs = {
 	id: Scalars["ID"]["input"];
 };
 
-export type Status =
+export type StatusEnum =
 	| "AWAIT_PAY"
 	| "AWAIT_SHIP"
 	| "CANCELLED"
@@ -192,6 +206,8 @@ export type Variant = {
 	product?: Maybe<Product>;
 	stock: Scalars["Int"]["output"];
 };
+
+export type VariantEnum = "cd" | "lp";
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
@@ -309,16 +325,16 @@ export type ResolversTypes = {
 	CreateOrderResponse: ResolverTypeWrapper<Mapper<CreateOrderResponse>>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
-	OrderInput: ResolverTypeWrapper<Mapper<OrderInput>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
 	OrderItemInput: ResolverTypeWrapper<Mapper<OrderItemInput>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
-	Status: ResolverTypeWrapper<Mapper<Status>>;
+	StatusEnum: ResolverTypeWrapper<Mapper<StatusEnum>>;
 	Track: ResolverTypeWrapper<Mapper<Track>>;
 	User: ResolverTypeWrapper<Mapper<User>>;
 	Boolean: ResolverTypeWrapper<Mapper<Scalars["Boolean"]["output"]>>;
 	Variant: ResolverTypeWrapper<Mapper<Variant>>;
+	VariantEnum: ResolverTypeWrapper<Mapper<VariantEnum>>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -332,7 +348,6 @@ export type ResolversParentTypes = {
 	CreateOrderResponse: Mapper<CreateOrderResponse>;
 	Mutation: {};
 	Order: Mapper<Order>;
-	OrderInput: Mapper<OrderInput>;
 	OrderItem: Mapper<OrderItem>;
 	OrderItemInput: Mapper<OrderItemInput>;
 	Product: Mapper<Product>;
@@ -397,17 +412,35 @@ export type MutationResolvers<
 	ParentType extends
 		ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"],
 > = {
+	addToOrder?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationaddToOrderArgs, "product" | "to" | "variant">
+	>;
 	createOrder?: Resolver<
 		ResolversTypes["CreateOrderResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderArgs, "userId">
 	>;
-	updateOrder?: Resolver<
+	deleteOrder?: Resolver<
+		ResolversTypes["ID"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationdeleteOrderArgs, "id">
+	>;
+	removeFromOrder?: Resolver<
 		ResolversTypes["Order"],
 		ParentType,
 		ContextType,
-		RequireFields<MutationupdateOrderArgs, "input">
+		RequireFields<MutationremoveFromOrderArgs, "from" | "product" | "variant">
+	>;
+	setOrderStatus?: Resolver<
+		ResolversTypes["ID"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationsetOrderStatusArgs, "status" | "where">
 	>;
 };
 
@@ -422,7 +455,7 @@ export type OrderResolvers<
 		ParentType,
 		ContextType
 	>;
-	status?: Resolver<ResolversTypes["Status"], ParentType, ContextType>;
+	status?: Resolver<ResolversTypes["StatusEnum"], ParentType, ContextType>;
 	user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

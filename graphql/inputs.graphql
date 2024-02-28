@@ -1,9 +1,3 @@
-input OrderInput {
-  orderId: ID!
-  orderItems: [OrderItemInput!]
-  status: Status
-}
-
 input OrderItemInput {
   variantId: ID!
   quantity: Int!

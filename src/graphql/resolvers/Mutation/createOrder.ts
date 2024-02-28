@@ -35,6 +35,9 @@ export const createOrder: NonNullable<
 				status: "CART",
 			},
 		});
+		logger.info(
+			`createOrder mutation, created order with id=${order.id} for user=${_arg.userId}`,
+		);
 		return { id: order.id };
 	} catch (err) {
 		logger.error(err);
