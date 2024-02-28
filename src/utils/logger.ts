@@ -1,6 +1,7 @@
 import os, { platform } from "os";
 import { env } from "process";
 import pino from "pino";
+import pinoCaller from "pino-caller";
 
 const config = {
 	level: process.env.NODE_ENV === "development" ? "debug" : "info",
@@ -12,4 +13,5 @@ const config = {
 	},
 };
 
-export const logger = pino(config);
+const baseLogger = pino(config);
+export const logger = pinoCaller(baseLogger);

@@ -46,6 +46,7 @@
 		"express": "^4.18.2",
 		"graphql": "^16.8.1",
 		"graphql-scalars": "^1.22.5",
-		"pino": "^8.19.0"
+		"pino": "^8.19.0",
+		"pino-caller": "^3.4.0"
 	}
 }
