@@ -7,6 +7,7 @@ import { DefaultOrderResponse } from "./graphql/resolvers/DefaultOrderResponse";
 import { addToOrder as Mutation_addToOrder } from "./graphql/resolvers/Mutation/addToOrder";
 import { createOrder as Mutation_createOrder } from "./graphql/resolvers/Mutation/createOrder";
 import { deleteOrder as Mutation_deleteOrder } from "./graphql/resolvers/Mutation/deleteOrder";
+import { removeAllFromOrder as Mutation_removeAllFromOrder } from "./graphql/resolvers/Mutation/removeAllFromOrder";
 import { removeFromOrder as Mutation_removeFromOrder } from "./graphql/resolvers/Mutation/removeFromOrder";
 import { setOrderStatus as Mutation_setOrderStatus } from "./graphql/resolvers/Mutation/setOrderStatus";
 import { Order } from "./graphql/resolvers/Order";
@@ -46,6 +47,7 @@ export const resolvers: Resolvers = {
 		addToOrder: Mutation_addToOrder,
 		createOrder: Mutation_createOrder,
 		deleteOrder: Mutation_deleteOrder,
+		removeAllFromOrder: Mutation_removeAllFromOrder,
 		removeFromOrder: Mutation_removeFromOrder,
 		setOrderStatus: Mutation_setOrderStatus,
 	},

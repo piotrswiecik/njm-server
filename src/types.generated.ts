@@ -66,6 +66,7 @@ export type Mutation = {
 	addToOrder: Order;
 	createOrder: DefaultOrderResponse;
 	deleteOrder: DefaultOrderResponse;
+	removeAllFromOrder: Order;
 	removeFromOrder: Order;
 	setOrderStatus: DefaultOrderResponse;
 };
@@ -82,6 +83,12 @@ export type MutationcreateOrderArgs = {
 
 export type MutationdeleteOrderArgs = {
 	id: Scalars["ID"]["input"];
+};
+
+export type MutationremoveAllFromOrderArgs = {
+	from: Scalars["ID"]["input"];
+	product: Scalars["ID"]["input"];
+	variant: VariantEnum;
 };
 
 export type MutationremoveFromOrderArgs = {
@@ -430,6 +437,15 @@ export type MutationResolvers<
 		ParentType,
 		ContextType,
 		RequireFields<MutationdeleteOrderArgs, "id">
+	>;
+	removeAllFromOrder?: Resolver<
+		ResolversTypes["Order"],
+		ParentType,
+		ContextType,
+		RequireFields<
+			MutationremoveAllFromOrderArgs,
+			"from" | "product" | "variant"
+		>
 	>;
 	removeFromOrder?: Resolver<
 		ResolversTypes["Order"],
