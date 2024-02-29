@@ -43,7 +43,7 @@ type Variant {
   name: String!
   price: Int!
   stock: Int!
-  product: Product
+  product: Product!
 }
 
 type Track {

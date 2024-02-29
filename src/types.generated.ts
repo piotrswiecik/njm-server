@@ -204,7 +204,7 @@ export type Variant = {
 	id: Scalars["ID"]["output"];
 	name: Scalars["String"]["output"];
 	price: Scalars["Int"]["output"];
-	product?: Maybe<Product>;
+	product: Product;
 	stock: Scalars["Int"]["output"];
 };
 
@@ -586,7 +586,7 @@ export type VariantResolvers<
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	price?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-	product?: Resolver<Maybe<ResolversTypes["Product"]>, ParentType, ContextType>;
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
 	stock?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
