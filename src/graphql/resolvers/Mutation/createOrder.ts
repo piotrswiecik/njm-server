@@ -40,6 +40,9 @@ export const createOrder: NonNullable<
 		);
 		return { id: order.id };
 	} catch (err) {
+		if (err instanceof GraphQLError) {
+			throw err;
+		}
 		logger.error(err);
 		throw new GraphQLError(
 			`createOrder mutation failed - internal error, see logs for details.`,
