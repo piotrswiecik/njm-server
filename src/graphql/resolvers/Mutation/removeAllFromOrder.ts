@@ -6,7 +6,6 @@ export const removeAllFromOrder: NonNullable<
 	MutationResolvers["removeAllFromOrder"]
 > = async (_parent, _arg, _ctx) => {
 	/* Implement Mutation.removeAllFromOrder resolver logic here */
-	logger.info(`removeAllFromOrder called with ${JSON.stringify(_arg)}`);
 	try {
 		// order must exist
 		const dbOrder = await _ctx.db.order.findUnique({

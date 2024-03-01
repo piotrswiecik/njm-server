@@ -22,7 +22,6 @@ export const Order: OrderResolvers = {
 			logger.error(`User not found: ${_parent.user?.id}`);
 			throw new Error("User not found");
 		}
-		logger.info(`User found: ${dbUser.id}`);
 		return {
 			...dbUser,
 		};
