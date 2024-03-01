@@ -24,3 +24,7 @@ extend type Query {
   categoryCount(name: String!): Int!
   category(name: String!): Category
 }
+
+extend type Query {
+  productReviews(productId: ID!): [Review!]
+}

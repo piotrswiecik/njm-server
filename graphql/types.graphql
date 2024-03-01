@@ -28,7 +28,7 @@ type Collection {
   products: [Product!]!
 }
 
-type DefaultOrderResponse {
+type DefaultIdResponse {
   id: ID!
 }
 
@@ -61,6 +61,16 @@ type Product {
   category: Category!
   tracks: [Track!]!
   variants: [Variant!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  headline: String!
+  content: String!
+  user: User!
+  product: Product!
+
 }
 
 enum StatusEnum {

@@ -1,9 +1,13 @@
 extend type Mutation {
-  createOrder(userId: ID!): DefaultOrderResponse!
+  createOrder(userId: ID!): DefaultIdResponse!
   addToOrder(to: ID!, product: ID!, variant: VariantEnum!): Order!
   removeFromOrder(from: ID!, product: ID!, variant: VariantEnum!): Order!
   removeAllFromOrder(from: ID!, product: ID!, variant: VariantEnum!): Order!
-  deleteOrder(id: ID!): DefaultOrderResponse!
-  setOrderStatus(where: ID!, status: StatusEnum!): DefaultOrderResponse!
+  deleteOrder(id: ID!): DefaultIdResponse!
+  setOrderStatus(where: ID!, status: StatusEnum!): DefaultIdResponse!
 }
 
+extend type Mutation {
+  createReview(productId: ID!, rating: Int!, headline: String!, content: String!, userId: ID!): Review!
+  deleteReview(id: ID!): DefaultIdResponse!
+}

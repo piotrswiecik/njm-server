@@ -56,19 +56,21 @@ export type Collection = {
 	products: Array<Product>;
 };
 
-export type DefaultOrderResponse = {
-	__typename?: "DefaultOrderResponse";
+export type DefaultIdResponse = {
+	__typename?: "DefaultIdResponse";
 	id: Scalars["ID"]["output"];
 };
 
 export type Mutation = {
 	__typename?: "Mutation";
 	addToOrder: Order;
-	createOrder: DefaultOrderResponse;
-	deleteOrder: DefaultOrderResponse;
+	createOrder: DefaultIdResponse;
+	createReview: Review;
+	deleteOrder: DefaultIdResponse;
+	deleteReview: DefaultIdResponse;
 	removeAllFromOrder: Order;
 	removeFromOrder: Order;
-	setOrderStatus: DefaultOrderResponse;
+	setOrderStatus: DefaultIdResponse;
 };
 
 export type MutationaddToOrderArgs = {
@@ -81,7 +83,19 @@ export type MutationcreateOrderArgs = {
 	userId: Scalars["ID"]["input"];
 };
 
+export type MutationcreateReviewArgs = {
+	content: Scalars["String"]["input"];
+	headline: Scalars["String"]["input"];
+	productId: Scalars["ID"]["input"];
+	rating: Scalars["Int"]["input"];
+	userId: Scalars["ID"]["input"];
+};
+
 export type MutationdeleteOrderArgs = {
+	id: Scalars["ID"]["input"];
+};
+
+export type MutationdeleteReviewArgs = {
 	id: Scalars["ID"]["input"];
 };
 
@@ -145,6 +159,7 @@ export type Query = {
 	orders: Array<Order>;
 	product?: Maybe<Product>;
 	productCount: Scalars["Int"]["output"];
+	productReviews?: Maybe<Array<Review>>;
 	productSearch?: Maybe<Array<Product>>;
 	products: Array<Product>;
 	user?: Maybe<User>;
@@ -172,6 +187,10 @@ export type QueryproductArgs = {
 	id: Scalars["ID"]["input"];
 };
 
+export type QueryproductReviewsArgs = {
+	productId: Scalars["ID"]["input"];
+};
+
 export type QueryproductSearchArgs = {
 	query: Scalars["String"]["input"];
 };
@@ -183,6 +202,16 @@ export type QueryproductsArgs = {
 
 export type QueryuserArgs = {
 	id: Scalars["ID"]["input"];
+};
+
+export type Review = {
+	__typename?: "Review";
+	content: Scalars["String"]["output"];
+	headline: Scalars["String"]["output"];
+	id: Scalars["ID"]["output"];
+	product: Product;
+	rating: Scalars["Int"]["output"];
+	user: User;
 };
 
 export type StatusEnum =
@@ -330,13 +359,14 @@ export type ResolversTypes = {
 	ID: ResolverTypeWrapper<Mapper<Scalars["ID"]["output"]>>;
 	Int: ResolverTypeWrapper<Mapper<Scalars["Int"]["output"]>>;
 	Collection: ResolverTypeWrapper<Mapper<Collection>>;
-	DefaultOrderResponse: ResolverTypeWrapper<Mapper<DefaultOrderResponse>>;
+	DefaultIdResponse: ResolverTypeWrapper<Mapper<DefaultIdResponse>>;
 	Mutation: ResolverTypeWrapper<{}>;
 	Order: ResolverTypeWrapper<Mapper<Order>>;
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
 	OrderItemInput: ResolverTypeWrapper<Mapper<OrderItemInput>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
 	Query: ResolverTypeWrapper<{}>;
+	Review: ResolverTypeWrapper<Mapper<Review>>;
 	StatusEnum: ResolverTypeWrapper<Mapper<StatusEnum>>;
 	Track: ResolverTypeWrapper<Mapper<Track>>;
 	User: ResolverTypeWrapper<Mapper<User>>;
@@ -353,13 +383,14 @@ export type ResolversParentTypes = {
 	ID: Mapper<Scalars["ID"]["output"]>;
 	Int: Mapper<Scalars["Int"]["output"]>;
 	Collection: Mapper<Collection>;
-	DefaultOrderResponse: Mapper<DefaultOrderResponse>;
+	DefaultIdResponse: Mapper<DefaultIdResponse>;
 	Mutation: {};
 	Order: Mapper<Order>;
 	OrderItem: Mapper<OrderItem>;
 	OrderItemInput: Mapper<OrderItemInput>;
 	Product: Mapper<Product>;
 	Query: {};
+	Review: Mapper<Review>;
 	Track: Mapper<Track>;
 	User: Mapper<User>;
 	Boolean: Mapper<Scalars["Boolean"]["output"]>;
@@ -406,10 +437,10 @@ export type CollectionResolvers<
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DefaultOrderResponseResolvers<
+export type DefaultIdResponseResolvers<
 	ContextType = ServerContext,
 	ParentType extends
-		ResolversParentTypes["DefaultOrderResponse"] = ResolversParentTypes["DefaultOrderResponse"],
+		ResolversParentTypes["DefaultIdResponse"] = ResolversParentTypes["DefaultIdResponse"],
 > = {
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -427,16 +458,31 @@ export type MutationResolvers<
 		RequireFields<MutationaddToOrderArgs, "product" | "to" | "variant">
 	>;
 	createOrder?: Resolver<
-		ResolversTypes["DefaultOrderResponse"],
+		ResolversTypes["DefaultIdResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationcreateOrderArgs, "userId">
 	>;
+	createReview?: Resolver<
+		ResolversTypes["Review"],
+		ParentType,
+		ContextType,
+		RequireFields<
+			MutationcreateReviewArgs,
+			"content" | "headline" | "productId" | "rating" | "userId"
+		>
+	>;
 	deleteOrder?: Resolver<
-		ResolversTypes["DefaultOrderResponse"],
+		ResolversTypes["DefaultIdResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationdeleteOrderArgs, "id">
+	>;
+	deleteReview?: Resolver<
+		ResolversTypes["DefaultIdResponse"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationdeleteReviewArgs, "id">
 	>;
 	removeAllFromOrder?: Resolver<
 		ResolversTypes["Order"],
@@ -454,7 +500,7 @@ export type MutationResolvers<
 		RequireFields<MutationremoveFromOrderArgs, "from" | "product" | "variant">
 	>;
 	setOrderStatus?: Resolver<
-		ResolversTypes["DefaultOrderResponse"],
+		ResolversTypes["DefaultIdResponse"],
 		ParentType,
 		ContextType,
 		RequireFields<MutationsetOrderStatusArgs, "status" | "where">
@@ -551,6 +597,12 @@ export type QueryResolvers<
 		RequireFields<QueryproductArgs, "id">
 	>;
 	productCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	productReviews?: Resolver<
+		Maybe<Array<ResolversTypes["Review"]>>,
+		ParentType,
+		ContextType,
+		RequireFields<QueryproductReviewsArgs, "productId">
+	>;
 	productSearch?: Resolver<
 		Maybe<Array<ResolversTypes["Product"]>>,
 		ParentType,
@@ -570,6 +622,20 @@ export type QueryResolvers<
 		RequireFields<QueryuserArgs, "id">
 	>;
 	users?: Resolver<Array<ResolversTypes["User"]>, ParentType, ContextType>;
+};
+
+export type ReviewResolvers<
+	ContextType = ServerContext,
+	ParentType extends
+		ResolversParentTypes["Review"] = ResolversParentTypes["Review"],
+> = {
+	content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	headline?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;
+	rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type TrackResolvers<
@@ -611,12 +677,13 @@ export type Resolvers<ContextType = ServerContext> = {
 	Artist?: ArtistResolvers<ContextType>;
 	Category?: CategoryResolvers<ContextType>;
 	Collection?: CollectionResolvers<ContextType>;
-	DefaultOrderResponse?: DefaultOrderResponseResolvers<ContextType>;
+	DefaultIdResponse?: DefaultIdResponseResolvers<ContextType>;
 	Mutation?: MutationResolvers<ContextType>;
 	Order?: OrderResolvers<ContextType>;
 	OrderItem?: OrderItemResolvers<ContextType>;
 	Product?: ProductResolvers<ContextType>;
 	Query?: QueryResolvers<ContextType>;
+	Review?: ReviewResolvers<ContextType>;
 	Track?: TrackResolvers<ContextType>;
 	User?: UserResolvers<ContextType>;
 	Variant?: VariantResolvers<ContextType>;
