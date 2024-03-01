@@ -233,6 +233,7 @@ export type User = {
 	email: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
 	isActive: Scalars["Boolean"]["output"];
+	name: Scalars["String"]["output"];
 };
 
 export type Variant = {
@@ -657,6 +658,7 @@ export type UserResolvers<
 	email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	isActive?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+	name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
