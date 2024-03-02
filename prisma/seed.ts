@@ -110,6 +110,30 @@ if (process.argv.includes("--drop")) {
 					console.log(err);
 				});
 		});
+} else if (process.argv.includes("--seed-reviews")) {
+	seedReviews()
+		.then(() => {
+			console.log("Seeding reviews complete!");
+			prisma
+				.$disconnect()
+				.then(() => {
+					console.log("Connection to database closed.");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		})
+		.catch((e) => {
+			console.error(e);
+			prisma
+				.$disconnect()
+				.then(() => {
+					console.log("Connection to database closed.");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		});
 }
 
 async function seed() {
@@ -296,7 +320,7 @@ async function seedUsers() {
 	});
 
 	await Promise.all(
-		[...Array(10).keys()].map(async () => {
+		[...Array(30).keys()].map(async () => {
 			await prisma.user.create({
 				data: {
 					email: faker.internet.email(),
@@ -304,6 +328,39 @@ async function seedUsers() {
 					isActive: true,
 				},
 			});
+		}),
+	);
+}
+
+async function seedReviews() {
+	const allProducts = await prisma.product.findMany();
+	const allUsers = await prisma.user.findMany();
+
+	// 50% of products will have reviews
+	const productsWithReviews = allProducts
+		.sort(() => Math.random() - 0.5)
+		.slice(0, allProducts.length / 2);
+
+	await Promise.all(
+		productsWithReviews.map(async (product) => {
+			for (let i = 0; i < Math.floor(1 + Math.random() * 3); i++) {
+				await prisma.review.create({
+					data: {
+						product: {
+							connect: { id: product.id },
+						},
+						user: {
+							connect: {
+								id: allUsers[Math.floor(Math.random() * allUsers.length)].id,
+							},
+						},
+						rating: Math.floor(1 + Math.random() * 5),
+						content: faker.lorem.paragraph({ min: 1, max: 5 }),
+						headline: faker.lorem.sentence({ min: 3, max: 10 }),
+						dateCreated: new Date(),
+					},
+				});
+			}
 		}),
 	);
 }
