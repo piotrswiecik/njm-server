@@ -159,7 +159,7 @@ export type Query = {
 	orders: Array<Order>;
 	product?: Maybe<Product>;
 	productCount: Scalars["Int"]["output"];
-	productReviews?: Maybe<Array<Review>>;
+	productReviews: Array<Review>;
 	productSearch?: Maybe<Array<Product>>;
 	products: Array<Product>;
 	user?: Maybe<User>;
@@ -600,7 +600,7 @@ export type QueryResolvers<
 	>;
 	productCount?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
 	productReviews?: Resolver<
-		Maybe<Array<ResolversTypes["Review"]>>,
+		Array<ResolversTypes["Review"]>,
 		ParentType,
 		ContextType,
 		RequireFields<QueryproductReviewsArgs, "productId">

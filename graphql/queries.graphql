@@ -26,5 +26,5 @@ extend type Query {
 }
 
 extend type Query {
-  productReviews(productId: ID!): [Review!]
+  productReviews(productId: ID!): [Review!]!
 }
