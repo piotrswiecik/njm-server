@@ -64,6 +64,7 @@ export const createReview: NonNullable<
 				rating: _arg.rating,
 				headline: _arg.headline,
 				content: _arg.content,
+				dateCreated: new Date(),
 			},
 		});
 		logger.info(

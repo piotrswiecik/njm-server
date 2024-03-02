@@ -106,5 +106,6 @@ model Review {
   product       Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   headline      String
   content       String
-  rating        Int       
+  rating        Int
+  dateCreated   DateTime       
 }
