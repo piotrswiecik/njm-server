@@ -207,6 +207,7 @@ export type QueryuserArgs = {
 export type Review = {
 	__typename?: "Review";
 	content: Scalars["String"]["output"];
+	dateCreated: Scalars["String"]["output"];
 	headline: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
 	product: Product;
@@ -631,6 +632,7 @@ export type ReviewResolvers<
 		ResolversParentTypes["Review"] = ResolversParentTypes["Review"],
 > = {
 	content?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+	dateCreated?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	headline?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
 	product?: Resolver<ResolversTypes["Product"], ParentType, ContextType>;

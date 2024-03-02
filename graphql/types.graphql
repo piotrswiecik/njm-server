@@ -71,7 +71,7 @@ type Review {
   content: String!
   user: User!
   product: Product!
-
+  dateCreated: String!
 }
 
 enum StatusEnum {

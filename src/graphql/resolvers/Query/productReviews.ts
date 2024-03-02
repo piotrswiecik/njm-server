@@ -11,7 +11,10 @@ export const productReviews: NonNullable<
 				productId: _arg.productId,
 			},
 		});
-		return reviews;
+		return reviews.map((review) => ({
+			...review,
+			dateCreated: review.dateCreated.toISOString(),
+		}));
 	} catch (err) {
 		if (err instanceof GraphQLError) {
 			throw err;

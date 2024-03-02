@@ -70,7 +70,7 @@ export const createReview: NonNullable<
 		logger.info(
 			`createReview mutation, created review with id=${newReview.id} for product=${newReview.productId} by user=${newReview.userId}`,
 		);
-		return newReview;
+		return { ...newReview, dateCreated: newReview.dateCreated.toISOString() };
 	} catch (err) {
 		if (err instanceof GraphQLError) {
 			throw err;
