@@ -1,12 +1,14 @@
 import { PrismaClient } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 import { mockDataFromJson } from "./mockdata/converter";
 
 const prisma = new PrismaClient();
 
-if 
-	(process.argv.includes("--drop") && (process.argv.includes("--seed") ||
-	process.argv.includes("--seed-collections")))
- {
+if (
+	process.argv.includes("--drop") &&
+	(process.argv.includes("--seed") ||
+		process.argv.includes("--seed-collections"))
+) {
 	console.error("You can't drop and seed at the same time. Exiting.");
 	process.exit(1);
 }
@@ -84,6 +86,30 @@ if (process.argv.includes("--drop")) {
 					console.log(err);
 				});
 		});
+} else if (process.argv.includes("--seed-users")) {
+	seedUsers()
+		.then(() => {
+			console.log("Seeding users complete!");
+			prisma
+				.$disconnect()
+				.then(() => {
+					console.log("Connection to database closed.");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		})
+		.catch((e) => {
+			console.error(e);
+			prisma
+				.$disconnect()
+				.then(() => {
+					console.log("Connection to database closed.");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		});
 }
 
 async function seed() {
@@ -109,7 +135,6 @@ async function seed() {
 	const mockData = await mockDataFromJson();
 
 	for (const product of mockData) {
-
 		// create artist if not exists
 		let artist;
 		artist = await prisma.artist.findFirst({
@@ -130,7 +155,10 @@ async function seed() {
 		if (artist === null) throw new Error("Error creating artist.");
 
 		// create product
-		const imageUrl = product.images[0] !== undefined ? product.images[0].url : "https://via.placeholder.com/300";
+		const imageUrl =
+			product.images[0] !== undefined
+				? product.images[0].url
+				: "https://via.placeholder.com/300";
 		const productCategory = await prisma.category.findFirst({
 			where: {
 				name: product.genre,
@@ -156,16 +184,20 @@ async function seed() {
 						data: [
 							{
 								name: "cd",
-								stock: Math.floor(Math.random() < 0.2 ? 0 : Math.random() * 100),
+								stock: Math.floor(
+									Math.random() < 0.2 ? 0 : Math.random() * 100,
+								),
 								price: Math.floor(20 + Math.random() * 40),
 							},
 							{
 								name: "lp",
-								stock: Math.floor(Math.random() < 0.2 ? 0 : Math.random() * 100),
+								stock: Math.floor(
+									Math.random() < 0.2 ? 0 : Math.random() * 100,
+								),
 								price: Math.floor(20 + Math.random() * 40),
 							},
 						],
-					}
+					},
 				},
 				tracks: {
 					createMany: {
@@ -184,11 +216,7 @@ async function seed() {
 }
 
 async function seedCollections() {
-	const allCollections = [
-		"new",
-		"bestsellers",
-		"staffpicks",
-	];
+	const allCollections = ["new", "bestsellers", "staffpicks"];
 
 	const allProducts = await prisma.product.findMany();
 
@@ -255,7 +283,29 @@ async function seedCollections() {
 			},
 		});
 	}
+}
 
+async function seedUsers() {
+	await prisma.user.create({
+		data: {
+			id: "dbe0705a-87d0-4c11-9432-f55895360016",
+			email: "piotr@test.pl",
+			name: "Piotr",
+			isActive: true,
+		},
+	});
+
+	await Promise.all(
+		[...Array(10).keys()].map(async () => {
+			await prisma.user.create({
+				data: {
+					email: faker.internet.email(),
+					name: faker.person.firstName(),
+					isActive: true,
+				},
+			});
+		}),
+	);
 }
 
 async function drop() {
