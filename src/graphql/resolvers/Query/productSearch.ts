@@ -19,6 +19,7 @@ export const productSearch: NonNullable<
 		return dbSearchResult.map((product) => ({
 			...product,
 			releaseDate: product.releaseDate.toISOString(),
+			numRatings: 0,
 		}));
 	} catch (err) {
 		logger.error(err);

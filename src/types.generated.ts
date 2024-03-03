@@ -143,6 +143,8 @@ export type Product = {
 	category: Category;
 	coverImageUrl: Scalars["String"]["output"];
 	id: Scalars["ID"]["output"];
+	numRatings: Scalars["Int"]["output"];
+	rating?: Maybe<Scalars["Float"]["output"]>;
 	releaseDate: Scalars["String"]["output"];
 	title: Scalars["String"]["output"];
 	tracks: Array<Track>;
@@ -168,6 +170,7 @@ export type Query = {
 
 export type QuerycategoryArgs = {
 	name: Scalars["String"]["input"];
+	sort?: InputMaybe<SortInput>;
 };
 
 export type QuerycategoryCountArgs = {
@@ -197,6 +200,7 @@ export type QueryproductSearchArgs = {
 
 export type QueryproductsArgs = {
 	skip?: InputMaybe<Scalars["Int"]["input"]>;
+	sort?: InputMaybe<SortInput>;
 	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
@@ -213,6 +217,13 @@ export type Review = {
 	product: Product;
 	rating: Scalars["Int"]["output"];
 	user: User;
+};
+
+export type SortEnum = "asc" | "desc";
+
+export type SortInput = {
+	price?: InputMaybe<SortEnum>;
+	rating?: InputMaybe<SortEnum>;
 };
 
 export type StatusEnum =
@@ -367,8 +378,11 @@ export type ResolversTypes = {
 	OrderItem: ResolverTypeWrapper<Mapper<OrderItem>>;
 	OrderItemInput: ResolverTypeWrapper<Mapper<OrderItemInput>>;
 	Product: ResolverTypeWrapper<Mapper<Product>>;
+	Float: ResolverTypeWrapper<Mapper<Scalars["Float"]["output"]>>;
 	Query: ResolverTypeWrapper<{}>;
 	Review: ResolverTypeWrapper<Mapper<Review>>;
+	SortEnum: ResolverTypeWrapper<Mapper<SortEnum>>;
+	SortInput: ResolverTypeWrapper<Mapper<SortInput>>;
 	StatusEnum: ResolverTypeWrapper<Mapper<StatusEnum>>;
 	Track: ResolverTypeWrapper<Mapper<Track>>;
 	User: ResolverTypeWrapper<Mapper<User>>;
@@ -391,8 +405,10 @@ export type ResolversParentTypes = {
 	OrderItem: Mapper<OrderItem>;
 	OrderItemInput: Mapper<OrderItemInput>;
 	Product: Mapper<Product>;
+	Float: Mapper<Scalars["Float"]["output"]>;
 	Query: {};
 	Review: Mapper<Review>;
+	SortInput: Mapper<SortInput>;
 	Track: Mapper<Track>;
 	User: Mapper<User>;
 	Boolean: Mapper<Scalars["Boolean"]["output"]>;
@@ -546,6 +562,8 @@ export type ProductResolvers<
 	category?: Resolver<ResolversTypes["Category"], ParentType, ContextType>;
 	coverImageUrl?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+	numRatings?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+	rating?: Resolver<Maybe<ResolversTypes["Float"]>, ParentType, ContextType>;
 	releaseDate?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
 	tracks?: Resolver<Array<ResolversTypes["Track"]>, ParentType, ContextType>;

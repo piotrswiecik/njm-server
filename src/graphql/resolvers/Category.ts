@@ -24,6 +24,7 @@ export const Category: CategoryResolvers = {
 		return dbProducts.map((product) => ({
 			...product,
 			releaseDate: product.releaseDate.toISOString(),
+			numRatings: 0,
 		}));
 	},
 };

@@ -15,6 +15,7 @@ export const product: NonNullable<QueryResolvers["product"]> = async (
 		return {
 			...dbProduct,
 			releaseDate: dbProduct.releaseDate.toISOString(),
+			numRatings: 0,
 		};
 	} catch (err) {
 		logger.error(err);

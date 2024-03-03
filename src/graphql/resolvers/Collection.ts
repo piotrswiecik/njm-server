@@ -13,6 +13,7 @@ export const Collection: CollectionResolvers = {
 		return dbProducts.map((product) => ({
 			...product,
 			releaseDate: product.releaseDate.toISOString(),
+			numRatings: 0,
 		}));
 	},
 };

@@ -82,4 +82,16 @@ export const Product: ProductResolvers = {
 			);
 		}
 	},
+	numRatings: async (parent, _args, _ctx) => {
+		return _ctx.db.review.count({
+			where: { productId: parent.id },
+		});
+	},
+	rating: async (parent, _args, _ctx) => {
+		const aggregate = await _ctx.db.review.aggregate({
+			where: { productId: parent.id },
+			_avg: { rating: true },
+		});
+		return aggregate._avg?.rating || null;
+	},
 };

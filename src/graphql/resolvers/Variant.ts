@@ -15,6 +15,7 @@ export const Variant: VariantResolvers = {
 		return {
 			...product,
 			releaseDate: product.releaseDate?.toISOString(),
+			numRatings: 0,
 		};
 	},
 };

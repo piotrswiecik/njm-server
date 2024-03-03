@@ -42,7 +42,11 @@ export const Review: ReviewResolvers = {
 					`resolver failed - product for review ${_parent.id} not found`,
 				);
 			}
-			return { ...product, releaseDate: product.releaseDate.toISOString() };
+			return {
+				...product,
+				releaseDate: product.releaseDate.toISOString(),
+				numRatings: 0,
+			};
 		} catch (err) {
 			if (err instanceof GraphQLError) {
 				throw err;
