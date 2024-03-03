@@ -22,36 +22,48 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 
 	// TODO: make this reusable in other resolvers (DRY)
 
-	// sorting from many->one requires a workaround
+	// sorting with aggregation doesn't work with prisma yet
+	// TODO: maybe optimize with raw query
 	if (_arg.sort === "rating") {
-		// const withReviews = await _ctx.db.product.findMany({
-		// 	where: {
-		// 		reviews: {
-		// 			some: {},
-		// 		},
-		// 	},
-		// 	include: {
-		// 		reviews: true,
-		// 	},
-		// });
-		// const mapped = withReviews.map((product) => {
-		// 	const avgRating =
-		// 		product.reviews.reduce((acc, next) => {
-		// 			return acc + next.rating ?? 0;
-		// 		}, 0) / product.reviews.length;
-		// 	return { ...product, avgRating };
-		// });
-		// const sorted = mapped.sort((x, y) => {
-		// 	return (
-		// 		// just use asc as default for any param for now...
-		// 		(y.avgRating - x.avgRating) * (_arg.order === "desc" ? -1 : 1)
-		// 	);
-		// });
-		// return sorted.map((product) => ({
-		// 	...product,
-		// 	releaseDate: product.releaseDate.toISOString(),
-		// 	numRatings: product.reviews.length,
-		// }));
+		const withReviews = await _ctx.db.product.findMany({
+			where: {
+				reviews: {
+					some: {},
+				},
+			},
+			include: {
+				reviews: true,
+			},
+		});
+		const withoutReviews = await _ctx.db.product.findMany({
+			where: {
+				reviews: {
+					none: {},
+				},
+			},
+		});
+		const withAverages = withReviews.map((product) => {
+			const avgRating =
+				product.reviews.reduce((acc, next) => {
+					return acc + next.rating ?? 0;
+				}, 0) / product.reviews.length;
+			return { ...product, avgRating };
+		});
+		const sorted = withAverages.sort((x, y) => {
+			return (x.avgRating - y.avgRating) * (_arg.order === "desc" ? -1 : 1);
+		});
+
+		const merged = [...sorted, ...withoutReviews];
+
+		const offset = _arg.skip || 0;
+		const limit = _arg.take ? offset + _arg.take : sorted.length;
+		const paginated = merged.slice(offset, limit);
+
+		return paginated.map((product) => ({
+			...product,
+			releaseDate: product.releaseDate.toISOString(),
+			numRatings: 0,
+		}));
 	}
 
 	// sorting with aggregation doesn't work with prisma yet
@@ -67,20 +79,19 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 			},
 		});
 
-		const priced = products.map((product) => ({
+		const withMinPrice = products.map((product) => ({
 			...product,
 			price: Math.min(...product.variants.map((variant) => variant.price)),
 		}));
 
-		const sorted = priced.sort(
+		const sorted = withMinPrice.sort(
 			(x, y) => (x.price - y.price) * (_arg.order === "desc" ? -1 : 1),
 		);
 
 		const offset = _arg.skip || 0;
 		const limit = _arg.take ? offset + _arg.take : sorted.length;
 		const paginated = sorted.slice(offset, limit);
-		
-		console.log("returning sorted records - by px");
+
 		return paginated.map((product) => ({
 			...product,
 			releaseDate: product.releaseDate.toISOString(),
