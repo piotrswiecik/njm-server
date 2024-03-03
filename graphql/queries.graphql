@@ -15,14 +15,14 @@ extend type Query {
 
 extend type Query {
   product(id: ID!): Product
-  products(skip: Int, take: Int, sort: SortInput): [Product!]!
+  products(skip: Int, take: Int, sort: String, order: String): [Product!]!
   productSearch(query: String!): [Product!]
   productCount: Int!
 }
 
 extend type Query {
   categoryCount(name: String!): Int!
-  category(name: String!, sort: SortInput): Category
+  category(name: String!, sort: String, order: String): Category
 }
 
 extend type Query {

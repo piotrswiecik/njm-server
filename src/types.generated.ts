@@ -170,7 +170,8 @@ export type Query = {
 
 export type QuerycategoryArgs = {
 	name: Scalars["String"]["input"];
-	sort?: InputMaybe<SortInput>;
+	order?: InputMaybe<Scalars["String"]["input"]>;
+	sort?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QuerycategoryCountArgs = {
@@ -199,8 +200,9 @@ export type QueryproductSearchArgs = {
 };
 
 export type QueryproductsArgs = {
+	order?: InputMaybe<Scalars["String"]["input"]>;
 	skip?: InputMaybe<Scalars["Int"]["input"]>;
-	sort?: InputMaybe<SortInput>;
+	sort?: InputMaybe<Scalars["String"]["input"]>;
 	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
