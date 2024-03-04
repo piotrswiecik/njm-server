@@ -20,8 +20,6 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 		queryOptions.take = _arg.take;
 	}
 
-	// TODO: make this reusable in other resolvers (DRY)
-
 	// sorting with aggregation doesn't work with prisma yet
 	// TODO: maybe optimize with raw query
 	if (_arg.sort === "rating") {

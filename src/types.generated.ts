@@ -45,7 +45,9 @@ export type Category = {
 };
 
 export type CategoryproductsArgs = {
+	order?: InputMaybe<Scalars["String"]["input"]>;
 	skip?: InputMaybe<Scalars["Int"]["input"]>;
+	sort?: InputMaybe<Scalars["String"]["input"]>;
 	take?: InputMaybe<Scalars["Int"]["input"]>;
 };
 
@@ -170,8 +172,6 @@ export type Query = {
 
 export type QuerycategoryArgs = {
 	name: Scalars["String"]["input"];
-	order?: InputMaybe<Scalars["String"]["input"]>;
-	sort?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QuerycategoryCountArgs = {

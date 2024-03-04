@@ -5,7 +5,7 @@ type Artist {
 type Category {
   id: ID!
   name: String!
-  products(skip: Int, take: Int): [Product!]!
+  products(skip: Int, take: Int, sort: String, order: String): [Product!]!
 }
 
 type Order {

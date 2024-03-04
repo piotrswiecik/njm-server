@@ -22,7 +22,7 @@ extend type Query {
 
 extend type Query {
   categoryCount(name: String!): Int!
-  category(name: String!, sort: String, order: String): Category
+  category(name: String!): Category
 }
 
 extend type Query {
