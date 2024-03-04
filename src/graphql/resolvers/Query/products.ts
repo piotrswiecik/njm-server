@@ -22,6 +22,7 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 
 	// sorting with aggregation doesn't work with prisma yet
 	// TODO: maybe optimize with raw query
+	// TODO: code reuse
 	if (_arg.sort === "rating") {
 		const withReviews = await _ctx.db.product.findMany({
 			where: {
@@ -66,6 +67,7 @@ export const products: NonNullable<QueryResolvers["products"]> = async (
 
 	// sorting with aggregation doesn't work with prisma yet
 	// TODO: maybe optimize with raw query
+	// TODO: code reuse
 	if (_arg.sort === "price") {
 		const products = await _ctx.db.product.findMany({
 			include: {
