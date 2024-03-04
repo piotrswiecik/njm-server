@@ -9,6 +9,7 @@ type QueryOptions = {
 export const Category: CategoryResolvers = {
 	/* Implement Category resolver logic here */
 	products: async (parent, _args, _ctx) => {
+		logger.info(_args);
 		const queryOptions = {} as QueryOptions;
 		if (_args.skip) {
 			queryOptions.skip = _args.skip;
@@ -60,7 +61,6 @@ export const Category: CategoryResolvers = {
 
 		// TODO: code reuse
 		if (_args.sort === "rating") {
-			logger.info("sorting by rating");
 			const withReviews = await _ctx.db.product.findMany({
 				where: {
 					reviews: {
@@ -100,7 +100,7 @@ export const Category: CategoryResolvers = {
 			const offset = _args.skip || 0;
 			const limit = _args.take ? offset + _args.take : sorted.length;
 			const paginated = merged.slice(offset, limit);
-
+			
 			return paginated.map((product) => ({
 				...product,
 				releaseDate: product.releaseDate.toISOString(),
