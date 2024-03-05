@@ -10,4 +10,4 @@ images:
     newTag: 16-bookworm
   - name: graphql-server
     newName: ghcr.io/piotrswiecik/njm-server
-    newTag: "73fd6fcf2c060cd136e55c90beaac5678d8ba855"
+    newTag: "7ea7a0f045cf988923830cdb018889137d5461e8"
