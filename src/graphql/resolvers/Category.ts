@@ -1,4 +1,3 @@
-import { logger } from "../../utils/logger";
 import type { CategoryResolvers } from "./../../types.generated";
 
 type QueryOptions = {
@@ -9,7 +8,6 @@ type QueryOptions = {
 export const Category: CategoryResolvers = {
 	/* Implement Category resolver logic here */
 	products: async (parent, _args, _ctx) => {
-		logger.info(_args);
 		const queryOptions = {} as QueryOptions;
 		if (_args.skip) {
 			queryOptions.skip = _args.skip;

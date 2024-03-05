@@ -204,19 +204,19 @@ async function seed() {
 				},
 				variants: {
 					createMany: {
-						// create 2 variants for each product, 20% chance of being out of stock
+						// create 2 variants for each product, 5% chance of being out of stock
 						data: [
 							{
 								name: "cd",
 								stock: Math.floor(
-									Math.random() < 0.2 ? 0 : Math.random() * 100,
+									Math.random() < 0.05 ? 0 : Math.random() * 100,
 								),
 								price: Math.floor(20 + Math.random() * 40),
 							},
 							{
 								name: "lp",
 								stock: Math.floor(
-									Math.random() < 0.2 ? 0 : Math.random() * 100,
+									Math.random() < 0.05 ? 0 : Math.random() * 100,
 								),
 								price: Math.floor(20 + Math.random() * 40),
 							},
