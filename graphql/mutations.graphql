@@ -11,3 +11,7 @@ extend type Mutation {
   createReview(productId: ID!, rating: Int!, headline: String!, content: String!, userId: ID!): Review!
   deleteReview(id: ID!): DefaultIdResponse!
 }
+
+extend type Mutation {
+  createUser(id: ID!, email: String!, name: String!): User!
+}

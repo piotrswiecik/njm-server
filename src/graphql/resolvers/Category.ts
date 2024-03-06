@@ -32,7 +32,7 @@ export const Category: CategoryResolvers = {
 						category: {
 							id: parent.id,
 						},
-					}
+					},
 				});
 			if (!dbProducts) {
 				return [];
@@ -98,7 +98,7 @@ export const Category: CategoryResolvers = {
 			const offset = _args.skip || 0;
 			const limit = _args.take ? offset + _args.take : sorted.length;
 			const paginated = merged.slice(offset, limit);
-			
+
 			return paginated.map((product) => ({
 				...product,
 				releaseDate: product.releaseDate.toISOString(),

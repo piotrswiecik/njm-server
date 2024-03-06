@@ -68,6 +68,7 @@ export type Mutation = {
 	addToOrder: Order;
 	createOrder: DefaultIdResponse;
 	createReview: Review;
+	createUser: User;
 	deleteOrder: DefaultIdResponse;
 	deleteReview: DefaultIdResponse;
 	removeAllFromOrder: Order;
@@ -91,6 +92,12 @@ export type MutationcreateReviewArgs = {
 	productId: Scalars["ID"]["input"];
 	rating: Scalars["Int"]["input"];
 	userId: Scalars["ID"]["input"];
+};
+
+export type MutationcreateUserArgs = {
+	email: Scalars["String"]["input"];
+	id: Scalars["ID"]["input"];
+	name: Scalars["String"]["input"];
 };
 
 export type MutationdeleteOrderArgs = {
@@ -491,6 +498,12 @@ export type MutationResolvers<
 			MutationcreateReviewArgs,
 			"content" | "headline" | "productId" | "rating" | "userId"
 		>
+	>;
+	createUser?: Resolver<
+		ResolversTypes["User"],
+		ParentType,
+		ContextType,
+		RequireFields<MutationcreateUserArgs, "email" | "id" | "name">
 	>;
 	deleteOrder?: Resolver<
 		ResolversTypes["DefaultIdResponse"],
