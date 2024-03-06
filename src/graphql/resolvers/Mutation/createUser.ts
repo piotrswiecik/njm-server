@@ -1,4 +1,5 @@
 import { GraphQLError } from "graphql";
+import { logger } from "../../../utils/logger";
 import type { MutationResolvers } from "./../../../types.generated";
 export const createUser: NonNullable<MutationResolvers["createUser"]> = async (
 	_parent,
@@ -10,6 +11,7 @@ export const createUser: NonNullable<MutationResolvers["createUser"]> = async (
 		where: { id: _arg.id, email: _arg.email },
 	});
 	if (dbUser) {
+		logger.error("User already exists");
 		throw new GraphQLError("User already exists");
 	}
 	const newUser = await _ctx.db.user.create({
