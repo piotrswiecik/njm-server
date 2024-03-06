@@ -21,6 +21,14 @@ spec:
                 name: db
             - secretRef:
                 name: db
+          volumeMounts:
+            - name: db
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: db
+          hostPath: 
+            path: /var/appdata/njmdb
+            type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
