@@ -35,12 +35,13 @@ kind: Service
 metadata:
   name: db
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: db
   ports:
     - port: 5432
       targetPort: 5432
+      nodePort: 30001
       protocol: TCP
 ---
 apiVersion: v1
