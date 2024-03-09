@@ -1,7 +1,13 @@
 # NJM Server
 
 Node.js GraphQL backend for Next.js Masters course. Provides mock e-commerce data for demo record store. 
-GraphQL API is based on Apollo server wrapped as Express.js middleware. 
+
+## Features
+
+Apollo GraphQL API with Express middleware.
+Automated GraphQL workflow with Codegen.
+Postgresql via Prisma ORM.
+Recombee AI recommender API integration.
 
 ## Running in development
 
@@ -71,4 +77,16 @@ DATABASE_HOST # as "host:port" e.g. db:5432
 DATABASE_NAME
 NODE_ENV # development || production
 NODE_PORT # graphql & rest server port, default 8000
+
+# recommender
+RECOMBEE_DB_NAME
+RECOMBEE_API_KEY
+RECOMBEE_DEFAULT_REGION
+```
+
+## Recommender engine
+
+```shell
+# configure database definitions
+npx ts-node src/recommender/init.ts
 ```
