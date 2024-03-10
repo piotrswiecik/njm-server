@@ -13,25 +13,26 @@ const prepareData = async () => {
 		},
 	});
 
-	const parsedData: RecommenderItemProps[] = data
-		.map((product) => {
-			return {
-        productId: product.id,
-        artistName: product.artist.name,
-        title: product.title,
-        imageUrl: product.coverImageUrl,
-      }
-		});
+	const parsedData: RecommenderItemProps[] = data.map((product) => {
+		return {
+			productId: product.id,
+			artistName: product.artist.name,
+			title: product.title,
+			imageUrl: product.coverImageUrl,
+		};
+	});
 
 	return parsedData;
 };
 
 const seed = async () => {
 	const data = await prepareData();
-  await Promise.all(data.map(async (item) => {
-    const res = await client.send(new reqs.AddItem(item.productId));
-    console.log(res);
-  }));
+	await Promise.all(
+		data.map(async (item) => {
+			const res = await client.send(new reqs.AddItem(item.productId));
+			console.log(res);
+		}),
+	);
 	await client.send(new reqs.AddUser("anonymous"));
 };
 
