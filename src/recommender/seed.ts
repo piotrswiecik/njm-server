@@ -32,6 +32,7 @@ const seed = async () => {
     const res = await client.send(new reqs.AddItem(item.productId));
     console.log(res);
   }));
+	await client.send(new reqs.AddUser("anonymous"));
 };
 
 if (process.argv.includes("--clear")) {
