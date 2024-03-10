@@ -18,6 +18,7 @@ extend type Query {
   products(skip: Int, take: Int, sort: String, order: String): [Product!]!
   productSearch(query: String!): [Product!]
   productCount: Int!
+  productRange(in: [ID!]!): [Product!]
 }
 
 extend type Query {
