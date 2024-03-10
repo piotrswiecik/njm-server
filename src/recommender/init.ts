@@ -21,27 +21,30 @@ const rl = readline.createInterface({
 checkPropsExist()
 	.then(async (res) => {
 		if (res) {
-			rl.question(
-				"Db already exists. Do you want to drop? (yes/no): ",
-				async (answer) => {
-					if (answer === "yes") {
-						await drop();
-						console.log("Database dropped");
-					} else {
-						console.log("Ok, quitting...");
-					}
-					rl.close();
-				},
-			);
+			await new Promise((resolve) => {
+				rl.question(
+					"Db already exists. Do you want to drop? (yes/no): ",
+					async (answer) => {
+						if (answer === "yes") {
+							await drop();
+							console.log(
+								"Database dropped, run script again to create schema",
+							);
+						} else {
+							console.log("Ok, quitting...");
+						}
+						rl.close();
+						resolve(null);
+					},
+				);
+			});
 		} else {
 			await client.send(new reqs.AddItemProperty("productId", "string"));
 			await client.send(new reqs.AddItemProperty("artistName", "string"));
 			await client.send(new reqs.AddItemProperty("title", "string"));
-			await client.send(new reqs.AddItemProperty("price", "double"));
-			await client.send(new reqs.AddItemProperty("variant", "string"));
 			await client.send(new reqs.AddItemProperty("imageUrl", "string"));
 			console.log("Database schema created");
-      process.exit(0);
+			process.exit(0);
 		}
 	})
 	.catch((err) => {
