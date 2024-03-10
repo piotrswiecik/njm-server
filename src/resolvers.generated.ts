@@ -24,6 +24,7 @@ import { order as Query_order } from "./graphql/resolvers/Query/order";
 import { orders as Query_orders } from "./graphql/resolvers/Query/orders";
 import { product as Query_product } from "./graphql/resolvers/Query/product";
 import { productCount as Query_productCount } from "./graphql/resolvers/Query/productCount";
+import { productRange as Query_productRange } from "./graphql/resolvers/Query/productRange";
 import { productReviews as Query_productReviews } from "./graphql/resolvers/Query/productReviews";
 import { productSearch as Query_productSearch } from "./graphql/resolvers/Query/productSearch";
 import { products as Query_products } from "./graphql/resolvers/Query/products";
@@ -43,6 +44,7 @@ export const resolvers: Resolvers = {
 		orders: Query_orders,
 		product: Query_product,
 		productCount: Query_productCount,
+		productRange: Query_productRange,
 		productReviews: Query_productReviews,
 		productSearch: Query_productSearch,
 		products: Query_products,
