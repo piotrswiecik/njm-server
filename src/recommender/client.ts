@@ -8,7 +8,7 @@ const key = process.env.RECOMBEE_API_KEY;
 const region = process.env.RECOMBEE_DEFAULT_REGION;
 
 if (!db) {
-	throw new Error("RECOMBEE_DB is not set");
+	throw new Error("RECOMBEE_DB_NAME is not set");
 }
 
 if (!key) {

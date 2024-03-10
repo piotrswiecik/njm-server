@@ -27,12 +27,10 @@ const prepareData = async () => {
 
 const seed = async () => {
 	const data = await prepareData();
-	await Promise.all(
-		data.map(async (item) => {
-			const res = await client.send(new reqs.AddItem(item.productId));
+	for (const item of data) {
+		const res = await client.send(new reqs.AddItem(item.productId));
 			console.log(res);
-		}),
-	);
+	}
 	await client.send(new reqs.AddUser("anonymous"));
 };
 
